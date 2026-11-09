@@ -1200,8 +1200,8 @@
               <div class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#120d2d] shadow-sm"></div>
             </div>
             <div class="flex flex-col">
-              <span class="text-xs text-[#9d93b8] font-normal leading-tight">Hello,</span>
-              <span class="text-[15px] font-bold text-white tracking-tight leading-tight mt-0.5 flex items-center gap-1">
+              <span class="user-greeting-hello text-xs text-[#9d93b8] font-normal leading-tight">Hello,</span>
+              <span class="user-greeting-name text-[15px] font-bold text-white tracking-tight leading-tight mt-0.5 flex items-center gap-1">
                 Marice Cervantes
                 <svg class="w-3 h-3 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               </span>
@@ -1264,14 +1264,14 @@
                 <!-- Active badge (tappable for card details) -->
                 <div id="card1-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(1);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Active
+                  <span id="homeCardActiveText">Active</span>
                 </div>
 
                 <div>
-                  <span class="text-[11px] font-medium text-white/80 tracking-wide">Card Balance</span>
+                  <span id="homeCardBalanceLabel" class="text-[11px] font-medium text-white/80 tracking-wide">Card Balance</span>
                   <div class="flex items-baseline gap-1 mt-0.5">
                     <span id="cardBalanceNum" class="text-[29px] font-bold tracking-tight text-white leading-none transition-transform">3,350.60</span>
-                    <span class="text-[13px] font-bold text-white/90">AED</span>
+                    <span class="currency-label text-[13px] font-bold text-white/90">AED</span>
                   </div>
                 </div>
 
@@ -1282,8 +1282,8 @@
                 <div class="flex items-center justify-between pt-1">
                   <div class="flex items-center gap-2">
                     <div class="flex flex-col text-[7px] font-bold uppercase tracking-wider text-white/70 leading-tight">
-                      <span>VALID</span>
-                      <span>THRU</span>
+                      <span id="homeValidText">VALID</span>
+                      <span id="homeThruText">THRU</span>
                     </div>
                     <span class="text-[13px] font-bold text-white tracking-wide">03/24</span>
                   </div>
@@ -1337,7 +1337,7 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Add</span>
+            <span id="homeActionAdd" class="text-xs text-[#a09bb8] font-medium mt-1.5">Add</span>
           </div>
 
           <!-- 2. Withdraw -->
@@ -1351,7 +1351,7 @@
                 <line x1="11.5" y1="15.2" x2="11.5" y2="16.2" stroke-width="1.5" />
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Withdraw</span>
+            <span id="homeActionWithdraw" class="text-xs text-[#a09bb8] font-medium mt-1.5">Withdraw</span>
           </div>
 
           <!-- 3. Send -->
@@ -1362,7 +1362,7 @@
                 <path d="M5 14.5v2.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5" />
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Send</span>
+            <span id="homeActionSend" class="text-xs text-[#a09bb8] font-medium mt-1.5">Send</span>
           </div>
 
           <!-- 4. Schedule -->
@@ -1380,7 +1380,7 @@
                 <circle cx="16" cy="16.5" r="0.9" fill="currentColor" />
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Schedule</span>
+            <span id="homeActionSchedule" class="text-xs text-[#a09bb8] font-medium mt-1.5">Schedule</span>
           </div>
         </div>
 
@@ -1403,7 +1403,7 @@
           
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <h3 class="text-[17px] font-bold text-white tracking-tight">Recent Transaction</h3>
+              <h3 id="recentTxHeaderTitle" class="text-[17px] font-bold text-white tracking-tight">Recent Transaction</h3>
               <span id="sheetCountBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">8 Items</span>
             </div>
             
@@ -1592,25 +1592,25 @@
 
       <!-- Current Balance Hero Section -->
       <div class="flex flex-col items-center justify-center text-center mt-1 mb-2">
-        <span class="text-[13px] font-medium text-[#9e94b8] tracking-tight mb-1">Current Balance</span>
+        <span id="cdBalanceLabel" class="text-[13px] font-medium text-[#9e94b8] tracking-tight mb-1">Current Balance</span>
         <div class="flex items-baseline justify-center">
           <span id="cdCurrentBalance" class="text-[42px] font-extrabold text-white tracking-tight leading-none">3,350.60</span>
-          <span class="text-xs font-bold text-white/85 ml-1.5 self-end mb-1">AED</span>
+          <span class="currency-label text-xs font-bold text-white/85 ml-1.5 self-end mb-1">AED</span>
         </div>
       </div>
 
       <!-- Key-Value Info Rows (Credit, Minimum Due, Last Payment) -->
       <div class="w-full px-2 mt-6 mb-6 space-y-3.5">
         <div class="flex items-center justify-between">
-          <span class="text-[13.5px] font-medium text-[#9e94b8]">Credit</span>
+          <span id="cdCreditLabel" class="text-[13.5px] font-medium text-[#9e94b8]">Credit</span>
           <span id="cdCreditLimit" class="text-[14px] font-semibold text-white tracking-tight">35,000.00 AED</span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-[13.5px] font-medium text-[#9e94b8]">Minimum Amount due</span>
+          <span id="cdMinDueLabel" class="text-[13.5px] font-medium text-[#9e94b8]">Minimum Amount due</span>
           <span id="cdMinDue" class="text-[14px] font-semibold text-white tracking-tight">960.00 AED</span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-[13.5px] font-medium text-[#9e94b8]">Last Payment</span>
+          <span id="cdLastPaymentLabel" class="text-[13.5px] font-medium text-[#9e94b8]">Last Payment</span>
           <span id="cdLastPayment" class="text-[14px] font-semibold text-white tracking-tight">May 25, 2024</span>
         </div>
       </div>
@@ -1626,7 +1626,7 @@
               <polyline points="1 20 1 14 7 14"></polyline>
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
             </svg>
-            <span class="text-[14px] font-medium text-white">Cashback</span>
+            <span id="cdCashbackLabel" class="text-[14px] font-medium text-white">Cashback</span>
           </div>
           <div class="flex items-center gap-2">
             <span id="cdCashback" class="text-[14px] font-bold text-[#ff2a6d] tracking-tight">200.00 AED</span>
@@ -1646,7 +1646,7 @@
               <line x1="16" y1="17" x2="8" y2="17"></line>
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
-            <span class="text-[14px] font-medium text-white">Statements</span>
+            <span id="cdStatementsLabel" class="text-[14px] font-medium text-white">Statements</span>
           </div>
           <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
@@ -1660,7 +1660,7 @@
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
             </svg>
-            <span class="text-[14px] font-medium text-white">Customize Card</span>
+            <span id="cdCustomizeLabel" class="text-[14px] font-medium text-white">Customize Card</span>
           </div>
           <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
@@ -1707,7 +1707,7 @@
               <line x1="2" y1="10" x2="22" y2="10"></line>
               <circle cx="17.5" cy="14.5" r="1" fill="currentColor"></circle>
             </svg>
-            <span class="text-[14px] font-medium text-white">Add Apple Wallet</span>
+            <span id="cdAppleWalletLabel" class="text-[14px] font-medium text-white">Add Apple Wallet</span>
           </div>
           <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
@@ -1725,7 +1725,7 @@
               <polyline points="3 12 4 13 3 14"></polyline>
               <polyline points="3 18 4 19 3 20"></polyline>
             </svg>
-            <span class="text-[14px] font-medium text-white">Transactions</span>
+            <span id="cdTransactionsLabel" class="text-[14px] font-medium text-white">Transactions</span>
           </div>
           <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
@@ -1798,8 +1798,8 @@
               <div class="absolute -bottom-0.5 -right-0.5 z-20 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#120d2d] shadow-sm"></div>
             </div>
             <div class="flex flex-col">
-              <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
-              <span class="text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
+              <span class="user-greeting-hello text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
+              <span class="user-greeting-name text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
                 Marice Cervantes
                 <svg class="w-2.5 h-2.5 text-blue-400 opacity-80" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               </span>
@@ -1838,7 +1838,7 @@
 
         <!-- Title: My Expenses (with Proper Padding & Margins) -->
         <div class="pt-3.5 pb-4 px-0.5 my-1">
-          <h1 class="text-[27px] font-extrabold text-white tracking-tight leading-none">My Expenses</h1>
+          <h1 id="statsScreenTitle" class="text-[27px] font-extrabold text-white tracking-tight leading-none">My Expenses</h1>
         </div>
 
         <!-- Chart Container Card -->
@@ -1846,10 +1846,10 @@
           <!-- Top: Balance & Period Filters (D, W, M, Y) -->
           <div class="flex items-start justify-between w-full mb-1">
             <div>
-              <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Current Balance</span>
+              <span id="statsBalanceLabel" class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Current Balance</span>
               <div class="flex items-baseline">
                 <span id="statsBalanceAmount" class="text-[23px] font-extrabold text-white tracking-tight leading-none">3,350.60</span>
-                <span class="text-[11px] font-bold text-white/70 ml-1 leading-none">AED</span>
+                <span class="currency-label text-[11px] font-bold text-white/70 ml-1 leading-none">AED</span>
               </div>
             </div>
 
@@ -1958,7 +1958,7 @@
 
           <!-- Section Title Row -->
           <div class="flex items-center justify-between">
-            <h2 class="text-[17px] font-bold text-white tracking-tight">Categories</h2>
+            <h2 id="statsCategoriesTitle" class="text-[17px] font-bold text-white tracking-tight">Categories</h2>
             <button 
               id="statsSheetToggleBtn" 
               onclick="toggleStatsCategoriesSheet()" 
@@ -1984,7 +1984,7 @@
                   <path d="M10 2c1 .5 2 2 2 5"></path>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Groceries</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Groceries</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">40%</span>
@@ -2004,7 +2004,7 @@
                   <rect x="2" y="6" width="20" height="12" rx="6"></rect>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Entertainment</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Entertainment</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">20%</span>
@@ -2022,7 +2022,7 @@
                   <path d="M16 10a4 4 0 0 1-8 0"></path>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Shopping</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Shopping</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">25%</span>
@@ -2042,7 +2042,7 @@
                   <line x1="14" y1="1" x2="14" y2="4"></line>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Dining & Cafe</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Dining & Cafe</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">15%</span>
@@ -2058,7 +2058,7 @@
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Subscriptions</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Subscriptions</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">8%</span>
@@ -2074,7 +2074,7 @@
                   <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path>
                 </svg>
               </div>
-              <span class="text-[14.5px] font-semibold text-white tracking-tight">Travel & Transit</span>
+              <span class="stats-cat-item-name text-[14.5px] font-semibold text-white tracking-tight">Travel & Transit</span>
             </div>
             <div class="flex items-center gap-4">
               <span class="text-[12.5px] font-medium text-[#9e94b8]">12%</span>
@@ -2110,8 +2110,8 @@
               <div class="absolute -bottom-0.5 -right-0.5 z-20 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#120d2d] shadow-sm"></div>
             </div>
             <div class="flex flex-col">
-              <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
-              <span class="text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
+              <span class="user-greeting-hello text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
+              <span class="user-greeting-name text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
                 Marice Cervantes
                 <svg class="w-2.5 h-2.5 text-blue-400 opacity-80" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               </span>
@@ -2151,7 +2151,7 @@
         <!-- Title: Finance with Proper Padding & Margins (Matches Statistics My Expenses) -->
         <div class="pt-2.5 pb-3.5 px-0.5 flex items-center justify-between">
           <div>
-            <h1 class="text-[27px] font-extrabold text-white tracking-tight leading-none">Finance</h1>
+            <h1 id="financeScreenTitle" class="text-[27px] font-extrabold text-white tracking-tight leading-none">Finance</h1>
           </div>
           <button 
             onclick="toggleStealthMode()" 
@@ -2168,22 +2168,22 @@
 
         <!-- Total Assets Hero Card (Matches Statistics Chart Card Design & Glass Style) -->
         <div class="w-full rounded-[22px] bg-[#141033]/80 border border-white/[0.08] p-4 backdrop-blur-xl relative shadow-lg mb-2">
-          <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Total Portfolio & Net Worth</span>
+          <span id="financeNetWorthLabel" class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Total Portfolio & Net Worth</span>
           <div class="flex items-baseline">
             <span id="financeTotalNetWorth" class="text-[26px] font-extrabold text-white tracking-tight">23,901.20</span>
-            <span class="text-[12px] font-bold text-white/80 ml-1">AED</span>
+            <span class="currency-label text-[12px] font-bold text-white/80 ml-1">AED</span>
           </div>
 
           <div class="w-full h-[1px] bg-white/[0.07] my-3"></div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <span class="text-[10.5px] text-[#9e94b8] font-medium block">Available Balance</span>
+              <span id="financeAvailLabel" class="text-[10.5px] text-[#9e94b8] font-medium block">Available Balance</span>
               <span id="financeAvailableBal" class="text-[14.5px] font-bold text-white tracking-tight block mt-0.5">5,501.20 AED</span>
             </div>
             <div onclick="showScreen('vault')" class="cursor-pointer group rounded-xl p-1 -m-1 hover:bg-white/[0.04] transition" title="Open Savings Vaults">
               <span class="text-[10.5px] text-[#9e94b8] group-hover:text-white font-medium flex items-center gap-1 transition">
-                Locked Vaults
+                <span id="financeVaultsLabel">Locked Vaults</span>
                 <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
               </span>
               <span id="financeVaultsBal" class="text-[14.5px] font-bold text-white tracking-tight block mt-0.5">18,400.00 AED</span>
@@ -2201,7 +2201,7 @@
                 <path d="M5 14.5v2.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5" />
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Transfer</span>
+            <span id="financeActionTransfer" class="text-xs text-[#a09bb8] font-medium mt-1.5">Transfer</span>
           </div>
 
           <!-- 2. Exchange -->
@@ -2213,7 +2213,7 @@
                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Exchange</span>
+            <span id="financeActionExchange" class="text-xs text-[#a09bb8] font-medium mt-1.5">Exchange</span>
           </div>
 
           <!-- 3. Top Up -->
@@ -2224,7 +2224,7 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Top Up</span>
+            <span id="financeActionTopUp" class="text-xs text-[#a09bb8] font-medium mt-1.5">Top Up</span>
           </div>
 
           <!-- 4. Vault -->
@@ -2235,7 +2235,7 @@
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Vault</span>
+            <span id="financeActionVault" class="text-xs text-[#a09bb8] font-medium mt-1.5">Vault</span>
           </div>
         </div>
 
@@ -2260,7 +2260,7 @@
 
           <!-- Section Title Row -->
           <div class="flex items-center justify-between">
-            <h2 class="text-[17px] font-bold text-white tracking-tight">Accounts & Vaults</h2>
+            <h2 id="financeAccountsTitle" class="text-[17px] font-bold text-white tracking-tight">Connected Accounts</h2>
             <button 
               id="financeSheetToggleBtn" 
               onclick="toggleFinanceBottomSheet()" 
@@ -2404,8 +2404,8 @@
               <div class="absolute -bottom-0.5 -right-0.5 z-20 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#120d2d] shadow-sm"></div>
             </div>
             <div class="flex flex-col">
-              <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
-              <span class="text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
+              <span class="user-greeting-hello text-[10.5px] font-medium text-[#9e94b8] tracking-tight leading-none mb-0.5">Hello,</span>
+              <span class="user-greeting-name text-[13.5px] font-bold text-white tracking-tight leading-none flex items-center gap-1">
                 Marice Cervantes
                 <svg class="w-2.5 h-2.5 text-blue-400 opacity-80" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               </span>
@@ -2445,7 +2445,7 @@
         <!-- Title: Wallet Features -->
         <div class="pt-2.5 pb-3.5 px-0.5 flex items-center justify-between">
           <div>
-            <h1 class="text-[27px] font-extrabold text-white tracking-tight leading-none">Wallet Features</h1>
+            <h1 id="othersScreenTitle" class="text-[27px] font-extrabold text-white tracking-tight leading-none">Wallet Features</h1>
           </div>
         </div>
 
@@ -2460,8 +2460,8 @@
                 </svg>
               </div>
               <div>
-                <span class="text-[15px] font-bold text-white block tracking-tight">Apple Wallet & NFC Pass</span>
-                <span class="text-[11px] text-white/85 font-medium">Contactless Tap to Pay provisioned</span>
+                <span id="othersAppleCardTitle" class="text-[15px] font-bold text-white block tracking-tight">Apple Wallet & NFC Pass</span>
+                <span id="othersAppleCardSub" class="text-[11px] text-white/85 font-medium">Contactless Tap to Pay provisioned</span>
               </div>
             </div>
           </div>
@@ -2474,7 +2474,7 @@
             <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.78 1.06-1.85.95-2.93-.93.04-2.02.63-2.67 1.39-.58.67-.99 1.77-.85 2.82 1.05.08 2.08-.55 2.57-1.28z"/>
             </svg>
-            <span>View Pass in Apple Wallet</span>
+            <span id="othersAppleCardBtnLabel">View Pass in Apple Wallet</span>
           </button>
         </div>
 
@@ -2487,7 +2487,7 @@
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Bill Pay</span>
+            <span id="othersActionBillPay" class="text-xs text-[#a09bb8] font-medium mt-1.5">Bill Pay</span>
           </div>
 
           <!-- 2. Split Bill -->
@@ -2500,7 +2500,7 @@
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Split Bill</span>
+            <span id="othersActionSplitBill" class="text-xs text-[#a09bb8] font-medium mt-1.5">Split Bill</span>
           </div>
 
           <!-- 3. Vouchers -->
@@ -2514,7 +2514,7 @@
                 <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Vouchers</span>
+            <span id="othersActionVouchers" class="text-xs text-[#a09bb8] font-medium mt-1.5">Vouchers</span>
           </div>
 
           <!-- 4. Rewards -->
@@ -2524,7 +2524,7 @@
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
             </button>
-            <span class="text-xs text-[#a09bb8] font-medium mt-1.5">Rewards</span>
+            <span id="othersActionRewards" class="text-xs text-[#a09bb8] font-medium mt-1.5">Rewards</span>
           </div>
         </div>
 
@@ -2549,7 +2549,7 @@
 
           <!-- Section Title Row -->
           <div class="flex items-center justify-between">
-            <h2 class="text-[17px] font-bold text-white tracking-tight">All Features</h2>
+            <h2 id="othersSheetTitle" class="text-[17px] font-bold text-white tracking-tight">All Features</h2>
             <button 
               id="othersSheetToggleBtn" 
               onclick="toggleOthersBottomSheet()" 
@@ -4674,10 +4674,10 @@
 
         <div class="p-3.5 bg-white/[0.04] border border-white/10 backdrop-blur-md rounded-2xl flex items-center justify-between">
           <div>
-            <div class="text-xs font-semibold text-white">Card Number</div>
+            <div id="cdNumberLabel" class="text-xs font-semibold text-white">Card Number</div>
             <div id="cardDetailsNum" class="text-sm font-mono tracking-widest text-slate-300 mt-0.5">5412 •••• •••• 0329</div>
           </div>
-          <button onclick="copyCardNumber()" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs text-blue-400 font-semibold transition apple-press">
+          <button id="cdCopyBtn" onclick="copyCardNumber()" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs text-blue-400 font-semibold transition apple-press">
             Copy
           </button>
         </div>
@@ -4685,17 +4685,17 @@
         <div class="space-y-2 text-xs">
           <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.035] border border-white/10 backdrop-blur-md">
             <div>
-              <div class="font-semibold text-white">Switch Active Card</div>
-              <div class="text-[10px] text-slate-400">Select Debit Card or Balance Card</div>
+              <div id="cdSwitchCardLabel" class="font-semibold text-white">Switch Active Card</div>
+              <div id="cdSwitchCardSub" class="text-[10px] text-slate-400">Select Debit Card or Balance Card</div>
             </div>
-            <button onclick="closeCardDetailsModal(); openCardSelectionModal();" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs text-blue-400 font-semibold transition apple-press">
+            <button id="cdSwitchCardBtn" onclick="closeCardDetailsModal(); openCardSelectionModal();" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs text-blue-400 font-semibold transition apple-press">
               Change
             </button>
           </div>
           <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.035] border border-white/10 backdrop-blur-md">
             <div>
-              <div class="font-semibold text-white">Lock / Freeze Card</div>
-              <div class="text-[10px] text-slate-400">Temporarily disable all transactions</div>
+              <div id="cdLockLabel" class="font-semibold text-white">Lock / Freeze Card</div>
+              <div id="cdLockSub" class="text-[10px] text-slate-400">Temporarily disable all transactions</div>
             </div>
             <div id="cardLockToggle" onclick="toggleCardLock(this)" class="w-10 h-6 rounded-full bg-white/20 p-0.5 flex items-center justify-start cursor-pointer transition-colors apple-press">
               <div class="w-5 h-5 rounded-full bg-white shadow-sm"></div>
@@ -4703,8 +4703,8 @@
           </div>
           <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.035] border border-white/10 backdrop-blur-md">
             <div>
-              <div class="font-semibold text-white">Contactless Apple Pay</div>
-              <div class="text-[10px] text-slate-400">Ready for iPhone & Apple Watch</div>
+              <div id="cdApplePayLabel" class="font-semibold text-white">Contactless Apple Pay</div>
+              <div id="cdApplePaySub" class="text-[10px] text-slate-400">Ready for iPhone & Apple Watch</div>
             </div>
             <div class="w-10 h-6 rounded-full bg-emerald-500 p-0.5 flex items-center justify-end cursor-pointer transition-colors apple-press">
               <div class="w-5 h-5 rounded-full bg-white shadow-sm"></div>
@@ -4712,7 +4712,7 @@
           </div>
         </div>
 
-        <button onclick="closeCardDetailsModal()" class="w-full py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-semibold text-xs transition apple-press">
+        <button id="cdDoneBtn" onclick="closeCardDetailsModal()" class="w-full py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-semibold text-xs transition apple-press">
           Done
         </button>
       </div>
@@ -4920,10 +4920,10 @@
           <div class="flex items-center justify-between w-full">
             <div>
               <h3 class="text-[17px] font-bold tracking-tight text-white flex items-center gap-1.5">
-                Account & Profile
-                <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Verified</span>
+                <span id="profileSheetTitle">Account & Profile</span>
+                <span id="profileVerifiedBadge" class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Verified</span>
               </h3>
-              <p class="text-[11px] text-[#9e94b8] mt-0.5">Manage personal security, limits & wallet preferences</p>
+              <p id="profileSheetSub" class="text-[11px] text-[#9e94b8] mt-0.5">Manage personal security, limits & wallet preferences</p>
             </div>
             <button onclick="closeUserProfileModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center text-slate-300 text-xs transition cursor-pointer apple-press">
               ✕
@@ -4943,8 +4943,8 @@
               </div>
               <div class="flex flex-col flex-1">
                 <div class="flex items-center justify-between">
-                  <h4 class="text-[16px] font-extrabold text-white tracking-tight">Marice Cervantes</h4>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-400/40 text-amber-300">BLACK TIER</span>
+                  <h4 class="user-greeting-name text-[16px] font-extrabold text-white tracking-tight">Marice Cervantes</h4>
+                  <span id="profileTierBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-400/40 text-amber-300">BLACK TIER</span>
                 </div>
                 <span class="text-[11px] text-[#9e94b8] mt-0.5">CustomerID: CL-8829-4102-AE</span>
                 <div class="flex items-center gap-2 mt-1.5">
@@ -4958,44 +4958,44 @@
           <!-- 3-Stats Grid -->
           <div class="grid grid-cols-3 gap-2">
             <div class="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 flex flex-col items-center text-center">
-              <span class="text-[10px] text-[#9e94b8]">Total Net Worth</span>
+              <span id="profileNetWorthLabel" class="text-[10px] text-[#9e94b8]">Total Net Worth</span>
               <span class="text-[13px] font-bold text-white mt-0.5">54,820 AED</span>
             </div>
             <div class="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 flex flex-col items-center text-center">
-              <span class="text-[10px] text-[#9e94b8]">Active Cards</span>
+              <span id="profileActiveCardsLabel" class="text-[10px] text-[#9e94b8]">Active Cards</span>
               <span id="profileCardsCountBadge" class="text-[13px] font-bold text-white mt-0.5">2 Cards</span>
             </div>
             <div class="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 flex flex-col items-center text-center">
-              <span class="text-[10px] text-[#9e94b8]">Safety Score</span>
+              <span id="profileSafetyScoreLabel" class="text-[10px] text-[#9e94b8]">Safety Score</span>
               <span class="text-[13px] font-bold text-emerald-400 mt-0.5">99.8% (A+)</span>
             </div>
           </div>
 
           <!-- Contact & Residency -->
           <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3 flex flex-col gap-2">
-            <span class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Contact & Residency</span>
+            <span id="profileContactHeading" class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Contact & Residency</span>
             <div class="flex items-center justify-between text-xs py-1 border-b border-white/[0.06]">
-              <span class="text-[#9e94b8]">Email</span>
+              <span id="profileEmailLabel" class="text-[#9e94b8]">Email</span>
               <span class="text-white font-medium">marice.cervantes@cashleap.ae</span>
             </div>
             <div class="flex items-center justify-between text-xs py-1 border-b border-white/[0.06]">
-              <span class="text-[#9e94b8]">Mobile Phone</span>
+              <span id="profilePhoneLabel" class="text-[#9e94b8]">Mobile Phone</span>
               <span class="text-white font-medium">+971 50 892 4102</span>
             </div>
             <div class="flex items-center justify-between text-xs py-1">
-              <span class="text-[#9e94b8]">Residency</span>
-              <span class="text-white font-medium">Dubai, United Arab Emirates</span>
+              <span id="profileResidencyLabel" class="text-[#9e94b8]">Residency</span>
+              <span id="profileResidencyVal" class="text-white font-medium">Dubai, United Arab Emirates</span>
             </div>
           </div>
 
           <!-- Security & Preferences -->
           <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3 flex flex-col gap-2.5">
-            <span class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Security & Biometrics</span>
+            <span id="profileSecurityHeading" class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Security & Biometrics</span>
             
             <div class="flex items-center justify-between py-1">
               <div class="flex flex-col">
-                <span class="text-xs font-semibold text-white">Apple Face ID Login</span>
-                <span class="text-[10px] text-[#9e94b8]">Biometric authentication for rapid unlocks</span>
+                <span id="profileFaceIdTitle" class="text-xs font-semibold text-white">Apple Face ID Login</span>
+                <span id="profileFaceIdSub" class="text-[10px] text-[#9e94b8]">Biometric authentication for rapid unlocks</span>
               </div>
               <button onclick="toggleProfileFaceId()" id="profileFaceIdToggle" class="w-10 h-5 rounded-full bg-blue-600 transition-colors p-0.5 relative cursor-pointer">
                 <div id="profileFaceIdKnob" class="w-4 h-4 rounded-full bg-white transition-transform transform translate-x-5"></div>
@@ -5004,15 +5004,15 @@
 
             <div class="flex items-center justify-between py-1 border-t border-white/[0.06]">
               <div class="flex flex-col">
-                <span class="text-xs font-semibold text-white">6-Digit Secret Key</span>
-                <span class="text-[10px] text-[#9e94b8]">High-security payment passcode</span>
+                <span id="profileSecretKeyTitle" class="text-xs font-semibold text-white">6-Digit Secret Key</span>
+                <span id="profileSecretKeySub" class="text-[10px] text-[#9e94b8]">High-security payment passcode</span>
               </div>
-              <button onclick="triggerProfilePasscodeChange()" class="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer">Manage</button>
+              <button id="profileSecretKeyManage" onclick="triggerProfilePasscodeChange()" class="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer">Manage</button>
             </div>
 
             <div class="flex items-center justify-between py-1 border-t border-white/[0.06]">
               <div class="flex flex-col">
-                <span class="text-xs font-semibold text-white">Language / اللغة</span>
+                <span id="profileLangTitle" class="text-xs font-semibold text-white">Language / اللغة</span>
                 <span id="profileLangSub" class="text-[10px] text-[#9e94b8]">Switch between English & Arabic</span>
               </div>
               <div class="flex items-center p-0.5 rounded-full bg-white/[0.08] border border-white/10">
@@ -5038,24 +5038,26 @@
 
           <!-- Limits & Statements -->
           <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3 flex flex-col gap-2">
-            <span class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Banking Limits</span>
+            <span id="profileLimitsHeading" class="text-[11px] font-bold text-white/90 uppercase tracking-wider">Banking Limits</span>
             <div class="flex items-center justify-between text-xs py-1 border-b border-white/[0.06]">
-              <span class="text-[#9e94b8]">Daily Transfer Cap</span>
+              <span id="profileDailyCapLabel" class="text-[#9e94b8]">Daily Transfer Cap</span>
               <span class="text-white font-semibold">50,000.00 AED</span>
             </div>
             <div class="flex items-center justify-between text-xs py-1 border-b border-white/[0.06]">
-              <span class="text-[#9e94b8]">Monthly Spending Limit</span>
+              <span id="profileMonthlyLimitLabel" class="text-[#9e94b8]">Monthly Spending Limit</span>
               <span class="text-white font-semibold">150,000.00 AED</span>
             </div>
             <button onclick="downloadOfficialStatement()" class="flex items-center justify-between py-1 text-xs text-cyan-400 hover:text-cyan-300 font-medium cursor-pointer">
-              <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>Download Official Statement (PDF)</span>
+              <span id="profileStatementBtnLabel" class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>Download Official Statement (PDF)</span>
               <span>&rarr;</span>
             </button>
           </div>
 
           <!-- Sign Out Action -->
-          <button onclick="closeUserProfileModal(); openSignOutConfirmation();" class="w-full py-3 rounded-2xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 font-semibold text-xs flex items-center justify-center gap-2 transition cursor-pointer apple-press">
+          <button id="profileSignOutBtn" onclick="closeUserProfileModal(); openSignOutConfirmation();" class="w-full py-3 rounded-2xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 font-semibold text-xs flex items-center justify-center gap-2 transition cursor-pointer apple-press">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign Out of Cashleap
+          </button>
             Sign Out of Cashleap
           </button>
 
@@ -5152,8 +5154,8 @@
           <div class="w-11 h-1.5 bg-white/30 hover:bg-white/50 rounded-full mb-3 cursor-pointer transition-colors" onclick="closeTransferModal()"></div>
           <div class="flex items-center justify-between w-full">
             <div>
-              <h3 class="text-[17px] font-bold text-white tracking-tight">Transfer Funds</h3>
-              <p class="text-[11px] text-[#9e94b8] mt-0.5">Instant zero-fee transfer between your accounts</p>
+              <h3 id="transferSheetTitle" class="text-[17px] font-bold text-white tracking-tight">Transfer Funds</h3>
+              <p id="transferSheetSub" class="text-[11px] text-[#9e94b8] mt-0.5">Instant zero-fee transfer between your accounts</p>
             </div>
             <button onclick="closeTransferModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center text-slate-300 transition cursor-pointer apple-press">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -5169,7 +5171,7 @@
             <!-- FROM ACCOUNT CARD -->
             <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3 backdrop-blur-xl transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-[10.5px] font-semibold uppercase tracking-wider text-[#9e94b8]">From Source</span>
+                <span id="transferFromHeader" class="text-[10.5px] font-semibold uppercase tracking-wider text-[#9e94b8]">From Source</span>
                 <span id="transferFromAvailBadge" class="text-[10.5px] font-medium text-emerald-400">Available: 3,350.60 AED</span>
               </div>
 
@@ -5221,8 +5223,8 @@
             <!-- TO DESTINATION ACCOUNT CARD -->
             <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3 backdrop-blur-xl transition">
               <div class="flex items-center justify-between mb-2">
-                <span class="text-[10.5px] font-semibold uppercase tracking-wider text-[#9e94b8]">To Destination</span>
-                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/[0.06] text-slate-300">Instant Credit</span>
+                <span id="transferToHeader" class="text-[10.5px] font-semibold uppercase tracking-wider text-[#9e94b8]">To Destination</span>
+                <span id="transferInstantCreditBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/[0.06] text-slate-300">Instant Credit</span>
               </div>
 
               <!-- Selected Destination Display -->
@@ -5260,8 +5262,8 @@
           <!-- AMOUNT INPUT & PRESET CHIPS -->
           <div class="rounded-2xl bg-[#141033]/90 border border-white/12 p-3.5 backdrop-blur-xl shadow-inner">
             <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[11px] font-semibold text-[#9e94b8]">Transfer Amount</span>
-              <span class="text-[10.5px] font-medium text-blue-400">No Transfer Fee</span>
+              <span id="transferAmountLabel" class="text-[11px] font-semibold text-[#9e94b8]">Transfer Amount</span>
+              <span id="transferNoFeeBadge" class="text-[10.5px] font-medium text-blue-400">No Transfer Fee</span>
             </div>
 
             <div class="flex items-baseline justify-between gap-2 pb-2.5 border-b border-white/[0.07]">
@@ -5273,7 +5275,7 @@
                 class="w-full bg-transparent text-[26px] font-extrabold text-white tracking-tight outline-none leading-none" 
                 placeholder="0.00"
               />
-              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white/[0.08] text-white/90 tracking-wider flex-shrink-0">AED</span>
+              <span class="currency-label text-xs font-bold px-2.5 py-1 rounded-lg bg-white/[0.08] text-white/90 tracking-wider flex-shrink-0">AED</span>
             </div>
 
             <!-- Preset Quick Amount Chips -->
@@ -5294,7 +5296,7 @@
           </div>
 
           <!-- Confirm Button -->
-          <button onclick="executeTransfer()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:opacity-95 text-white font-semibold text-xs shadow-lg active:scale-[0.98] transition cursor-pointer apple-press flex items-center justify-center gap-2">
+          <button id="transferConfirmBtn" onclick="executeTransfer()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:opacity-95 text-white font-semibold text-xs shadow-lg active:scale-[0.98] transition cursor-pointer apple-press flex items-center justify-center gap-2">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
             </svg>
@@ -5626,7 +5628,7 @@
             <path d="M10.707 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 19.414 11H19v9a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h-.414a1 1 0 0 1-.707-1.707l7-7Z" fill="currentColor"/>
             <path d="M16 3h2v4.5l-2-2V3Z" fill="currentColor"/>
           </svg>
-          <span class="text-[12px] font-semibold tracking-tight text-white">Home</span>
+          <span id="dockLabelHome" class="text-[12px] font-semibold tracking-tight text-white">Home</span>
           <div id="bar-home" class="dock-active-bar"></div>
         </div>
 
@@ -5637,7 +5639,7 @@
             <rect x="2.5" y="7" width="19" height="13.5" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
             <circle cx="16.5" cy="13.5" r="1.1" fill="currentColor"/>
           </svg>
-          <span class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Finance</span>
+          <span id="dockLabelFinance" class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Finance</span>
           <div id="bar-finance" class="dock-active-bar hidden"></div>
         </div>
 
@@ -5647,7 +5649,7 @@
             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
             <path d="M12 3.5 A8.5 8.5 0 0 1 20.5 11.2 H12 Z M12 12.8 H20.5 A8.5 8.5 0 0 1 12 20.5 Z" fill="currentColor"/>
           </svg>
-          <span class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Statistics</span>
+          <span id="dockLabelStats" class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Statistics</span>
           <div id="bar-statistics" class="dock-active-bar hidden"></div>
         </div>
 
@@ -5659,7 +5661,7 @@
             <rect x="3.5" y="13.5" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.8"/>
             <rect x="13.5" y="13.5" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.8"/>
           </svg>
-          <span class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Others</span>
+          <span id="dockLabelOthers" class="text-[12px] font-normal tracking-tight text-[#9e94b8]">Others</span>
           <div id="bar-others" class="dock-active-bar hidden"></div>
         </div>
 
@@ -6849,6 +6851,13 @@
     const SHEET_COLLAPSED_Y = 356;
     const SHEET_EXPANDED_Y = 0;
 
+    function getSheetToggleText(expanded) {
+      if (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar') {
+        return expanded ? 'طي' : 'عرض الكل';
+      }
+      return expanded ? 'Collapse' : 'See All';
+    }
+
     function setSheetExpanded(expanded) {
       isSheetExpanded = expanded;
       const sheet = document.getElementById('recentTransactionsSheet');
@@ -6860,11 +6869,11 @@
       
       if (isSheetExpanded) {
         sheet.style.transform = `translateY(${SHEET_EXPANDED_Y}px)`;
-        if (toggleLabel) toggleLabel.textContent = 'Collapse';
+        if (toggleLabel) toggleLabel.textContent = getSheetToggleText(true);
         if (toggleChevron) toggleChevron.style.transform = 'rotate(180deg)';
       } else {
         sheet.style.transform = `translateY(${SHEET_COLLAPSED_Y}px)`;
-        if (toggleLabel) toggleLabel.textContent = 'See All';
+        if (toggleLabel) toggleLabel.textContent = getSheetToggleText(false);
         if (toggleChevron) toggleChevron.style.transform = 'rotate(0deg)';
       }
     }
@@ -6993,11 +7002,11 @@
       
       if (isStatsSheetExpanded) {
         sheet.style.transform = 'translateY(' + STATS_SHEET_EXPANDED_Y + 'px)';
-        if (toggleLabel) toggleLabel.textContent = 'Collapse';
+        if (toggleLabel) toggleLabel.textContent = getSheetToggleText(true);
         if (toggleChevron) toggleChevron.style.transform = 'rotate(180deg)';
       } else {
         sheet.style.transform = 'translateY(' + STATS_SHEET_COLLAPSED_Y + 'px)';
-        if (toggleLabel) toggleLabel.textContent = 'See All';
+        if (toggleLabel) toggleLabel.textContent = getSheetToggleText(false);
         if (toggleChevron) toggleChevron.style.transform = 'rotate(0deg)';
       }
     }
@@ -7133,7 +7142,7 @@
       sheet.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       const targetY = expanded ? FINANCE_SHEET_EXPANDED_Y : FINANCE_SHEET_COLLAPSED_Y;
       sheet.style.transform = 'translateY(' + targetY + 'px)';
-      if (label) label.textContent = expanded ? 'Collapse' : 'See All';
+      if (label) label.textContent = getSheetToggleText(expanded);
       if (chevron) chevron.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
     }
 
@@ -7267,7 +7276,7 @@
       sheet.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       const targetY = expanded ? OTHERS_SHEET_EXPANDED_Y : OTHERS_SHEET_COLLAPSED_Y;
       sheet.style.transform = 'translateY(' + targetY + 'px)';
-      if (label) label.textContent = expanded ? 'Collapse' : 'See All';
+      if (label) label.textContent = getSheetToggleText(expanded);
       if (chevron) chevron.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
     }
 
@@ -8855,6 +8864,349 @@
     }
 
     let currentAppLanguage = 'en'; // 'en' or 'ar'
+
+    function switchDomCurrency(isAr) {
+      const fromStr = isAr ? 'AED' : 'د.إ';
+      const toStr = isAr ? 'د.إ' : 'AED';
+
+      document.querySelectorAll('.currency-label').forEach(el => {
+        el.textContent = toStr;
+      });
+
+      // Walk text nodes inside app
+      const appContainer = document.getElementById('mobileAppContainer') || document.body;
+      const walker = document.createTreeWalker(
+        appContainer,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!node.nodeValue) continue;
+        if (node.parentElement && (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE' || node.parentElement.id === 'homeToast')) continue;
+        if (node.nodeValue.includes(fromStr)) {
+          node.nodeValue = node.nodeValue.split(fromStr).join(toStr);
+        }
+      }
+    }
+
+    function applyGlobalTranslations(isAr) {
+      const appRoot = document.getElementById('mobileAppContainer') || document.body;
+      if (isAr) {
+        appRoot.classList.add('lang-arabic');
+      } else {
+        appRoot.classList.remove('lang-arabic');
+      }
+
+      // 1. Top Capsule Greetings across all screens
+      document.querySelectorAll('.user-greeting-hello').forEach(el => {
+        el.textContent = isAr ? 'مرحباً،' : 'Hello,';
+      });
+      document.querySelectorAll('.user-greeting-name').forEach(el => {
+        const svg = el.querySelector('svg');
+        el.textContent = isAr ? 'ماريس سيرفانتس ' : 'Marice Cervantes ';
+        if (svg) el.appendChild(svg);
+      });
+
+      // 2. Dock Navigation
+      const dockHome = document.getElementById('dockLabelHome');
+      if (dockHome) dockHome.textContent = isAr ? 'الرئيسية' : 'Home';
+      const dockFinance = document.getElementById('dockLabelFinance');
+      if (dockFinance) dockFinance.textContent = isAr ? 'المالية' : 'Finance';
+      const dockStats = document.getElementById('dockLabelStats');
+      if (dockStats) dockStats.textContent = isAr ? 'الإحصائيات' : 'Statistics';
+      const dockOthers = document.getElementById('dockLabelOthers');
+      if (dockOthers) dockOthers.textContent = isAr ? 'المزيد' : 'Others';
+
+      // 3. Home Screen Card & Actions
+      const homeBalLabel = document.getElementById('homeCardBalanceLabel');
+      if (homeBalLabel) homeBalLabel.textContent = isAr ? 'رصيد البطاقة' : 'Card Balance';
+      const homeActive = document.getElementById('homeCardActiveText');
+      if (homeActive) homeActive.textContent = isAr ? 'نشطة' : 'Active';
+      const homeValid = document.getElementById('homeValidText');
+      if (homeValid) homeValid.textContent = isAr ? 'صالح' : 'VALID';
+      const homeThru = document.getElementById('homeThruText');
+      if (homeThru) homeThru.textContent = isAr ? 'حتى' : 'THRU';
+
+      const actAdd = document.getElementById('homeActionAdd');
+      if (actAdd) actAdd.textContent = isAr ? 'إيداع' : 'Add';
+      const actWithdraw = document.getElementById('homeActionWithdraw');
+      if (actWithdraw) actWithdraw.textContent = isAr ? 'سحب' : 'Withdraw';
+      const actSend = document.getElementById('homeActionSend');
+      if (actSend) actSend.textContent = isAr ? 'إرسال' : 'Send';
+      const actSchedule = document.getElementById('homeActionSchedule');
+      if (actSchedule) actSchedule.textContent = isAr ? 'جدولة' : 'Schedule';
+
+      // Recent Transactions Sheet Header
+      const recentTitle = document.getElementById('recentTxHeaderTitle');
+      if (recentTitle) recentTitle.textContent = isAr ? 'أحدث المعاملات' : 'Recent Transaction';
+      const countBadge = document.getElementById('sheetCountBadge');
+      if (countBadge) countBadge.textContent = isAr ? '٨ عناصر' : '8 Items';
+      const toggleLabel = document.getElementById('sheetToggleLabel');
+      if (toggleLabel) toggleLabel.textContent = getSheetToggleText(isSheetExpanded);
+
+      // 4. Statistics Screen
+      const statsTitle = document.getElementById('statsScreenTitle');
+      if (statsTitle) statsTitle.textContent = isAr ? 'مصروفاتي' : 'My Expenses';
+      const statsBalLabel = document.getElementById('statsBalanceLabel');
+      if (statsBalLabel) statsBalLabel.textContent = isAr ? 'الرصيد الحالي' : 'Current Balance';
+      const statsCatTitle = document.getElementById('statsCategoriesTitle');
+      if (statsCatTitle) statsCatTitle.textContent = isAr ? 'الفئات' : 'Categories';
+      const statsToggleLabel = document.getElementById('statsSheetToggleLabel');
+      if (statsToggleLabel) statsToggleLabel.textContent = getSheetToggleText(isStatsSheetExpanded);
+
+      const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const dayNamesAr = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+      for (let i = 0; i <= 6; i++) {
+        const btn = document.getElementById('stats-day-' + i);
+        if (btn) btn.textContent = isAr ? dayNamesAr[i] : dayNamesEn[i];
+      }
+
+      // Statistics Categories Items
+      const statsCats = document.querySelectorAll('.stats-cat-item-name');
+      const catTranslations = {
+        'Groceries': 'البقالة والتموين',
+        'Entertainment': 'الترفيه والألعاب',
+        'Shopping': 'التسوق والمشتريات',
+        'Dining & Cafe': 'المطاعم والمقاهي',
+        'Subscriptions': 'الاشتراكات الرقمية',
+        'Travel & Transit': 'السفر والتنقل'
+      };
+      const catTranslationsRev = {
+        'البقالة والتموين': 'Groceries',
+        'الترفيه والألعاب': 'Entertainment',
+        'التسوق والمشتريات': 'Shopping',
+        'المطاعم والمقاهي': 'Dining & Cafe',
+        'الاشتراكات الرقمية': 'Subscriptions',
+        'السفر والتنقل': 'Travel & Transit'
+      };
+      statsCats.forEach(cat => {
+        const txt = cat.textContent.trim();
+        if (isAr && catTranslations[txt]) {
+          cat.textContent = catTranslations[txt];
+        } else if (!isAr && catTranslationsRev[txt]) {
+          cat.textContent = catTranslationsRev[txt];
+        }
+      });
+
+      // 5. Finance Screen
+      const finTitle = document.getElementById('financeScreenTitle');
+      if (finTitle) finTitle.textContent = isAr ? 'المالية والاستثمار' : 'Finance';
+      const finStealth = document.getElementById('financeStealthLabel');
+      if (finStealth) {
+        if (typeof isStealthMode !== 'undefined' && isStealthMode) {
+          finStealth.textContent = isAr ? 'مخفي' : 'Hidden';
+        } else {
+          finStealth.textContent = isAr ? 'مرئي' : 'Visible';
+        }
+      }
+      const finNetWorth = document.getElementById('financeNetWorthLabel');
+      if (finNetWorth) finNetWorth.textContent = isAr ? 'إجمالي المحفظة وصافي القيمة' : 'Total Portfolio & Net Worth';
+      const finAvail = document.getElementById('financeAvailLabel');
+      if (finAvail) finAvail.textContent = isAr ? 'الرصيد المتاح' : 'Available Balance';
+      const finVaults = document.getElementById('financeVaultsLabel');
+      if (finVaults) finVaults.textContent = isAr ? 'الخزائن المقفلة' : 'Locked Vaults';
+
+      const finTransfer = document.getElementById('financeActionTransfer');
+      if (finTransfer) finTransfer.textContent = isAr ? 'تحويل' : 'Transfer';
+      const finExchange = document.getElementById('financeActionExchange');
+      if (finExchange) finExchange.textContent = isAr ? 'تبديل' : 'Exchange';
+      const finTopUp = document.getElementById('financeActionTopUp');
+      if (finTopUp) finTopUp.textContent = isAr ? 'شحن رصيد' : 'Top Up';
+      const finVault = document.getElementById('financeActionVault');
+      if (finVault) finVault.textContent = isAr ? 'خزينة' : 'Vault';
+
+      const finAccTitle = document.getElementById('financeAccountsTitle');
+      if (finAccTitle) finAccTitle.textContent = isAr ? 'الحسابات والخزائن' : 'Connected Accounts';
+      const finToggleLabel = document.getElementById('financeSheetToggleLabel');
+      if (finToggleLabel) finToggleLabel.textContent = getSheetToggleText(isFinanceSheetExpanded);
+
+      // 6. Others Screen (Wallet Features)
+      const othersTitle = document.getElementById('othersScreenTitle');
+      if (othersTitle) othersTitle.textContent = isAr ? 'ميزات المحفظة' : 'Wallet Features';
+      const appleTitle = document.getElementById('othersAppleCardTitle');
+      if (appleTitle) appleTitle.textContent = isAr ? 'محفظة آبل وتمرير NFC' : 'Apple Wallet & NFC Pass';
+      const appleSub = document.getElementById('othersAppleCardSub');
+      if (appleSub) appleSub.textContent = isAr ? 'الدفع بدون تلامس مفعّل وجاهز' : 'Contactless Tap to Pay provisioned';
+      const appleBtn = document.getElementById('othersAppleCardBtnLabel');
+      if (appleBtn) appleBtn.textContent = isAr ? 'عرض البطاقة في Apple Wallet' : 'View Pass in Apple Wallet';
+
+      const othBill = document.getElementById('othersActionBillPay');
+      if (othBill) othBill.textContent = isAr ? 'سداد الفواتير' : 'Bill Pay';
+      const othSplit = document.getElementById('othersActionSplitBill');
+      if (othSplit) othSplit.textContent = isAr ? 'تقسيم الحساب' : 'Split Bill';
+      const othVouch = document.getElementById('othersActionVouchers');
+      if (othVouch) othVouch.textContent = isAr ? 'قسائم الشراء' : 'Vouchers';
+      const othRew = document.getElementById('othersActionRewards');
+      if (othRew) othRew.textContent = isAr ? 'المكافآت' : 'Rewards';
+
+      const othSheetTitle = document.getElementById('othersSheetTitle');
+      if (othSheetTitle) othSheetTitle.textContent = isAr ? 'جميع الخدمات والميزات' : 'All Features';
+      const othToggleLabel = document.getElementById('othersSheetToggleLabel');
+      if (othToggleLabel) othToggleLabel.textContent = getSheetToggleText(isOthersSheetExpanded);
+
+      // 7. Card Details Screen & Modal
+      const cdBal = document.getElementById('cdBalanceLabel');
+      if (cdBal) cdBal.textContent = isAr ? 'الرصيد الحالي' : 'Current Balance';
+      const cdCred = document.getElementById('cdCreditLabel');
+      if (cdCred) cdCred.textContent = isAr ? 'الحد الائتماني' : 'Credit';
+      const cdMin = document.getElementById('cdMinDueLabel');
+      if (cdMin) cdMin.textContent = isAr ? 'الحد الأدنى المستحق' : 'Minimum Amount due';
+      const cdLast = document.getElementById('cdLastPaymentLabel');
+      if (cdLast) cdLast.textContent = isAr ? 'آخر دفعة مسددة' : 'Last Payment';
+      const cdCash = document.getElementById('cdCashbackLabel');
+      if (cdCash) cdCash.textContent = isAr ? 'استرداد نقدي (كاش باك)' : 'Cashback';
+      const cdState = document.getElementById('cdStatementsLabel');
+      if (cdState) cdState.textContent = isAr ? 'كشوف الحسابات' : 'Statements';
+      const cdCust = document.getElementById('cdCustomizeLabel');
+      if (cdCust) cdCust.textContent = isAr ? 'تخصيص البطاقة' : 'Customize Card';
+      const cdFrz = document.getElementById('cdFreezeLabel');
+      if (cdFrz) cdFrz.textContent = isAr ? 'تجميد الحساب والبطاقة' : 'Freeze my Account';
+      const cdApple = document.getElementById('cdAppleWalletLabel');
+      if (cdApple) cdApple.textContent = isAr ? 'إضافة إلى Apple Wallet' : 'Add Apple Wallet';
+      const cdTx = document.getElementById('cdTransactionsLabel');
+      if (cdTx) cdTx.textContent = isAr ? 'سجل المعاملات' : 'Transactions';
+      const cdLang = document.getElementById('cdLangLabel');
+      if (cdLang) cdLang.textContent = isAr ? 'اللغة' : 'Language';
+
+      // Card Details Sheet Modal
+      const cdTitle = document.getElementById('cardDetailsTitle');
+      if (cdTitle) cdTitle.textContent = isAr ? 'ماستركارد كاش ليب' : 'Cashleap Mastercard';
+      const cdSubtitle = document.getElementById('cardDetailsSubtitle');
+      if (cdSubtitle) cdSubtitle.textContent = isAr ? 'إعدادات البطاقة وApple Pay' : 'Card Controls & Apple Pay';
+      const cdNumLabel = document.getElementById('cdNumberLabel');
+      if (cdNumLabel) cdNumLabel.textContent = isAr ? 'رقم البطاقة' : 'Card Number';
+      const cdCopy = document.getElementById('cdCopyBtn');
+      if (cdCopy) cdCopy.textContent = isAr ? 'نسخ' : 'Copy';
+      const cdSwitch = document.getElementById('cdSwitchCardLabel');
+      if (cdSwitch) cdSwitch.textContent = isAr ? 'تبديل البطاقة النشطة' : 'Switch Active Card';
+      const cdSwitchSub = document.getElementById('cdSwitchCardSub');
+      if (cdSwitchSub) cdSwitchSub.textContent = isAr ? 'اختر بطاقة الخصم أو بطاقة الرصيد' : 'Select Debit Card or Balance Card';
+      const cdSwitchBtn = document.getElementById('cdSwitchCardBtn');
+      if (cdSwitchBtn) cdSwitchBtn.textContent = isAr ? 'تغيير' : 'Change';
+      const cdLock = document.getElementById('cdLockLabel');
+      if (cdLock) cdLock.textContent = isAr ? 'قفل / تجميد البطاقة' : 'Lock / Freeze Card';
+      const cdLockSub = document.getElementById('cdLockSub');
+      if (cdLockSub) cdLockSub.textContent = isAr ? 'تعطيل كافة المعاملات مؤقتاً' : 'Temporarily disable all transactions';
+      const cdApplePay = document.getElementById('cdApplePayLabel');
+      if (cdApplePay) cdApplePay.textContent = isAr ? 'الدفع بدون تلامس Apple Pay' : 'Contactless Apple Pay';
+      const cdApplePaySub = document.getElementById('cdApplePaySub');
+      if (cdApplePaySub) cdApplePaySub.textContent = isAr ? 'جاهز لأجهزة آيفون وساعة آبل' : 'Ready for iPhone & Apple Watch';
+      const cdDone = document.getElementById('cdDoneBtn');
+      if (cdDone) cdDone.textContent = isAr ? 'تم' : 'Done';
+
+      // 8. User Profile Modal Sheet
+      const profTitle = document.getElementById('profileSheetTitle');
+      if (profTitle) profTitle.textContent = isAr ? 'الحساب والملف الشخصي' : 'Account & Profile';
+      const profVerif = document.getElementById('profileVerifiedBadge');
+      if (profVerif) profVerif.textContent = isAr ? 'موثق' : 'Verified';
+      const profSub = document.getElementById('profileSheetSub');
+      if (profSub) profSub.textContent = isAr ? 'إدارة الأمان والحدود وتفضيلات المحفظة' : 'Manage personal security, limits & wallet preferences';
+      const profTier = document.getElementById('profileTierBadge');
+      if (profTier) profTier.textContent = isAr ? 'الفئة السوداء' : 'BLACK TIER';
+      const profNetWorth = document.getElementById('profileNetWorthLabel');
+      if (profNetWorth) profNetWorth.textContent = isAr ? 'صافي الثروة' : 'Total Net Worth';
+      const profActiveCards = document.getElementById('profileActiveCardsLabel');
+      if (profActiveCards) profActiveCards.textContent = isAr ? 'البطاقات النشطة' : 'Active Cards';
+      const profCardsCount = document.getElementById('profileCardsCountBadge');
+      if (profCardsCount) profCardsCount.textContent = isAr ? '٢ بطاقات' : '2 Cards';
+      const profSafety = document.getElementById('profileSafetyScoreLabel');
+      if (profSafety) profSafety.textContent = isAr ? 'مؤشر الأمان' : 'Safety Score';
+
+      const profContact = document.getElementById('profileContactHeading');
+      if (profContact) profContact.textContent = isAr ? 'الاتصال والإقامة' : 'Contact & Residency';
+      const profEmail = document.getElementById('profileEmailLabel');
+      if (profEmail) profEmail.textContent = isAr ? 'البريد الإلكتروني' : 'Email';
+      const profPhone = document.getElementById('profilePhoneLabel');
+      if (profPhone) profPhone.textContent = isAr ? 'رقم الهاتف المتحرك' : 'Mobile Phone';
+      const profRes = document.getElementById('profileResidencyLabel');
+      if (profRes) profRes.textContent = isAr ? 'مكان الإقامة' : 'Residency';
+      const profResVal = document.getElementById('profileResidencyVal');
+      if (profResVal) profResVal.textContent = isAr ? 'دبي، الإمارات العربية المتحدة' : 'Dubai, United Arab Emirates';
+
+      const profSec = document.getElementById('profileSecurityHeading');
+      if (profSec) profSec.textContent = isAr ? 'الأمان والقياسات الحيوية' : 'Security & Biometrics';
+      const profFaceId = document.getElementById('profileFaceIdTitle');
+      if (profFaceId) profFaceId.textContent = isAr ? 'تسجيل الدخول بالبصمة البيومترية' : 'Apple Face ID Login';
+      const profFaceIdSub = document.getElementById('profileFaceIdSub');
+      if (profFaceIdSub) profFaceIdSub.textContent = isAr ? 'مصادقة Face ID لفتح سريع وآمن' : 'Biometric authentication for rapid unlocks';
+      const profSecKey = document.getElementById('profileSecretKeyTitle');
+      if (profSecKey) profSecKey.textContent = isAr ? 'رمز الأمان السري (٦ أرقام)' : '6-Digit Secret Key';
+      const profSecKeySub = document.getElementById('profileSecretKeySub');
+      if (profSecKeySub) profSecKeySub.textContent = isAr ? 'رمز مرور عالي الأمان للدفع' : 'High-security payment passcode';
+      const profSecKeyMan = document.getElementById('profileSecretKeyManage');
+      if (profSecKeyMan) profSecKeyMan.textContent = isAr ? 'إدارة' : 'Manage';
+
+      const profLang = document.getElementById('profileLangTitle');
+      if (profLang) profLang.textContent = isAr ? 'اللغة / Language' : 'Language / اللغة';
+      const profLimits = document.getElementById('profileLimitsHeading');
+      if (profLimits) profLimits.textContent = isAr ? 'حدود المعاملات البنكية' : 'Banking Limits';
+      const profDailyCap = document.getElementById('profileDailyCapLabel');
+      if (profDailyCap) profDailyCap.textContent = isAr ? 'سقف التحويل اليومي' : 'Daily Transfer Cap';
+      const profMonthLimit = document.getElementById('profileMonthlyLimitLabel');
+      if (profMonthLimit) profMonthLimit.textContent = isAr ? 'الحد الشهري للإنفاق' : 'Monthly Spending Limit';
+      const profStatement = document.getElementById('profileStatementBtnLabel');
+      if (profStatement) {
+        const svg = profStatement.querySelector('svg');
+        profStatement.textContent = isAr ? 'تحميل كشف الحساب الرسمي (PDF) ' : 'Download Official Statement (PDF) ';
+        if (svg) profStatement.prepend(svg);
+      }
+      const profSignOut = document.getElementById('profileSignOutBtn');
+      if (profSignOut) {
+        const svg = profSignOut.querySelector('svg');
+        profSignOut.textContent = isAr ? 'تسجيل الخروج من كاش ليب' : 'Sign Out of Cashleap';
+        if (svg) profSignOut.prepend(svg);
+      }
+
+      // 9. Transfer Funds Modal Sheet
+      const trTitle = document.getElementById('transferSheetTitle');
+      if (trTitle) trTitle.textContent = isAr ? 'تحويل الأموال' : 'Transfer Funds';
+      const trSub = document.getElementById('transferSheetSub');
+      if (trSub) trSub.textContent = isAr ? 'تحويل فوري بدون أي رسوم بين حساباتك' : 'Instant zero-fee transfer between your accounts';
+      const trFromHead = document.getElementById('transferFromHeader');
+      if (trFromHead) trFromHead.textContent = isAr ? 'من الحساب' : 'From Source';
+      const trToHead = document.getElementById('transferToHeader');
+      if (trToHead) trToHead.textContent = isAr ? 'إلى الحساب' : 'To Destination';
+      const trInstantBadge = document.getElementById('transferInstantCreditBadge');
+      if (trInstantBadge) trInstantBadge.textContent = isAr ? 'إيداع فوري' : 'Instant Credit';
+      const trAmtLabel = document.getElementById('transferAmountLabel');
+      if (trAmtLabel) trAmtLabel.textContent = isAr ? 'مبلغ التحويل' : 'Transfer Amount';
+      const trNoFee = document.getElementById('transferNoFeeBadge');
+      if (trNoFee) trNoFee.textContent = isAr ? 'بدون أي رسوم تحويل' : 'No Transfer Fee';
+      const trConfirm = document.getElementById('transferConfirmBtn');
+      if (trConfirm) {
+        const svg = trConfirm.querySelector('svg');
+        trConfirm.textContent = isAr ? 'تأكيد التحويل الفوري' : 'Confirm Instant Transfer';
+        if (svg) trConfirm.prepend(svg);
+      }
+
+      // 10. Send Money Sheet Modal
+      const sendTitle = document.getElementById('sendMoneyModalTitle');
+      if (sendTitle) sendTitle.textContent = isAr ? 'إرسال الأموال' : 'Send Money';
+      const sendSub = document.getElementById('sendMoneyModalSub');
+      if (sendSub) sendSub.textContent = isAr ? 'أرسل لمستخدمي كاش ليب (@leaptag) أو رقم الآيبان' : 'Send to Cashleap users (@leaptag) or bank IBAN';
+      const sendSearchInp = document.getElementById('sendSheetSearchInput');
+      if (sendSearchInp) sendSearchInp.placeholder = isAr ? 'ابحث بالمعرف @leaptag، الاسم، أو الآيبان...' : 'Search @leaptag, Cashleap user, or IBAN...';
+      const sendAddNew = document.getElementById('sendSheetAddNewText');
+      if (sendAddNew) sendAddNew.textContent = isAr ? 'إضافة جديد' : 'Add New';
+      const sendAmtTitle = document.getElementById('sendTransferAmtTitle');
+      if (sendAmtTitle) sendAmtTitle.textContent = isAr ? 'مبلغ التحويل' : 'Transfer Amount';
+      const sendNoteInp = document.getElementById('sendMoneyNoteInput');
+      if (sendNoteInp) sendNoteInp.placeholder = isAr ? 'أضف ملاحظة (مثلاً: مشاركة عشاء، إيجار، هدية)...' : 'Add a note (e.g. Dinner split, rent, gift)...';
+      const sendSlider = document.getElementById('sendSliderLabel');
+      if (sendSlider) sendSlider.textContent = isAr ? 'اسحب أو اضغط للإرسال الفوري' : 'Slide or Tap to Send Instantly';
+
+      // 11. Digital Brand Vouchers
+      const vouchTitle = document.getElementById('vouchersSheetTitle');
+      if (vouchTitle) vouchTitle.textContent = isAr ? 'قسائم الماركات الرقمية' : 'Digital Brand Vouchers';
+      const vouchSub = document.getElementById('vouchersSheetSub');
+      if (vouchSub) vouchSub.textContent = isAr ? 'تفعيل فوري • رسوم معالجة 0.00 د.إ' : 'Instant activation • 0.00 AED processing fee';
+
+      // 12. Global Currency Symbol Swap (AED <-> د.إ)
+      switchDomCurrency(isAr);
+    }
+
     function setAppLanguage(lang) {
       if (typeof playHapticTick === 'function') playHapticTick();
       currentAppLanguage = lang;
@@ -8895,6 +9247,9 @@
       if (profileLangSub) {
         profileLangSub.textContent = isAr ? 'اللغة العربية مفعلة للواجهة' : 'Switch between English & Arabic';
       }
+
+      // Apply Global Bilingual Translation to all screens, bottom sheets, and badges
+      applyGlobalTranslations(isAr);
 
       if (isAr) {
         triggerDynamicIsland('تغيير اللغة', 'تم التبديل إلى العربية (Arabic)', '<span class="text-xs text-blue-400 font-bold">ع</span>');
