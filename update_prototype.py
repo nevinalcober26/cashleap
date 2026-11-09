@@ -840,7 +840,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ========================================== -->
     <!-- SCREEN 2: CHOOSE LOGIN TYPE                -->
     <!-- ========================================== -->
-    <div id="loginScreen" class="screen-layer login-bg screen-hidden-right flex flex-col justify-between pt-12 pb-7 px-6">
+    <div id="loginScreen" class="screen-layer login-bg screen-hidden-right flex flex-col justify-between pt-16 pb-7 px-6">
       <div>
         <div class="px-1">
           <h1 class="text-[28px] font-bold tracking-[-0.02em] text-white leading-tight">
@@ -938,7 +938,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ========================================== -->
     <!-- SCREEN 3: FACE ID SCREEN                   -->
     <!-- ========================================== -->
-    <div id="faceidScreen" class="screen-layer auth-bg screen-hidden-right flex flex-col justify-between pt-6 pb-8 px-6">
+    <div id="faceidScreen" class="screen-layer auth-bg screen-hidden-right flex flex-col justify-between pt-9 pb-8 px-6">
       <div class="flex items-center justify-between">
         <button 
           onclick="showScreen('login')" 
@@ -1039,7 +1039,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ========================================== -->
     <!-- SCREEN 4: SECRET KEY SCREEN                -->
     <!-- ========================================== -->
-    <div id="secretkeyScreen" class="screen-layer auth-bg screen-hidden-right flex flex-col justify-between pt-6 pb-6 px-6">
+    <div id="secretkeyScreen" class="screen-layer auth-bg screen-hidden-right flex flex-col justify-between pt-9 pb-6 px-6">
       <div class="flex items-center justify-between">
         <button 
           onclick="showScreen('login')" 
@@ -1150,7 +1150,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ========================================== -->
     <!-- SCREEN 5: WELCOME SCREEN (Clean & Auto)   -->
     <!-- ========================================== -->
-    <div id="welcomeScreen" onclick="showScreen('home')" class="screen-layer welcome-bg screen-hidden-right flex flex-col justify-between pt-12 pb-8 px-6 cursor-pointer">
+    <div id="welcomeScreen" onclick="showScreen('home')" class="screen-layer welcome-bg screen-hidden-right flex flex-col justify-between pt-16 pb-8 px-6 cursor-pointer">
       <div class="flex flex-col items-center justify-center my-auto relative">
         <div id="welcomeRingsContainer" class="relative flex items-center justify-center mb-6">
           <div class="absolute concentric-ripple-1"></div>
@@ -1191,7 +1191,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ========================================== -->
     <!-- SCREEN 6: HOME SCREEN                      -->
     <!-- ========================================== -->
-    <div id="homeScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden">
+    <div id="homeScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden">
       
       <!-- Upper Section: Header, Draggable Card Carousel, Quick Actions -->
       <div id="homeTopSection" class="w-full px-0 pt-1 pb-2 select-none">
@@ -1399,7 +1399,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="recentTransactionsSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(356px);"
+        style="top: 54px; transform: translateY(356px);"
       >
         <!-- Liquid Glass Specular Top Highlight -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -1568,7 +1568,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 7: CARD DETAILS (MATCHING UPLOADED IMAGE)         -->
     <!-- ======================================================== -->
-    <div id="cardDetailScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-5 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="cardDetailScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <div class="flex-1 overflow-y-auto px-5 pb-28 scrollbar-none">
       <!-- Top Bar: Circular Glass Back Button & Circular Glass Settings Gear -->
@@ -1787,7 +1787,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 8: STATISTICS / MY EXPENSES (APPLE BOTTOMSHEET)     -->
     <!-- ======================================================== -->
-    <div id="statisticsScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="statisticsScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <!-- Upper Section: Header Capsule, Headline, Chart Card (padded px-4) -->
       <div id="statsTopSection" class="w-full px-4 pt-1 select-none flex-shrink-0">
@@ -1952,7 +1952,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="statsCategoriesSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(338px);"
+        style="top: 54px; transform: translateY(338px);"
       >
         <!-- Liquid Glass Specular Top Highlight Line -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -2099,7 +2099,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 9: FINANCE HUB (CONSISTENT HOMESCREEN & STATS THEME)-->
     <!-- ======================================================== -->
-    <div id="financeScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="financeScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <!-- Upper Section: Capsule Header, Portfolio Card, Quick Actions -->
       <div id="financeTopSection" class="w-full px-4 pt-1 select-none flex-shrink-0">
@@ -2254,7 +2254,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="financeBottomSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(325px);"
+        style="top: 54px; transform: translateY(325px);"
       >
         <!-- Liquid Glass Specular Top Highlight Line -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -2393,7 +2393,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 10: WALLET FEATURES & SERVICES (MOBILE WALLET HUB)  -->
     <!-- ======================================================== -->
-    <div id="othersScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="othersScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <!-- Upper Section: Capsule Header, Apple Wallet Pass Hero, Quick Actions -->
       <div id="othersTopSection" class="w-full px-4 pt-1 select-none flex-shrink-0">
@@ -2543,7 +2543,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="othersBottomSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(325px);"
+        style="top: 54px; transform: translateY(325px);"
       >
         <!-- Liquid Glass Specular Top Highlight Line -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -2720,7 +2720,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 11: SAVINGS VAULTS SCREEN FLOW                    -->
     <!-- ======================================================== -->
-    <div id="vaultScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="vaultScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <!-- Upper Section: Capsule Header, Title, Total Vault Hero Card & Quick Actions -->
       <div id="vaultTopSection" class="w-full px-4 pt-1 select-none flex-shrink-0">
@@ -2860,7 +2860,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="vaultGoalsSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(338px);"
+        style="top: 54px; transform: translateY(338px);"
       >
         <!-- Liquid Glass Specular Top Highlight Line -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -2977,7 +2977,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <!-- SCREEN 12: SEND MONEY & BENEFICIARIES SCREEN FLOW        -->
     <!-- ======================================================== -->
-    <div id="sendMoneyScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none text-white">
+    <div id="sendMoneyScreen" class="screen-layer home-bg screen-hidden-right flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none text-white">
       
       <!-- Upper Section: Capsule Header, Title, Cashleap User Lookup Card & Quick Actions -->
       <div id="sendMoneyTopSection" class="w-full px-4 pt-1 select-none flex-shrink-0">
@@ -3183,7 +3183,7 @@ html_content = f"""<!DOCTYPE html>
       <div 
         id="sendBeneficiariesSheet" 
         class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
-        style="top: 38px; transform: translateY(338px);"
+        style="top: 54px; transform: translateY(338px);"
       >
         <!-- Liquid Glass Specular Top Highlight Line -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -5456,7 +5456,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- ======================================================== -->
     <div 
       id="tabSkeletonOverlay" 
-      class="absolute inset-0 home-bg z-[38] flex flex-col justify-between pt-4 pb-0 px-0 overflow-hidden select-none pointer-events-none opacity-0"
+      class="absolute inset-0 home-bg z-[38] flex flex-col justify-between pt-8 pb-0 px-0 overflow-hidden select-none pointer-events-none opacity-0"
       aria-hidden="true"
     >
       <!-- Upper Section Skeleton -->
