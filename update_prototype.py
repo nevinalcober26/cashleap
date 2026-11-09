@@ -4154,28 +4154,28 @@ html_content = f"""<!DOCTYPE html>
     <!-- MODAL: SEND MONEY & BENEFICIARIES SHEET    -->
     <!-- ========================================== -->
     <div id="sendMoneyModal" onclick="if(event.target === this) closeQuickActionModal('send')" class="absolute inset-0 apple-sheet-backdrop z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-      <div id="sendMoneySheet" class="liquid-glass-sheet relative overflow-hidden w-full max-h-[91%] rounded-t-[34px] px-5 pt-3.5 pb-6 text-white transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col">
+      <div id="sendMoneySheet" class="liquid-glass-sheet relative overflow-hidden w-full max-h-[92%] rounded-t-[34px] px-6 pt-4 pb-7 text-white transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col">
         <!-- Liquid Glass Specular Top Highlight -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-white/[0.05] via-transparent to-transparent pointer-events-none"></div>
 
-        <!-- Sheet Drag Handle & Clean Header (No X button, No header chips) -->
-        <div class="flex flex-col items-center mb-3 flex-shrink-0">
-          <div class="w-11 h-1.5 bg-white/30 hover:bg-white/50 rounded-full mb-3 cursor-pointer transition-colors" onclick="closeQuickActionModal('send')"></div>
+        <!-- Sheet Drag Handle & Clean Header -->
+        <div class="flex flex-col items-center mb-4 flex-shrink-0">
+          <div class="w-11 h-1.5 bg-white/30 hover:bg-white/50 rounded-full mb-3.5 cursor-pointer transition-colors" onclick="closeQuickActionModal('send')"></div>
           <div class="w-full">
-            <h3 class="text-[18px] font-bold tracking-tight text-white">Send Money</h3>
-            <p class="text-[11.5px] text-[#9d93b8] mt-0.5">Send to Cashleap users (@leaptag) or bank IBAN</p>
+            <h3 class="text-[19px] font-bold tracking-tight text-white leading-tight">Send Money</h3>
+            <p class="text-[12px] text-[#9d93b8] mt-1">Send to Cashleap users (@leaptag) or bank IBAN</p>
           </div>
         </div>
 
-        <!-- Scrollable Sheet Body -->
-        <div class="overflow-y-auto flex-1 space-y-3 scrollbar-none pr-0.5">
+        <!-- Scrollable Sheet Body with Generous Premium Spacing -->
+        <div class="overflow-y-auto flex-1 space-y-4 scrollbar-none pr-0.5">
 
           <!-- Cashleap Users & Beneficiaries Quick Strip + Search -->
-          <div class="rounded-2xl bg-white/[0.035] border border-white/10 p-3">
+          <div class="rounded-[22px] bg-white/[0.035] border border-white/10 p-4">
             <!-- Search Input -->
-            <div class="relative flex items-center mb-2.5">
-              <svg class="w-3.5 h-3.5 text-[#9e94b8] absolute left-3 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="relative flex items-center mb-3.5">
+              <svg class="w-4 h-4 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
@@ -4184,150 +4184,150 @@ html_content = f"""<!DOCTYPE html>
                 id="sendSheetSearchInput" 
                 oninput="filterSendSheetBeneficiaries(this.value)" 
                 placeholder="Search @leaptag, Cashleap user, or IBAN..." 
-                class="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-[11.5px] text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
               />
             </div>
 
-            <!-- Horizontal Cashleap Users Avatar Strip (No Directory Link) -->
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-[#9e94b8]">Cashleap Users & Saved (<span id="sendSheetCountBadge">5</span>)</span>
+            <!-- Horizontal Cashleap Users Avatar Strip -->
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-[10.5px] font-semibold uppercase tracking-wider text-[#9e94b8]">Cashleap Users & Saved (<span id="sendSheetCountBadge">5</span>)</span>
             </div>
 
-            <div id="sendSheetAvatarsRow" class="flex items-center gap-3 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
+            <div id="sendSheetAvatarsRow" class="flex items-center gap-3.5 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
               <!-- + Add New Beneficiary -->
-              <div onclick="openAddBeneficiaryModal('cashleap')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
-                <div class="w-10 h-10 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-dashed border-blue-400/60 flex items-center justify-center text-blue-400 transition">
+              <div onclick="openAddBeneficiaryModal('cashleap')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
+                <div class="w-11 h-11 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-dashed border-blue-400/60 flex items-center justify-center text-blue-400 transition">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
                 </div>
-                <span class="text-[9.5px] font-semibold text-blue-300">Add New</span>
+                <span class="text-[10px] font-semibold text-blue-300">Add New</span>
               </div>
 
               <!-- User 1: Sarah -->
-              <div onclick="selectSheetBeneficiary('sarah')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
+              <div onclick="selectSheetBeneficiary('sarah')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
-                  <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">SJ</div>
+                  <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">SJ</div>
                   <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
-                <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Sarah</span>
+                <span class="text-[10px] text-white/90 font-medium truncate w-11 text-center">Sarah</span>
               </div>
 
               <!-- User 2: Alex -->
-              <div onclick="selectSheetBeneficiary('alex')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
+              <div onclick="selectSheetBeneficiary('alex')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
-                  <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">AR</div>
+                  <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">AR</div>
                   <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
-                <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Alex</span>
+                <span class="text-[10px] text-white/90 font-medium truncate w-11 text-center">Alex</span>
               </div>
 
               <!-- User 3: David -->
-              <div onclick="selectSheetBeneficiary('david')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
+              <div onclick="selectSheetBeneficiary('david')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
-                  <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">DC</div>
+                  <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">DC</div>
                   <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
-                <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">David</span>
+                <span class="text-[10px] text-white/90 font-medium truncate w-11 text-center">David</span>
               </div>
 
               <!-- User 4: Omar -->
-              <div onclick="selectSheetBeneficiary('omar')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
+              <div onclick="selectSheetBeneficiary('omar')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
-                  <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">OM</div>
+                  <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">OM</div>
                   <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
-                <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Omar</span>
+                <span class="text-[10px] text-white/90 font-medium truncate w-11 text-center">Omar</span>
               </div>
 
               <!-- User 5: Elena (IBAN) -->
-              <div onclick="selectSheetBeneficiary('elena')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
+              <div onclick="selectSheetBeneficiary('elena')" class="flex flex-col items-center gap-1.5 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
-                  <div class="w-10 h-10 rounded-full bg-white/[0.08] border border-white/25 flex items-center justify-center text-white font-bold text-xs">ER</div>
+                  <div class="w-11 h-11 rounded-full bg-white/[0.08] border border-white/25 flex items-center justify-center text-white font-bold text-xs">ER</div>
                 </div>
-                <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Elena</span>
+                <span class="text-[10px] text-white/90 font-medium truncate w-11 text-center">Elena</span>
               </div>
             </div>
 
             <!-- Search Filter Results List (Revealed when typing in search) -->
-            <div id="sendSheetBeneficiariesPanel" class="hidden mt-2 pt-2 border-t border-white/10 max-h-[140px] overflow-y-auto divide-y divide-white/[0.06] scrollbar-none">
-              <div data-sheet-ben-search="sarah jenkins @sarah.j +971 50 842 1920" onclick="selectSheetBeneficiary('sarah')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
-                <div class="flex items-center gap-2.5">
+            <div id="sendSheetBeneficiariesPanel" class="hidden mt-3 pt-2.5 border-t border-white/10 max-h-[140px] overflow-y-auto divide-y divide-white/[0.06] scrollbar-none">
+              <div data-sheet-ben-search="sarah jenkins @sarah.j +971 50 842 1920" onclick="selectSheetBeneficiary('sarah')" class="sheet-ben-row py-2.5 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-2 cursor-pointer transition">
+                <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white font-bold text-[10px]">SJ</div>
                   <div class="flex flex-col">
                     <span class="text-xs font-semibold text-white">Sarah Jenkins</span>
-                    <span class="text-[10px] text-[#9e94b8]">@sarah.j • Instant 0.00 AED Fee</span>
+                    <span class="text-[10.5px] text-[#9e94b8]">@sarah.j • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
               </div>
 
-              <div data-sheet-ben-search="alex rivera @alex.r +971 52 391 0488" onclick="selectSheetBeneficiary('alex')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
-                <div class="flex items-center gap-2.5">
+              <div data-sheet-ben-search="alex rivera @alex.r +971 52 391 0488" onclick="selectSheetBeneficiary('alex')" class="sheet-ben-row py-2.5 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-2 cursor-pointer transition">
+                <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-[10px]">AR</div>
                   <div class="flex flex-col">
                     <span class="text-xs font-semibold text-white">Alex Rivera</span>
-                    <span class="text-[10px] text-[#9e94b8]">@alex.r • Instant 0.00 AED Fee</span>
+                    <span class="text-[10.5px] text-[#9e94b8]">@alex.r • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
               </div>
 
-              <div data-sheet-ben-search="david chen @david.c +971 55 901 2341" onclick="selectSheetBeneficiary('david')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
-                <div class="flex items-center gap-2.5">
+              <div data-sheet-ben-search="david chen @david.c +971 55 901 2341" onclick="selectSheetBeneficiary('david')" class="sheet-ben-row py-2.5 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-2 cursor-pointer transition">
+                <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold text-[10px]">DC</div>
                   <div class="flex flex-col">
                     <span class="text-xs font-semibold text-white">David Chen</span>
-                    <span class="text-[10px] text-[#9e94b8]">@david.c • Instant 0.00 AED Fee</span>
+                    <span class="text-[10.5px] text-[#9e94b8]">@david.c • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
               </div>
 
-              <div data-sheet-ben-search="omar al maktoum @omar.m +971 50 112 7789" onclick="selectSheetBeneficiary('omar')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
-                <div class="flex items-center gap-2.5">
+              <div data-sheet-ben-search="omar al maktoum @omar.m +971 50 112 7789" onclick="selectSheetBeneficiary('omar')" class="sheet-ben-row py-2.5 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-2 cursor-pointer transition">
+                <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold text-[10px]">OM</div>
                   <div class="flex flex-col">
                     <span class="text-xs font-semibold text-white">Omar Al Maktoum</span>
-                    <span class="text-[10px] text-[#9e94b8]">@omar.m • Instant 0.00 AED Fee</span>
+                    <span class="text-[10.5px] text-[#9e94b8]">@omar.m • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
               </div>
 
-              <div data-sheet-ben-search="elena rostova emirates nbd ae4202600010158492019" onclick="selectSheetBeneficiary('elena')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
-                <div class="flex items-center gap-2.5">
+              <div data-sheet-ben-search="elena rostova emirates nbd ae4202600010158492019" onclick="selectSheetBeneficiary('elena')" class="sheet-ben-row py-2.5 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-2 cursor-pointer transition">
+                <div class="flex items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-white/[0.08] border border-white/20 flex items-center justify-center text-white font-bold text-[10px]">ER</div>
                   <div class="flex flex-col">
                     <span class="text-xs font-semibold text-white">Elena Rostova</span>
-                    <span class="text-[10px] text-[#9e94b8]">Emirates NBD • AE42 •••• 2019</span>
+                    <span class="text-[10.5px] text-[#9e94b8]">Emirates NBD • AE42 •••• 2019</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Clean Selected Recipient Row (No extra chips) -->
-          <div class="p-3 bg-white/[0.04] border border-white/10 rounded-2xl flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div id="sendRecipientAvatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">SJ</div>
-              <div class="flex flex-col">
-                <span id="sendRecipientName" class="text-sm font-bold text-white">Sarah Jenkins</span>
-                <span id="sendRecipientHandle" class="text-[11px] text-[#9d93b8]">@sarah.j • Instant 0.00 AED Fee</span>
-                <span id="sendRecipientBadge" class="hidden">Cashleap</span>
+          <!-- Spacious Selected Recipient Card -->
+          <div class="px-4 py-3.5 bg-white/[0.045] border border-white/10 rounded-[20px] flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div id="sendRecipientAvatar" class="w-11 h-11 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">SJ</div>
+              <div class="flex flex-col gap-0.5 min-w-0">
+                <span id="sendRecipientName" class="text-[15px] font-bold text-white tracking-tight leading-snug truncate">Sarah Jenkins</span>
+                <span id="sendRecipientHandle" class="text-[11.5px] text-[#9d93b8] leading-snug truncate">@sarah.j • Instant 0.00 AED Fee</span>
               </div>
             </div>
+            <span id="sendRecipientBadge" class="flex-shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300">Cashleap</span>
           </div>
 
-          <!-- Amount Input (Clean, No Preset Chips) -->
+          <!-- Amount Input -->
           <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-[11px] font-semibold text-[#9e94b8]">Transfer Amount</label>
-              <span class="text-[10.5px] text-emerald-400 font-medium">Avail: 3,350.60 AED</span>
+            <div class="flex items-center justify-between mb-2 px-0.5">
+              <label class="text-[11.5px] font-semibold text-[#9e94b8]">Transfer Amount</label>
+              <span class="text-[11px] text-emerald-400 font-semibold">Avail: 3,350.60 AED</span>
             </div>
             <div class="relative flex items-center">
               <input 
                 type="number" 
                 id="sendMoneyAmountInput" 
                 value="150.00" 
-                class="w-full bg-white/[0.05] border border-white/15 rounded-2xl px-4 py-3 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
+                class="w-full bg-white/[0.05] border border-white/15 rounded-[20px] px-4 py-3.5 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
               />
               <span class="absolute right-4 text-xs font-bold text-[#9e94b8]">AED</span>
             </div>
@@ -4339,7 +4339,7 @@ html_content = f"""<!DOCTYPE html>
               type="text" 
               id="sendMoneyNoteInput" 
               placeholder="Add a note (e.g. Dinner split, rent, gift)..." 
-              class="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition" 
+              class="w-full bg-white/[0.04] border border-white/10 rounded-[18px] px-4 py-3 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition" 
             />
           </div>
 
@@ -7986,7 +7986,7 @@ html_content = f"""<!DOCTYPE html>
         badge: 'Cashleap',
         handle: '@sarah.j • Instant 0.00 AED Fee',
         sub: '@sarah.j • +971 50 842 1920',
-        avatarClass: 'w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }},
       alex: {{
         name: 'Alex Rivera',
@@ -7995,7 +7995,7 @@ html_content = f"""<!DOCTYPE html>
         badge: 'Cashleap',
         handle: '@alex.r • Instant 0.00 AED Fee',
         sub: '@alex.r • +971 52 391 0488',
-        avatarClass: 'w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }},
       david: {{
         name: 'David Chen',
@@ -8004,7 +8004,7 @@ html_content = f"""<!DOCTYPE html>
         badge: 'Cashleap',
         handle: '@david.c • Instant 0.00 AED Fee',
         sub: '@david.c • +971 55 901 2341',
-        avatarClass: 'w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }},
       omar: {{
         name: 'Omar Al Maktoum',
@@ -8013,7 +8013,7 @@ html_content = f"""<!DOCTYPE html>
         badge: 'Cashleap',
         handle: '@omar.m • Instant 0.00 AED Fee',
         sub: '@omar.m • +971 50 112 7789',
-        avatarClass: 'w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }},
       elena: {{
         name: 'Elena Rostova',
@@ -8022,7 +8022,7 @@ html_content = f"""<!DOCTYPE html>
         badge: 'IBAN',
         handle: 'Emirates NBD • AE42 •••• 2019',
         sub: 'Emirates NBD • AE42 •••• 2019',
-        avatarClass: 'w-10 h-10 rounded-full bg-white/[0.08] border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-white/[0.08] border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }}
     }};
 
@@ -8096,8 +8096,8 @@ html_content = f"""<!DOCTYPE html>
       if (badgeEl) {{
         badgeEl.textContent = ben.badge;
         badgeEl.className = (ben.type === 'cashleap')
-          ? 'text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-blue-500/20 border border-blue-400/30 text-blue-300'
-          : 'text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-white/10 border border-white/15 text-[#9e94b8]';
+          ? 'flex-shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300'
+          : 'flex-shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[#9e94b8]';
       }}
       if (handleEl) handleEl.textContent = ben.handle;
 
@@ -8306,7 +8306,7 @@ html_content = f"""<!DOCTYPE html>
         badge: isCashleap ? 'Cashleap' : 'IBAN',
         handle: isCashleap ? ('@' + cleanTag + ' • Instant 0.00 AED Fee') : (selectedBenBankName + ' • AE07 •••• ' + last4),
         sub: isCashleap ? ('@' + cleanTag + ' • Verified Cashleap User') : (selectedBenBankName + ' • AE07 •••• ' + last4),
-        avatarClass: 'w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
+        avatarClass: 'w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0'
       }};
 
       // 1. Add to horizontal Quick Cashleap Avatars Strip
