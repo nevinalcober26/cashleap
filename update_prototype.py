@@ -271,6 +271,27 @@ html_content = f"""<!DOCTYPE html>
       box-shadow: none;
     }}
 
+    /* Animated Slide to Send Shimmer & Thumb Pulse */
+    @keyframes slideSendShimmer {{
+      0% {{ background-position: 200% center; }}
+      100% {{ background-position: -200% center; }}
+    }}
+    @keyframes slideSendThumbNudge {{
+      0%, 100% {{ transform: translateX(0px) scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45); }}
+      50% {{ transform: translateX(5px) scale(1.03); box-shadow: 0 0 18px 2px rgba(59, 130, 246, 0.45); }}
+    }}
+    .slide-send-label {{
+      background: linear-gradient(90deg, rgba(255,255,255,0.65) 0%, #ffffff 45%, #93c5fd 50%, #ffffff 55%, rgba(255,255,255,0.65) 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideSendShimmer 2.6s linear infinite;
+    }}
+    .slide-send-thumb-idle {{
+      animation: slideSendThumbNudge 2.1s ease-in-out infinite;
+    }}
+
     /* Face ID Scanner Visuals */
     .faceid-frame {{
       width: 176px;
@@ -4135,26 +4156,12 @@ html_content = f"""<!DOCTYPE html>
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-white/[0.05] via-transparent to-transparent pointer-events-none"></div>
 
-        <!-- Sheet Drag Handle & Header -->
-        <div class="flex flex-col items-center mb-2.5 flex-shrink-0">
-          <div class="w-11 h-1.5 bg-white/30 hover:bg-white/50 rounded-full mb-2.5 cursor-pointer transition-colors" onclick="closeQuickActionModal('send')"></div>
-          <div class="flex items-center justify-between w-full">
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-[17px] font-bold tracking-tight text-white">Send Money</h3>
-                <span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">0.00 AED Fee</span>
-              </div>
-              <p class="text-[11px] text-[#9d93b8]">Send to Cashleap users (@leaptag) or bank IBAN</p>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <button type="button" onclick="openAddBeneficiaryModal('cashleap')" class="px-2.5 py-1.5 rounded-full bg-blue-600/25 hover:bg-blue-600/35 border border-blue-400/40 text-[10.5px] font-semibold text-blue-300 transition cursor-pointer flex items-center gap-1 apple-press">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span>Add Beneficiary</span>
-              </button>
-              <button onclick="closeQuickActionModal('send')" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center text-slate-300 text-xs transition cursor-pointer apple-press">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </button>
-            </div>
+        <!-- Sheet Drag Handle & Clean Header (No X button, No header chips) -->
+        <div class="flex flex-col items-center mb-3 flex-shrink-0">
+          <div class="w-11 h-1.5 bg-white/30 hover:bg-white/50 rounded-full mb-3 cursor-pointer transition-colors" onclick="closeQuickActionModal('send')"></div>
+          <div class="w-full">
+            <h3 class="text-[18px] font-bold tracking-tight text-white">Send Money</h3>
+            <p class="text-[11.5px] text-[#9d93b8] mt-0.5">Send to Cashleap users (@leaptag) or bank IBAN</p>
           </div>
         </div>
 
@@ -4178,15 +4185,12 @@ html_content = f"""<!DOCTYPE html>
               />
             </div>
 
-            <!-- Horizontal Cashleap Users Avatar Strip -->
-            <div class="flex items-center justify-between mb-1.5">
+            <!-- Horizontal Cashleap Users Avatar Strip (No Directory Link) -->
+            <div class="flex items-center justify-between mb-2">
               <span class="text-[10px] font-semibold uppercase tracking-wider text-[#9e94b8]">Cashleap Users & Saved (<span id="sendSheetCountBadge">5</span>)</span>
-              <button type="button" onclick="toggleSendSheetBeneficiariesList()" id="sendSheetBrowseToggleBtn" class="text-[10.5px] font-semibold text-blue-400 hover:text-blue-300 transition cursor-pointer">
-                Directory ▾
-              </button>
             </div>
 
-            <div id="sendSheetAvatarsRow" class="flex items-center gap-2.5 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
+            <div id="sendSheetAvatarsRow" class="flex items-center gap-3 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
               <!-- + Add New Beneficiary -->
               <div onclick="openAddBeneficiaryModal('cashleap')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
                 <div class="w-10 h-10 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-dashed border-blue-400/60 flex items-center justify-center text-blue-400 transition">
@@ -4202,9 +4206,7 @@ html_content = f"""<!DOCTYPE html>
               <div onclick="selectSheetBeneficiary('sarah')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
                   <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">SJ</div>
-                  <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#141033] flex items-center justify-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </span>
+                  <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
                 <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Sarah</span>
               </div>
@@ -4213,9 +4215,7 @@ html_content = f"""<!DOCTYPE html>
               <div onclick="selectSheetBeneficiary('alex')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
                   <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">AR</div>
-                  <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#141033] flex items-center justify-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </span>
+                  <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
                 <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Alex</span>
               </div>
@@ -4224,9 +4224,7 @@ html_content = f"""<!DOCTYPE html>
               <div onclick="selectSheetBeneficiary('david')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
                   <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">DC</div>
-                  <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#141033] flex items-center justify-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </span>
+                  <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
                 <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">David</span>
               </div>
@@ -4235,9 +4233,7 @@ html_content = f"""<!DOCTYPE html>
               <div onclick="selectSheetBeneficiary('omar')" class="flex flex-col items-center gap-1 cursor-pointer apple-press flex-shrink-0">
                 <div class="relative">
                   <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">OM</div>
-                  <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#141033] flex items-center justify-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  </span>
+                  <span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>
                 </div>
                 <span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">Omar</span>
               </div>
@@ -4251,102 +4247,86 @@ html_content = f"""<!DOCTYPE html>
               </div>
             </div>
 
-            <!-- Expandable Inline Saved Beneficiaries Directory List -->
-            <div id="sendSheetBeneficiariesPanel" class="hidden mt-2 pt-2 border-t border-white/10 max-h-[150px] overflow-y-auto divide-y divide-white/[0.06] scrollbar-none">
+            <!-- Search Filter Results List (Revealed when typing in search) -->
+            <div id="sendSheetBeneficiariesPanel" class="hidden mt-2 pt-2 border-t border-white/10 max-h-[140px] overflow-y-auto divide-y divide-white/[0.06] scrollbar-none">
               <div data-sheet-ben-search="sarah jenkins @sarah.j +971 50 842 1920" onclick="selectSheetBeneficiary('sarah')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white font-bold text-[10px]">SJ</div>
                   <div class="flex flex-col">
-                    <span class="text-xs font-semibold text-white">Sarah Jenkins <span class="text-[9px] text-blue-300 font-bold ml-1">Cashleap</span></span>
+                    <span class="text-xs font-semibold text-white">Sarah Jenkins</span>
                     <span class="text-[10px] text-[#9e94b8]">@sarah.j • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
-                <span class="text-[10.5px] font-semibold text-blue-400">Select</span>
               </div>
 
               <div data-sheet-ben-search="alex rivera @alex.r +971 52 391 0488" onclick="selectSheetBeneficiary('alex')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-[10px]">AR</div>
                   <div class="flex flex-col">
-                    <span class="text-xs font-semibold text-white">Alex Rivera <span class="text-[9px] text-blue-300 font-bold ml-1">Cashleap</span></span>
+                    <span class="text-xs font-semibold text-white">Alex Rivera</span>
                     <span class="text-[10px] text-[#9e94b8]">@alex.r • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
-                <span class="text-[10.5px] font-semibold text-blue-400">Select</span>
               </div>
 
               <div data-sheet-ben-search="david chen @david.c +971 55 901 2341" onclick="selectSheetBeneficiary('david')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold text-[10px]">DC</div>
                   <div class="flex flex-col">
-                    <span class="text-xs font-semibold text-white">David Chen <span class="text-[9px] text-blue-300 font-bold ml-1">Cashleap</span></span>
+                    <span class="text-xs font-semibold text-white">David Chen</span>
                     <span class="text-[10px] text-[#9e94b8]">@david.c • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
-                <span class="text-[10.5px] font-semibold text-blue-400">Select</span>
               </div>
 
               <div data-sheet-ben-search="omar al maktoum @omar.m +971 50 112 7789" onclick="selectSheetBeneficiary('omar')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold text-[10px]">OM</div>
                   <div class="flex flex-col">
-                    <span class="text-xs font-semibold text-white">Omar Al Maktoum <span class="text-[9px] text-blue-300 font-bold ml-1">Cashleap</span></span>
+                    <span class="text-xs font-semibold text-white">Omar Al Maktoum</span>
                     <span class="text-[10px] text-[#9e94b8]">@omar.m • Instant 0.00 AED Fee</span>
                   </div>
                 </div>
-                <span class="text-[10.5px] font-semibold text-blue-400">Select</span>
               </div>
 
               <div data-sheet-ben-search="elena rostova emirates nbd ae4202600010158492019" onclick="selectSheetBeneficiary('elena')" class="sheet-ben-row py-2 flex items-center justify-between hover:bg-white/[0.04] rounded-lg px-1.5 cursor-pointer transition">
                 <div class="flex items-center gap-2.5">
                   <div class="w-8 h-8 rounded-full bg-white/[0.08] border border-white/20 flex items-center justify-center text-white font-bold text-[10px]">ER</div>
                   <div class="flex flex-col">
-                    <span class="text-xs font-semibold text-white">Elena Rostova <span class="text-[9px] text-[#9e94b8] font-bold ml-1">IBAN</span></span>
+                    <span class="text-xs font-semibold text-white">Elena Rostova</span>
                     <span class="text-[10px] text-[#9e94b8]">Emirates NBD • AE42 •••• 2019</span>
                   </div>
                 </div>
-                <span class="text-[10.5px] font-semibold text-blue-400">Select</span>
               </div>
             </div>
           </div>
 
-          <!-- Active Recipient Card with @leaptag & Instant Badge -->
+          <!-- Clean Selected Recipient Row (No extra chips) -->
           <div class="p-3 bg-white/[0.04] border border-white/10 rounded-2xl flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div id="sendRecipientAvatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">SJ</div>
               <div class="flex flex-col">
-                <div class="flex items-center gap-1.5">
-                  <span id="sendRecipientName" class="text-sm font-bold text-white">Sarah Jenkins</span>
-                  <span id="sendRecipientBadge" class="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded bg-blue-500/20 border border-blue-400/30 text-blue-300">Cashleap</span>
-                </div>
+                <span id="sendRecipientName" class="text-sm font-bold text-white">Sarah Jenkins</span>
                 <span id="sendRecipientHandle" class="text-[11px] text-[#9d93b8]">@sarah.j • Instant 0.00 AED Fee</span>
+                <span id="sendRecipientBadge" class="hidden">Cashleap</span>
               </div>
             </div>
-            <button type="button" onclick="openAddBeneficiaryModal('iban')" class="text-[10.5px] font-semibold text-blue-400 hover:text-blue-300 transition cursor-pointer">
-              + Bank IBAN
-            </button>
           </div>
 
-          <!-- Amount Input + Preset Chips -->
+          <!-- Amount Input (Clean, No Preset Chips) -->
           <div>
-            <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center justify-between mb-1.5">
               <label class="text-[11px] font-semibold text-[#9e94b8]">Transfer Amount</label>
               <span class="text-[10.5px] text-emerald-400 font-medium">Avail: 3,350.60 AED</span>
             </div>
-            <div class="relative flex items-center mb-2">
+            <div class="relative flex items-center">
               <input 
                 type="number" 
                 id="sendMoneyAmountInput" 
                 value="150.00" 
-                class="w-full bg-white/[0.05] border border-white/15 rounded-2xl px-4 py-2.5 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
+                class="w-full bg-white/[0.05] border border-white/15 rounded-2xl px-4 py-3 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
               />
               <span class="absolute right-4 text-xs font-bold text-[#9e94b8]">AED</span>
-            </div>
-            <div class="grid grid-cols-4 gap-2">
-              <button type="button" onclick="setSendMoneyPreset('50.00')" class="py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-semibold text-slate-300 transition cursor-pointer">50 AED</button>
-              <button type="button" onclick="setSendMoneyPreset('150.00')" class="py-1.5 rounded-lg bg-blue-600/25 border border-blue-500/60 text-[11px] font-semibold text-white transition cursor-pointer">150 AED</button>
-              <button type="button" onclick="setSendMoneyPreset('500.00')" class="py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-semibold text-slate-300 transition cursor-pointer">500 AED</button>
-              <button type="button" onclick="setSendMoneyPreset('1000.00')" class="py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-semibold text-slate-300 transition cursor-pointer">1,000 AED</button>
             </div>
           </div>
 
@@ -4356,22 +4336,30 @@ html_content = f"""<!DOCTYPE html>
               type="text" 
               id="sendMoneyNoteInput" 
               placeholder="Add a note (e.g. Dinner split, rent, gift)..." 
-              class="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition" 
+              class="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition" 
             />
           </div>
 
-          <!-- Apple Slide to Send Interactive Slider (Supports both Drag & Tap) -->
-          <div class="pt-0.5">
-            <div id="sendSliderTrack" onclick="executeSendMoneyTransfer()" class="relative w-full h-[52px] rounded-full bg-white/[0.08] border border-white/15 overflow-hidden flex items-center px-1.5 select-none cursor-pointer">
-              <div id="sendSliderProgress" class="absolute left-0 top-0 bottom-0 bg-blue-600/40 w-0 pointer-events-none transition-all duration-75"></div>
+          <!-- Animated "Slide to send" Interactive Slider -->
+          <div class="pt-1">
+            <div id="sendSliderTrack" onclick="completeSendSlideAnimation()" class="relative w-full h-[58px] rounded-full bg-[#110e2e]/90 border border-white/15 overflow-hidden flex items-center justify-between px-1.5 select-none cursor-pointer">
+              <div id="sendSliderProgress" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-blue-600/50 to-indigo-500/40 w-0 pointer-events-none transition-all duration-150"></div>
+              <div id="sendSliderThumb" class="slide-send-thumb-idle w-11 h-11 rounded-full bg-gradient-to-r from-[#2d82ff] to-[#4f46e5] text-white flex items-center justify-center cursor-grab active:cursor-grabbing z-20 transition-transform duration-200 apple-press">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6"/>
+                </svg>
+              </div>
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <span id="sendSliderLabel" class="text-xs font-semibold text-white/90 tracking-wide flex items-center gap-1.5">
-                  <span>Slide or Tap to Send Instantly</span>
-                  <svg class="w-3.5 h-3.5 text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <span id="sendSliderLabel" class="slide-send-label text-[14px] font-semibold tracking-wide">
+                  Slide to send
                 </span>
               </div>
-              <div id="sendSliderThumb" class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center cursor-grab active:cursor-grabbing z-10 transition-transform duration-75 apple-press">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              <div id="sendSliderChevrons" class="flex items-center pr-4 pointer-events-none z-10 transition-opacity duration-200">
+                <svg width="24" height="16" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path class="chevron-1" d="M2 2L9 9L2 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path class="chevron-2" d="M10 2L17 9L10 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path class="chevron-3" d="M18 2L25 9L18 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
             </div>
           </div>
@@ -8378,7 +8366,7 @@ html_content = f"""<!DOCTYPE html>
         sItem.innerHTML =
           '<div class="relative">' +
             '<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 border border-white/25 flex items-center justify-center text-white font-bold text-xs">' + initials + '</div>' +
-            (isCashleap ? '<span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#141033] flex items-center justify-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>' : '') +
+            (isCashleap ? '<span class="absolute -bottom-0.5 -right-0.5 z-20 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#161233]"></span>' : '') +
           '</div>' +
           '<span class="text-[9.5px] text-white/90 font-medium truncate w-11 text-center">' + firstName + '</span>';
         sheetAvatars.insertBefore(sItem, sheetAvatars.children[1] || null);
@@ -8394,11 +8382,10 @@ html_content = f"""<!DOCTYPE html>
           '<div class="flex items-center gap-2.5">' +
             '<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-[10px]">' + initials + '</div>' +
             '<div class="flex flex-col">' +
-              '<span class="text-xs font-semibold text-white">' + fullName + ' <span class="text-[9px] ' + (isCashleap ? 'text-blue-300' : 'text-[#9e94b8]') + ' font-bold ml-1">' + (isCashleap ? 'Cashleap' : 'IBAN') + '</span></span>' +
+              '<span class="text-xs font-semibold text-white">' + fullName + '</span>' +
               '<span class="text-[10px] text-[#9e94b8]">' + beneficiariesDirectory[key].handle + '</span>' +
             '</div>' +
-          '</div>' +
-          '<span class="text-[10.5px] font-semibold text-blue-400">Select</span>';
+          '</div>';
         sheetPanel.insertBefore(sRow, sheetPanel.firstChild);
       }}
 
@@ -8412,48 +8399,86 @@ html_content = f"""<!DOCTYPE html>
       }}, 320);
     }}
 
-    /* Apple Slide to Send Gesture */
+    /* Animated Slide to Send Gesture & Tap Animation */
+    function completeSendSlideAnimation() {{
+      const track = document.getElementById('sendSliderTrack');
+      const thumb = document.getElementById('sendSliderThumb');
+      const progress = document.getElementById('sendSliderProgress');
+      const label = document.getElementById('sendSliderLabel');
+      const chevrons = document.getElementById('sendSliderChevrons');
+      if (!track || !thumb || !progress) {{
+        executeSendMoneyTransfer();
+        return;
+      }}
+      const maxSlide = Math.max(200, (track.offsetWidth || 310) - (thumb.offsetWidth || 44) - 12);
+      thumb.classList.remove('slide-send-thumb-idle');
+      thumb.style.transition = 'transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)';
+      thumb.style.transform = 'translateX(' + maxSlide + 'px)';
+      progress.style.width = '100%';
+      if (label) label.style.opacity = '0';
+      if (chevrons) chevrons.style.opacity = '0';
+
+      setTimeout(() => {{
+        thumb.style.transition = 'none';
+        thumb.style.transform = 'translateX(0px)';
+        thumb.classList.add('slide-send-thumb-idle');
+        progress.style.width = '0px';
+        if (label) label.style.opacity = '1';
+        if (chevrons) chevrons.style.opacity = '1';
+        executeSendMoneyTransfer();
+      }}, 260);
+    }}
+
     function initSendSlider() {{
       const track = document.getElementById('sendSliderTrack');
       const thumb = document.getElementById('sendSliderThumb');
       const progress = document.getElementById('sendSliderProgress');
+      const label = document.getElementById('sendSliderLabel');
+      const chevrons = document.getElementById('sendSliderChevrons');
       if (!track || !thumb || !progress) return;
 
       let isDragging = false;
       let startX = 0;
       let maxSlide = 0;
+      let hasMoved = false;
 
       function onDown(e) {{
+        e.stopPropagation();
         isDragging = true;
+        hasMoved = false;
         startX = e.touches ? e.touches[0].clientX : e.clientX;
-        maxSlide = track.offsetWidth - thumb.offsetWidth - 12;
+        maxSlide = Math.max(180, (track.offsetWidth || 310) - (thumb.offsetWidth || 44) - 12);
+        thumb.classList.remove('slide-send-thumb-idle');
+        thumb.style.transition = 'none';
       }}
 
       function onMove(e) {{
         if (!isDragging) return;
         const currentX = e.touches ? e.touches[0].clientX : e.clientX;
         const delta = Math.max(0, Math.min(currentX - startX, maxSlide));
+        if (delta > 4) hasMoved = true;
         thumb.style.transform = `translateX(${{delta}}px)`;
-        progress.style.width = `${{delta + 20}}px`;
+        progress.style.width = `${{delta + 24}}px`;
+        const ratio = maxSlide > 0 ? (delta / maxSlide) : 0;
+        if (label) label.style.opacity = String(Math.max(0, 1 - ratio * 1.6));
+        if (chevrons) chevrons.style.opacity = String(Math.max(0.1, 1 - ratio));
       }}
 
       function onUp(e) {{
         if (!isDragging) return;
         isDragging = false;
-        const currentX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const currentX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : e.clientX;
         const delta = currentX - startX;
-        if (delta >= maxSlide * 0.65) {{
-          thumb.style.transform = 'translateX(' + maxSlide + 'px)';
-          progress.style.width = '100%';
-          setTimeout(() => {{
-            thumb.style.transform = 'translateX(0px)';
-            progress.style.width = '0px';
-            executeSendMoneyTransfer();
-          }}, 220);
+        if (!hasMoved || delta >= maxSlide * 0.45) {{
+          completeSendSlideAnimation();
         }} else {{
           playHapticTick();
+          thumb.style.transition = 'transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)';
           thumb.style.transform = 'translateX(0px)';
+          setTimeout(() => thumb.classList.add('slide-send-thumb-idle'), 260);
           progress.style.width = '0px';
+          if (label) label.style.opacity = '1';
+          if (chevrons) chevrons.style.opacity = '1';
         }}
       }}
 
