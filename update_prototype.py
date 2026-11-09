@@ -749,18 +749,13 @@ html_content = f"""<!DOCTYPE html>
   <!-- Mobile Device Viewport (Frameless Mobile View) -->
   <div class="phone-frame" id="phoneFrame">
 
-    <!-- Persistent iOS Status Bar with Interactive Apple Dynamic Island -->
-    <div class="absolute top-0 inset-x-0 h-11 px-6 flex items-center justify-between z-40 pointer-events-none text-white select-none">
-      <div class="flex items-center gap-1.5 pointer-events-auto">
-        <span class="text-[13px] font-semibold tracking-tight leading-none">19:02</span>
-      </div>
-
-      <!-- Interactive Apple Dynamic Island Capsule -->
+    <!-- Floating Notification Capsule (Hidden when idle; Time & Signal Bar Removed) -->
+    <div class="absolute top-0 inset-x-0 h-11 px-6 flex items-center justify-center z-40 pointer-events-none text-white select-none">
       <div 
         id="dynamicIsland" 
         onclick="onDynamicIslandTap()"
-        class="dynamic-island-container absolute top-2 left-1/2 -translate-x-1/2 bg-black border border-white/10 rounded-full h-[28px] w-[98px] flex items-center justify-between px-2.5 pointer-events-auto cursor-pointer shadow-sm z-50 overflow-hidden"
-        title="Dynamic Island"
+        class="dynamic-island-container absolute top-2 left-1/2 -translate-x-1/2 bg-black border border-white/10 rounded-full h-[28px] w-[98px] flex items-center justify-between px-2.5 pointer-events-none opacity-0 cursor-pointer shadow-sm z-50 overflow-hidden transition-opacity duration-300"
+        title="Notification"
       >
         <div id="islandContentLeft" class="flex items-center gap-2 overflow-hidden">
           <div id="islandIconDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 flex-shrink-0 animate-pulse"></div>
@@ -772,17 +767,6 @@ html_content = f"""<!DOCTYPE html>
             <div class="w-1 h-1 rounded-full bg-blue-400/80"></div>
           </div>
         </div>
-      </div>
-
-      <div class="flex items-center gap-2 pointer-events-auto">
-        <svg width="15" height="11" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 9.4C8.75 9.4 9.35 10 9.35 10.75C9.35 11.5 8.75 12.1 8 12.1C7.25 12.1 6.65 11.5 6.65 10.75C6.65 10 7.25 9.4 8 9.4ZM4.25 7.45C6.35 5.65 9.65 5.65 11.75 7.45L10.55 8.75C9.1 7.5 6.9 7.5 5.45 8.75L4.25 7.45ZM1.5 4.7C5.15 1.5 10.85 1.5 14.5 4.7L13.3 6C10.3 3.4 5.7 3.4 2.7 6L1.5 4.7Z" fill="white"/>
-        </svg>
-        <svg width="24" height="12" viewBox="0 0 25 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0.5" y="1" width="21" height="10" rx="2.5" stroke="white" stroke-opacity="0.45" stroke-width="1"/>
-          <rect x="2" y="2.5" width="14.5" height="7" rx="1.3" fill="white"/>
-          <path d="M23 4.2V7.8C23.8 7.4 24.3 6.75 24.3 6C24.3 5.25 23.8 4.6 23 4.2Z" fill="white" fill-opacity="0.45"/>
-        </svg>
       </div>
     </div>
 
@@ -7641,7 +7625,8 @@ html_content = f"""<!DOCTYPE html>
       const iconDot = document.getElementById('islandIconDot');
       if (!island) return;
 
-      island.classList.add('dynamic-island-expanded');
+      island.classList.remove('opacity-0');
+      island.classList.add('dynamic-island-expanded', 'opacity-100');
       titleEl.textContent = title;
       titleEl.classList.remove('hidden');
       subEl.textContent = sub;
@@ -7653,7 +7638,8 @@ html_content = f"""<!DOCTYPE html>
       }}
 
       dynamicIslandTimer = setTimeout(() => {{
-        island.classList.remove('dynamic-island-expanded');
+        island.classList.remove('dynamic-island-expanded', 'opacity-100');
+        island.classList.add('opacity-0');
         titleEl.classList.add('hidden');
         subEl.textContent = 'AED';
         subEl.className = 'text-[9.5px] font-mono font-medium text-emerald-400';
