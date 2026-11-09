@@ -506,6 +506,9 @@ html_content = f"""<!DOCTYPE html>
     /* Screen 6: Vibrant Credit Card Styling matching Image 2 */
     .debit-card-gradient {{
       background: linear-gradient(108deg, #f7aa11 0%, #f14f52 46%, #4947d5 82%, #3a47d8 100%);
+      background-origin: border-box;
+      background-clip: border-box;
+      background-repeat: no-repeat;
       box-shadow: none;
     }}
 
@@ -2409,10 +2412,7 @@ html_content = f"""<!DOCTYPE html>
         </div>
 
         <!-- Apple Wallet Pass & Contactless Hero Card (Colorful Gradient Matching Home Card) -->
-        <div class="w-full rounded-[24px] debit-card-gradient border border-white/20 p-4 relative overflow-hidden mb-2">
-          <!-- Subtle Top Specular Glint -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/[0.14] via-transparent to-black/15 pointer-events-none"></div>
-
+        <div class="w-full rounded-[28px] debit-card-gradient p-5 relative overflow-hidden mb-2">
           <div class="relative z-10 flex items-start justify-between mb-3.5">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-2xl bg-black/25 backdrop-blur-md border border-white/25 flex items-center justify-center text-white flex-shrink-0">
