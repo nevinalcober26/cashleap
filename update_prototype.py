@@ -1739,6 +1739,40 @@ html_content = f"""<!DOCTYPE html>
           </svg>
         </div>
 
+        <!-- Row 3: Language Change / Switcher (Arabic <-> English) -->
+        <div id="cardLangRow" class="flex items-center justify-between px-4 py-3.5 hover:bg-white/[0.04] transition select-none">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-slate-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <div class="flex flex-col">
+              <span id="cdLangLabel" class="text-[14px] font-medium text-white leading-tight">Language</span>
+              <span id="cdLangSub" class="text-[11px] text-[#9e94b8] mt-0.5">English • العربية</span>
+            </div>
+          </div>
+          <!-- Segmented Arabic / English Switcher Pill -->
+          <div class="flex items-center p-0.5 rounded-full bg-white/[0.08] border border-white/10 backdrop-blur-md">
+            <button 
+              type="button" 
+              id="langBtnEn" 
+              onclick="setAppLanguage('en')" 
+              class="px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm"
+            >
+              English
+            </button>
+            <button 
+              type="button" 
+              id="langBtnAr" 
+              onclick="setAppLanguage('ar')" 
+              class="px-2.5 py-1 rounded-full text-[11px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer"
+            >
+              العربية
+            </button>
+          </div>
+        </div>
+
       </div>
       </div>
 
@@ -4981,6 +5015,31 @@ html_content = f"""<!DOCTYPE html>
                 <span class="text-[10px] text-[#9e94b8]">High-security payment passcode</span>
               </div>
               <button onclick="triggerProfilePasscodeChange()" class="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer">Manage</button>
+            </div>
+
+            <div class="flex items-center justify-between py-1 border-t border-white/[0.06]">
+              <div class="flex flex-col">
+                <span class="text-xs font-semibold text-white">Language / اللغة</span>
+                <span id="profileLangSub" class="text-[10px] text-[#9e94b8]">Switch between English & Arabic</span>
+              </div>
+              <div class="flex items-center p-0.5 rounded-full bg-white/[0.08] border border-white/10">
+                <button 
+                  type="button" 
+                  id="profileLangBtnEn" 
+                  onclick="setAppLanguage('en')" 
+                  class="px-2 py-0.5 rounded-full text-[10px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm"
+                >
+                  EN
+                </button>
+                <button 
+                  type="button" 
+                  id="profileLangBtnAr" 
+                  onclick="setAppLanguage('ar')" 
+                  class="px-2 py-0.5 rounded-full text-[10px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer"
+                >
+                  عربي
+                </button>
+              </div>
             </div>
           </div>
 
@@ -8800,9 +8859,66 @@ html_content = f"""<!DOCTYPE html>
       setTimeout(() => setSheetExpanded(true), 350);
     }}
 
+    let currentAppLanguage = 'en'; // 'en' or 'ar'
+    function setAppLanguage(lang) {{
+      if (typeof playHapticTick === 'function') playHapticTick();
+      currentAppLanguage = lang;
+      const isAr = (lang === 'ar');
+
+      // Update Card Detail Segmented Buttons
+      const btnEn = document.getElementById('langBtnEn');
+      const btnAr = document.getElementById('langBtnAr');
+      if (btnEn && btnAr) {{
+        if (isAr) {{
+          btnAr.className = 'px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm';
+          btnEn.className = 'px-2.5 py-1 rounded-full text-[11px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer';
+        }} else {{
+          btnEn.className = 'px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm';
+          btnAr.className = 'px-2.5 py-1 rounded-full text-[11px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer';
+        }}
+      }}
+
+      // Update Profile Segmented Buttons
+      const pBtnEn = document.getElementById('profileLangBtnEn');
+      const pBtnAr = document.getElementById('profileLangBtnAr');
+      if (pBtnEn && pBtnAr) {{
+        if (isAr) {{
+          pBtnAr.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm';
+          pBtnEn.className = 'px-2 py-0.5 rounded-full text-[10px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer';
+        }} else {{
+          pBtnEn.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold transition-all cursor-pointer bg-blue-600 text-white shadow-sm';
+          pBtnAr.className = 'px-2 py-0.5 rounded-full text-[10px] font-medium text-[#9e94b8] hover:text-white transition-all cursor-pointer';
+        }}
+      }}
+
+      // Update Labels
+      const cdLangSub = document.getElementById('cdLangSub');
+      if (cdLangSub) {{
+        cdLangSub.textContent = isAr ? 'اللغة العربية مفعلة' : 'English • العربية';
+      }}
+      const profileLangSub = document.getElementById('profileLangSub');
+      if (profileLangSub) {{
+        profileLangSub.textContent = isAr ? 'اللغة العربية مفعلة للواجهة' : 'Switch between English & Arabic';
+      }}
+
+      if (isAr) {{
+        triggerDynamicIsland('تغيير اللغة', 'تم التبديل إلى العربية (Arabic)', '<span class="text-xs text-blue-400 font-bold">ع</span>');
+        showToast('تم تحويل لغة التطبيق إلى العربية بنجاح');
+      }} else {{
+        triggerDynamicIsland('Language Changed', 'Switched to English (UAE)', '<span class="text-xs text-blue-400 font-bold">EN</span>');
+        showToast('App language switched to English');
+      }}
+    }}
+
     function openCardSettingsAction() {{
       playHapticTick();
-      triggerDynamicIsland('Card Controls', 'Limits & Biometrics Active');
+      const row = document.getElementById('cardLangRow');
+      if (row) {{
+        row.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
+        row.classList.add('bg-white/[0.08]');
+        setTimeout(() => row.classList.remove('bg-white/[0.08]'), 800);
+      }}
+      triggerDynamicIsland('Card Controls', 'Language: ' + (currentAppLanguage === 'ar' ? 'العربية' : 'English'));
     }}
 
     /* Card Selection Sheet Controls */
