@@ -6,7 +6,7 @@ with open('card2_b64.txt') as f:
     card2_b64 = f.read().strip()
 
 html_content = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,6 +30,28 @@ html_content = f"""<!DOCTYPE html>
     .lang-arabic [dir="ltr"] {{
       direction: ltr;
       unicode-bidi: isolate;
+    }}
+    .lang-arabic input.font-mono {{
+      text-align: start;
+    }}
+    .lang-arabic svg.rtl-flip {{
+      transform: scaleX(-1);
+    }}
+    .lang-arabic #secretkeyScreen .grid.grid-cols-3,
+    .lang-arabic #cardCarouselContainer,
+    .lang-arabic #statsChartArea,
+    .lang-arabic #statsDaysRow,
+    .lang-arabic #profileFaceIdToggle {{
+      direction: ltr;
+    }}
+    .lang-arabic [id^="card-item-"],
+    .lang-arabic #newCardPreview {{
+      direction: rtl;
+      text-align: right;
+    }}
+    .lang-arabic [id^="card"][id$="-active-badge"] {{
+      right: auto !important;
+      left: 1rem !important;
     }}
 
     body {{
@@ -292,6 +314,10 @@ html_content = f"""<!DOCTYPE html>
       0%, 100% {{ transform: translateX(0px) scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45); }}
       50% {{ transform: translateX(5px) scale(1.03); box-shadow: 0 0 18px 2px rgba(59, 130, 246, 0.45); }}
     }}
+    @keyframes slideSendThumbNudgeRtl {{
+      0%, 100% {{ transform: translateX(0px) scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45); }}
+      50% {{ transform: translateX(-5px) scale(1.03); box-shadow: 0 0 18px 2px rgba(59, 130, 246, 0.45); }}
+    }}
     .slide-send-label {{
       background: linear-gradient(90deg, rgba(255,255,255,0.65) 0%, #ffffff 45%, #93c5fd 50%, #ffffff 55%, rgba(255,255,255,0.65) 100%);
       background-size: 220% auto;
@@ -302,6 +328,9 @@ html_content = f"""<!DOCTYPE html>
     }}
     .slide-send-thumb-idle {{
       animation: slideSendThumbNudge 2.1s ease-in-out infinite;
+    }}
+    .lang-arabic .slide-send-thumb-idle {{
+      animation: slideSendThumbNudgeRtl 2.1s ease-in-out infinite;
     }}
 
     /* Face ID Scanner Visuals */
@@ -798,7 +827,7 @@ html_content = f"""<!DOCTYPE html>
 <body class="p-0 m-0">
 
   <!-- Mobile Device Viewport (Frameless Mobile View) -->
-  <div class="phone-frame" id="phoneFrame">
+  <div class="phone-frame" id="phoneFrame" dir="ltr">
 
     <!-- Floating Notification Capsule (Hidden when idle; Time & Signal Bar Removed) -->
     <div class="absolute top-0 inset-x-0 h-11 px-6 flex items-center justify-center z-40 pointer-events-none text-white select-none">
@@ -929,15 +958,15 @@ html_content = f"""<!DOCTYPE html>
             class="slider-thumb flex items-center justify-center text-white z-20 cursor-grab active:cursor-grabbing focus:outline-none select-none"
             style="touch-action: none; -webkit-user-select: none;"
           >
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="pointer-events-none">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="pointer-events-none rtl-flip">
               <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <span id="sliderLabel" class="absolute left-1/2 -translate-x-1/2 text-[16px] font-medium text-white/95 tracking-wide pointer-events-none transition-opacity duration-200">
             Next
           </span>
-          <div id="sliderChevrons" class="flex items-center pr-6 pointer-events-none transition-opacity duration-200">
-            <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div id="sliderChevrons" class="flex items-center pe-6 pointer-events-none transition-opacity duration-200">
+            <svg class="rtl-flip" width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path class="chevron-1" d="M2 2L9 9L2 16" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
               <path class="chevron-2" d="M10 2L17 9L10 16" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
               <path class="chevron-3" d="M18 2L25 9L18 16" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -957,7 +986,7 @@ html_content = f"""<!DOCTYPE html>
           class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/15 active:scale-95 flex items-center justify-center text-white border border-white/10 transition cursor-pointer"
           title="Back to Login Type"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <svg class="w-5 h-5 rtl-flip" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -1040,7 +1069,7 @@ html_content = f"""<!DOCTYPE html>
             class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer flex items-center gap-1 transition"
           >
             <span>Use Secret Key</span>
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <svg class="w-3 h-3 rtl-flip" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -1058,7 +1087,7 @@ html_content = f"""<!DOCTYPE html>
           class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/15 active:scale-95 flex items-center justify-center text-white border border-white/10 transition cursor-pointer"
           title="Back to Login Type"
         >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <svg class="w-5 h-5 rtl-flip" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -1591,7 +1620,7 @@ html_content = f"""<!DOCTYPE html>
           class="w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/[0.14] active:scale-95 border border-white/15 backdrop-blur-md flex items-center justify-center text-white/90 transition cursor-pointer apple-press shadow-sm"
           title="Back to Home Dashboard"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="rtl-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
@@ -1614,7 +1643,7 @@ html_content = f"""<!DOCTYPE html>
         <span id="cdBalanceLabel" class="text-[13px] font-medium text-[#9e94b8] tracking-tight mb-1">Current Balance</span>
         <div class="flex items-baseline justify-center">
           <span id="cdCurrentBalance" class="text-[42px] font-extrabold text-white tracking-tight leading-none">3,350.60</span>
-          <span class="currency-label text-xs font-bold text-white/85 ml-1.5 self-end mb-1">AED</span>
+          <span class="currency-label text-xs font-bold text-white/85 ms-1.5 self-end mb-1">AED</span>
         </div>
       </div>
 
@@ -1649,7 +1678,7 @@ html_content = f"""<!DOCTYPE html>
           </div>
           <div class="flex items-center gap-2">
             <span id="cdCashback" class="text-[14px] font-bold text-[#ff2a6d] tracking-tight">200.00 AED</span>
-            <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </div>
@@ -1667,7 +1696,7 @@ html_content = f"""<!DOCTYPE html>
             </svg>
             <span id="cdStatementsLabel" class="text-[14px] font-medium text-white">Statements</span>
           </div>
-          <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </div>
@@ -1681,7 +1710,7 @@ html_content = f"""<!DOCTYPE html>
             </svg>
             <span id="cdCustomizeLabel" class="text-[14px] font-medium text-white">Customize Card</span>
           </div>
-          <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </div>
@@ -1708,7 +1737,7 @@ html_content = f"""<!DOCTYPE html>
             </svg>
             <span id="cdFreezeLabel" class="text-[14px] font-medium text-white">Freeze my Account</span>
           </div>
-          <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </div>
@@ -1728,7 +1757,7 @@ html_content = f"""<!DOCTYPE html>
             </svg>
             <span id="cdAppleWalletLabel" class="text-[14px] font-medium text-white">Add Apple Wallet</span>
           </div>
-          <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </div>
@@ -1746,7 +1775,7 @@ html_content = f"""<!DOCTYPE html>
             </svg>
             <span id="cdTransactionsLabel" class="text-[14px] font-medium text-white">Transactions</span>
           </div>
-          <svg class="w-4 h-4 text-white/40 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="w-4 h-4 text-white/40 flex-shrink-0 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </div>
@@ -1868,7 +1897,7 @@ html_content = f"""<!DOCTYPE html>
               <span id="statsBalanceLabel" class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Current Balance</span>
               <div class="flex items-baseline">
                 <span id="statsBalanceAmount" class="text-[23px] font-extrabold text-white tracking-tight leading-none">3,350.60</span>
-                <span class="currency-label text-[11px] font-bold text-white/70 ml-1 leading-none">AED</span>
+                <span class="currency-label text-[11px] font-bold text-white/70 ms-1 leading-none">AED</span>
               </div>
             </div>
 
@@ -1885,7 +1914,7 @@ html_content = f"""<!DOCTYPE html>
           </div>
 
           <!-- The Spline Area SVG Chart -->
-          <div class="relative w-full h-[120px] select-none">
+          <div id="statsChartArea" class="relative w-full h-[120px] select-none">
             <!-- Floating Tooltip Badge on Chart -->
             <div id="statsChartBadge" class="absolute z-10 transition-all duration-300 pointer-events-none transform -translate-x-1/2 -translate-y-full" style="left: 208px; top: 24px;">
               <span id="statsBadgeText" class="text-[12px] font-bold text-white tracking-tight drop-shadow-md">3,350.60 AED</span>
@@ -2190,7 +2219,7 @@ html_content = f"""<!DOCTYPE html>
           <span id="financeNetWorthLabel" class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Total Portfolio & Net Worth</span>
           <div class="flex items-baseline">
             <span id="financeTotalNetWorth" class="text-[26px] font-extrabold text-white tracking-tight">23,901.20</span>
-            <span class="currency-label text-[12px] font-bold text-white/80 ml-1">AED</span>
+            <span class="currency-label text-[12px] font-bold text-white/80 ms-1">AED</span>
           </div>
 
           <div class="w-full h-[1px] bg-white/[0.07] my-3"></div>
@@ -2203,7 +2232,7 @@ html_content = f"""<!DOCTYPE html>
             <div onclick="showScreen('vault')" class="cursor-pointer group rounded-xl p-1 -m-1 hover:bg-white/[0.04] transition" title="Open Savings Vaults">
               <span class="text-[10.5px] text-[#9e94b8] group-hover:text-white font-medium flex items-center gap-1 transition">
                 <span id="financeVaultsLabel">Locked Vaults</span>
-                <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+                <svg class="w-3 h-3 text-blue-400 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
               </span>
               <span id="financeVaultsBal" class="text-[14.5px] font-bold text-white tracking-tight block mt-0.5">18,400.00 AED</span>
             </div>
@@ -2746,7 +2775,7 @@ html_content = f"""<!DOCTYPE html>
               class="w-8 h-8 rounded-full bg-white/[0.07] hover:bg-white/[0.14] active:scale-95 border border-white/10 flex items-center justify-center text-white transition cursor-pointer apple-press"
               title="Back to Finance"
             >
-              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4 text-white rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 18l-6-6 6-6"/>
               </svg>
             </button>
@@ -2793,10 +2822,10 @@ html_content = f"""<!DOCTYPE html>
               <span class="text-[10.5px] font-medium text-[#9e94b8] tracking-tight block mb-0.5">Total Vault Balance</span>
               <div class="flex items-baseline">
                 <span id="vaultTotalBalance" class="text-[26px] font-extrabold text-white tracking-tight">18,400.00</span>
-                <span class="text-[12px] font-bold text-white/80 ml-1">AED</span>
+                <span class="text-[12px] font-bold text-white/80 ms-1">AED</span>
               </div>
             </div>
-            <div class="text-right">
+            <div class="text-end">
               <span class="text-[10px] text-[#9e94b8] font-medium block">Yield Earned YTD</span>
               <span id="vaultTotalYield" class="text-[13px] font-bold text-emerald-400 tracking-tight">+742.50 AED</span>
             </div>
@@ -3003,7 +3032,7 @@ html_content = f"""<!DOCTYPE html>
               class="w-8 h-8 rounded-full bg-white/[0.07] hover:bg-white/[0.14] active:scale-95 border border-white/10 flex items-center justify-center text-white transition cursor-pointer apple-press"
               title="Back to Home"
             >
-              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4 text-white rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 18l-6-6 6-6"/>
               </svg>
             </button>
@@ -3047,7 +3076,7 @@ html_content = f"""<!DOCTYPE html>
         <div class="w-full rounded-[22px] bg-[#141033]/85 border border-white/[0.08] p-3.5 backdrop-blur-xl relative shadow-lg mb-2">
           <!-- Search Bar for @leaptag, Mobile or IBAN -->
           <div class="relative flex items-center mb-3">
-            <svg class="w-4 h-4 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="w-4 h-4 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -3056,7 +3085,7 @@ html_content = f"""<!DOCTYPE html>
               id="sendBeneficiarySearchInput" 
               oninput="filterSendBeneficiaries(this.value)" 
               placeholder="Search @leaptag, name, phone or IBAN..." 
-              class="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
+              class="w-full bg-white/[0.05] border border-white/10 rounded-xl ps-9 pe-3 py-2 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
             />
           </div>
 
@@ -3254,7 +3283,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[11.5px] font-semibold text-blue-400">Send</span>
-              <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              <svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
           </div>
 
@@ -3277,7 +3306,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[11.5px] font-semibold text-blue-400">Send</span>
-              <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              <svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
           </div>
 
@@ -3300,7 +3329,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[11.5px] font-semibold text-blue-400">Send</span>
-              <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              <svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
           </div>
 
@@ -3323,7 +3352,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[11.5px] font-semibold text-blue-400">Send</span>
-              <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              <svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
           </div>
 
@@ -3341,7 +3370,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-[11.5px] font-semibold text-blue-400">Send</span>
-              <svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+              <svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
           </div>
 
@@ -3398,7 +3427,7 @@ html_content = f"""<!DOCTYPE html>
                   Verified User
                 </span>
               </div>
-              <div class="relative flex items-center">
+              <div class="relative flex items-center" dir="ltr">
                 <span class="absolute left-3.5 text-xs font-bold text-blue-400">@</span>
                 <input 
                   type="text" 
@@ -3484,7 +3513,7 @@ html_content = f"""<!DOCTYPE html>
             </button>
             <button type="button" onclick="confirmAddBeneficiary(true)" class="py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:opacity-95 text-white font-semibold text-xs transition cursor-pointer apple-press shadow-lg flex items-center justify-center gap-1.5">
               <span>Save & Send Now</span>
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg class="w-3.5 h-3.5 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
 
@@ -3562,9 +3591,9 @@ html_content = f"""<!DOCTYPE html>
                   type="number" 
                   id="newVaultTargetInput" 
                   value="8000" 
-                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-3.5 pr-11 py-2.5 text-xs font-mono font-bold text-white focus:outline-none focus:border-blue-500 transition" 
+                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-3.5 pe-11 py-2.5 text-xs font-mono font-bold text-white focus:outline-none focus:border-blue-500 transition" 
                 />
-                <span class="absolute right-3 text-[10px] font-bold text-[#9e94b8]">AED</span>
+                <span class="absolute end-3 text-[10px] font-bold text-[#9e94b8]">AED</span>
               </div>
             </div>
 
@@ -3575,9 +3604,9 @@ html_content = f"""<!DOCTYPE html>
                   type="number" 
                   id="newVaultInitialInput" 
                   value="1000" 
-                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-3.5 pr-11 py-2.5 text-xs font-mono font-bold text-emerald-400 focus:outline-none focus:border-blue-500 transition" 
+                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-3.5 pe-11 py-2.5 text-xs font-mono font-bold text-emerald-400 focus:outline-none focus:border-blue-500 transition" 
                 />
-                <span class="absolute right-3 text-[10px] font-bold text-[#9e94b8]">AED</span>
+                <span class="absolute end-3 text-[10px] font-bold text-[#9e94b8]">AED</span>
               </div>
             </div>
           </div>
@@ -3586,14 +3615,14 @@ html_content = f"""<!DOCTYPE html>
           <div>
             <label class="text-[11px] font-semibold text-[#9e94b8] block mb-1.5">Yield Term & APY</label>
             <div class="grid grid-cols-2 gap-2.5">
-              <button type="button" id="vault-term-flex" onclick="selectVaultTerm('flex')" class="p-2.5 rounded-xl bg-blue-600/20 border border-blue-500/60 text-left transition cursor-pointer">
+              <button type="button" id="vault-term-flex" onclick="selectVaultTerm('flex')" class="p-2.5 rounded-xl bg-blue-600/20 border border-blue-500/60 text-start transition cursor-pointer">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-bold text-white">4.50% APY</span>
                   <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-200">Flexible</span>
                 </div>
                 <span class="text-[10px] text-[#9e94b8] block mt-0.5">Withdraw anytime instantly</span>
               </button>
-              <button type="button" id="vault-term-fixed" onclick="selectVaultTerm('fixed')" class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-left transition cursor-pointer">
+              <button type="button" id="vault-term-fixed" onclick="selectVaultTerm('fixed')" class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-start transition cursor-pointer">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-bold text-emerald-400">5.10% APY</span>
                   <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">90-Day Lock</span>
@@ -3682,7 +3711,7 @@ html_content = f"""<!DOCTYPE html>
             <span id="vaultSelectedNameLabel" class="text-xs font-bold text-white block">Emergency Reserve Vault</span>
             <span id="vaultSelectedApyLabel" class="text-[10.5px] text-emerald-400 font-medium">4.85% APY • Goal: 15,000 AED</span>
           </div>
-          <div class="text-right">
+          <div class="text-end">
             <span class="text-[10px] text-[#9e94b8] block">Current Balance</span>
             <span id="vaultSelectedBalLabel" class="text-sm font-extrabold text-white font-mono">12,000.00 AED</span>
           </div>
@@ -3699,9 +3728,9 @@ html_content = f"""<!DOCTYPE html>
               type="number" 
               id="vaultActionAmountInput" 
               value="500.00" 
-              class="w-full bg-white/[0.05] border border-white/15 rounded-2xl px-4 py-3 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
+              class="w-full bg-white/[0.05] border border-white/15 rounded-2xl ps-4 pe-14 py-3 text-xl font-extrabold font-mono text-white focus:outline-none focus:border-blue-500 transition" 
             />
-            <span class="absolute right-4 text-xs font-bold text-[#9e94b8]">AED</span>
+            <span class="absolute end-4 text-xs font-bold text-[#9e94b8]">AED</span>
           </div>
           <div class="grid grid-cols-4 gap-2">
             <button type="button" onclick="setVaultPresetAmount('100.00')" class="py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-[11px] font-semibold text-slate-300 transition cursor-pointer">+100</button>
@@ -4383,7 +4412,7 @@ html_content = f"""<!DOCTYPE html>
           <div class="rounded-[22px] bg-white/[0.035] border border-white/10 p-4">
             <!-- Search Input -->
             <div class="relative flex items-center mb-3.5">
-              <svg class="w-4 h-4 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
@@ -4392,7 +4421,7 @@ html_content = f"""<!DOCTYPE html>
                 id="sendSheetSearchInput" 
                 oninput="filterSendSheetBeneficiaries(this.value)" 
                 placeholder="Search @leaptag, Cashleap user, or IBAN..." 
-                class="w-full bg-white/[0.05] border border-white/10 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
+                class="w-full bg-white/[0.05] border border-white/10 rounded-xl ps-9 pe-3.5 py-2.5 text-xs text-white placeholder-[#8e8ca8] focus:outline-none focus:border-blue-500 transition"
               />
             </div>
 
@@ -4554,9 +4583,9 @@ html_content = f"""<!DOCTYPE html>
           <!-- Animated "Slide to send" Interactive Slider -->
           <div class="pt-1">
             <div id="sendSliderTrack" onclick="completeSendSlideAnimation()" class="relative w-full h-[58px] rounded-full bg-[#110e2e]/90 border border-white/15 overflow-hidden flex items-center justify-between px-1.5 select-none cursor-pointer">
-              <div id="sendSliderProgress" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-blue-600/50 to-indigo-500/40 w-0 pointer-events-none transition-all duration-150"></div>
+              <div id="sendSliderProgress" class="absolute start-0 top-0 bottom-0 bg-gradient-to-r from-blue-600/50 to-indigo-500/40 w-0 pointer-events-none transition-all duration-150"></div>
               <div id="sendSliderThumb" class="slide-send-thumb-idle w-11 h-11 rounded-full bg-gradient-to-r from-[#2d82ff] to-[#4f46e5] text-white flex items-center justify-center cursor-grab active:cursor-grabbing z-20 transition-transform duration-200 apple-press">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="rtl-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M5 12h14M13 6l6 6-6 6"/>
                 </svg>
               </div>
@@ -4565,8 +4594,8 @@ html_content = f"""<!DOCTYPE html>
                   Slide to send
                 </span>
               </div>
-              <div id="sendSliderChevrons" class="flex items-center pr-4 pointer-events-none z-10 transition-opacity duration-200">
-                <svg width="24" height="16" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div id="sendSliderChevrons" class="flex items-center pe-4 pointer-events-none z-10 transition-opacity duration-200">
+                <svg class="rtl-flip" width="24" height="16" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path class="chevron-1" d="M2 2L9 9L2 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                   <path class="chevron-2" d="M10 2L17 9L10 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                   <path class="chevron-3" d="M18 2L25 9L18 16" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -4820,7 +4849,7 @@ html_content = f"""<!DOCTYPE html>
               </button>
             </div>
             <div class="relative flex items-center">
-              <svg class="w-4 h-4 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
               </svg>
               <input 
@@ -4830,10 +4859,10 @@ html_content = f"""<!DOCTYPE html>
                 maxlength="19"
                 inputmode="numeric"
                 oninput="formatCardNumberInput(this)" 
-                class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-10 pr-10 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-wider transition" 
+                class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-10 pe-10 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-wider transition" 
                 placeholder="0000 0000 0000 0000" 
               />
-              <div class="absolute right-3 flex items-center pointer-events-none">
+              <div class="absolute end-3 flex items-center pointer-events-none">
                 <svg class="w-5 h-3.5" viewBox="0 0 38 24" fill="none">
                   <circle cx="13" cy="12" r="10.5" fill="#EB001B"/>
                   <circle cx="25" cy="12" r="10.5" fill="#F79E1B" fill-opacity="0.95"/>
@@ -4846,7 +4875,7 @@ html_content = f"""<!DOCTYPE html>
           <div>
             <label class="text-[11px] font-semibold text-[#9e94b8] block mb-1">Cardholder Name</label>
             <div class="relative flex items-center">
-              <svg class="w-4 h-4 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="w-4 h-4 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
               </svg>
               <input 
@@ -4854,7 +4883,7 @@ html_content = f"""<!DOCTYPE html>
                 id="newCardNameInput" 
                 value="Marice Cervantes" 
                 oninput="updateNewCardPreview()" 
-                class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-10 pr-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-medium tracking-wide transition" 
+                class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-10 pe-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-medium tracking-wide transition" 
                 placeholder="Name as shown on card" 
               />
             </div>
@@ -4865,7 +4894,7 @@ html_content = f"""<!DOCTYPE html>
             <div>
               <label class="text-[11px] font-semibold text-[#9e94b8] block mb-1">Expiry Date</label>
               <div class="relative flex items-center">
-                <svg class="w-3.5 h-3.5 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-3.5 h-3.5 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
                 </svg>
                 <input 
@@ -4875,7 +4904,7 @@ html_content = f"""<!DOCTYPE html>
                   maxlength="5"
                   inputmode="numeric"
                   oninput="formatCardExpiryInput(this)" 
-                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-9 pr-3 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-wider transition" 
+                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-9 pe-3 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-wider transition" 
                   placeholder="MM/YY" 
                 />
               </div>
@@ -4884,7 +4913,7 @@ html_content = f"""<!DOCTYPE html>
             <div>
               <label class="text-[11px] font-semibold text-[#9e94b8] block mb-1">Security Code (CVV)</label>
               <div class="relative flex items-center">
-                <svg class="w-3.5 h-3.5 text-[#9e94b8] absolute left-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-3.5 h-3.5 text-[#9e94b8] absolute start-3.5 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
                 <input 
@@ -4893,7 +4922,7 @@ html_content = f"""<!DOCTYPE html>
                   value="842" 
                   maxlength="4"
                   inputmode="numeric"
-                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl pl-9 pr-3 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-widest transition" 
+                  class="w-full bg-white/[0.05] border border-white/15 rounded-xl ps-9 pe-3 py-2.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 tracking-widest transition" 
                   placeholder="•••" 
                 />
               </div>
@@ -5205,7 +5234,7 @@ html_content = f"""<!DOCTYPE html>
                     <span id="transferFromSub" class="text-[11px] text-[#9e94b8] mt-0.5">Primary Wallet •••• 0329</span>
                   </div>
                 </div>
-                <div class="text-right">
+                <div class="text-end">
                   <span id="transferFromBalance" class="text-[13px] font-bold text-white">3,350.60 AED</span>
                 </div>
               </div>
@@ -5257,7 +5286,7 @@ html_content = f"""<!DOCTYPE html>
                     <span id="transferToSub" class="text-[11px] text-[#9e94b8] mt-0.5">Secondary Card •••• 0319</span>
                   </div>
                 </div>
-                <div class="text-right">
+                <div class="text-end">
                   <span id="transferToBalance" class="text-[13px] font-bold text-white">2,150.60 AED</span>
                 </div>
               </div>
@@ -6266,11 +6295,12 @@ html_content = f"""<!DOCTYPE html>
       const thumb = document.getElementById('sliderThumb');
       const label = document.getElementById('sliderLabel');
       const chevrons = document.getElementById('sliderChevrons');
+      const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
       sliderMaxSlide = getSliderMax();
 
       if (thumb) {{
         thumb.style.transition = 'transform 0.24s cubic-bezier(0.2, 0.9, 0.3, 1)';
-        thumb.style.transform = 'translateX(' + sliderMaxSlide + 'px)';
+        thumb.style.transform = 'translateX(' + (isRtl ? -sliderMaxSlide : sliderMaxSlide) + 'px)';
       }}
       if (label) {{
         label.style.transition = 'opacity 0.18s ease';
@@ -6300,12 +6330,13 @@ html_content = f"""<!DOCTYPE html>
       function onPointerStart(e) {{
         e.preventDefault();
         e.stopPropagation();
+        const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
         isSliderDragging = true;
         sliderDragMoved = false;
         sliderMaxSlide = getSliderMax();
         thumb.classList.add('dragging');
         thumb.style.transition = 'none';
-        sliderStartX = e.clientX - sliderCurrentX;
+        sliderStartX = e.clientX + (isRtl ? sliderCurrentX : -sliderCurrentX);
 
         if (thumb.setPointerCapture && e.pointerId !== undefined) {{
           try {{ thumb.setPointerCapture(e.pointerId); }} catch(err) {{}}
@@ -6315,10 +6346,11 @@ html_content = f"""<!DOCTYPE html>
       function onPointerMove(e) {{
         if (!isSliderDragging) return;
         e.preventDefault();
-        const delta = e.clientX - sliderStartX;
+        const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
+        const delta = isRtl ? (sliderStartX - e.clientX) : (e.clientX - sliderStartX);
         if (Math.abs(delta - sliderCurrentX) > 3) sliderDragMoved = true;
         sliderCurrentX = Math.max(0, Math.min(delta, sliderMaxSlide));
-        thumb.style.transform = 'translateX(' + sliderCurrentX + 'px)';
+        thumb.style.transform = 'translateX(' + (isRtl ? -sliderCurrentX : sliderCurrentX) + 'px)';
 
         const progress = sliderMaxSlide > 0 ? (sliderCurrentX / sliderMaxSlide) : 0;
         if (label) label.style.opacity = String(Math.max(0, 1 - progress * 1.6));
@@ -7569,12 +7601,12 @@ html_content = f"""<!DOCTYPE html>
       const fixedBtn = document.getElementById('vault-term-fixed');
       if (term === 'flex') {{
         selectedVaultTermRate = '4.50% APY';
-        if (flexBtn) flexBtn.className = 'p-2.5 rounded-xl bg-blue-600/20 border border-blue-500/60 text-left transition cursor-pointer';
-        if (fixedBtn) fixedBtn.className = 'p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-left transition cursor-pointer';
+        if (flexBtn) flexBtn.className = 'p-2.5 rounded-xl bg-blue-600/20 border border-blue-500/60 text-start transition cursor-pointer';
+        if (fixedBtn) fixedBtn.className = 'p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-start transition cursor-pointer';
       }} else {{
         selectedVaultTermRate = '5.10% APY';
-        if (fixedBtn) fixedBtn.className = 'p-2.5 rounded-xl bg-emerald-600/20 border border-emerald-500/60 text-left transition cursor-pointer';
-        if (flexBtn) flexBtn.className = 'p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-left transition cursor-pointer';
+        if (fixedBtn) fixedBtn.className = 'p-2.5 rounded-xl bg-emerald-600/20 border border-emerald-500/60 text-start transition cursor-pointer';
+        if (flexBtn) flexBtn.className = 'p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-start transition cursor-pointer';
       }}
     }}
 
@@ -8713,7 +8745,7 @@ html_content = f"""<!DOCTYPE html>
           '</div>' +
           '<div class="flex items-center gap-2">' +
             '<span class="text-[11.5px] font-semibold text-blue-400" data-i18n-dyn-en="Send">' + t('Send') + '</span>' +
-            '<svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>' +
+            '<svg class="w-4 h-4 text-white/40 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>' +
           '</div>';
         list.insertBefore(row, list.firstChild);
       }}
@@ -8782,10 +8814,11 @@ html_content = f"""<!DOCTYPE html>
         executeSendMoneyTransfer();
         return;
       }}
+      const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
       const maxSlide = Math.max(200, (track.offsetWidth || 310) - (thumb.offsetWidth || 44) - 12);
       thumb.classList.remove('slide-send-thumb-idle');
       thumb.style.transition = 'transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)';
-      thumb.style.transform = 'translateX(' + maxSlide + 'px)';
+      thumb.style.transform = 'translateX(' + (isRtl ? -maxSlide : maxSlide) + 'px)';
       progress.style.width = '100%';
       if (label) label.style.opacity = '0';
       if (chevrons) chevrons.style.opacity = '0';
@@ -8826,10 +8859,12 @@ html_content = f"""<!DOCTYPE html>
 
       function onMove(e) {{
         if (!isDragging) return;
+        const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
         const currentX = e.touches ? e.touches[0].clientX : e.clientX;
-        const delta = Math.max(0, Math.min(currentX - startX, maxSlide));
+        const rawDelta = isRtl ? (startX - currentX) : (currentX - startX);
+        const delta = Math.max(0, Math.min(rawDelta, maxSlide));
         if (delta > 4) hasMoved = true;
-        thumb.style.transform = `translateX(${{delta}}px)`;
+        thumb.style.transform = `translateX(${{isRtl ? -delta : delta}}px)`;
         progress.style.width = `${{delta + 24}}px`;
         const ratio = maxSlide > 0 ? (delta / maxSlide) : 0;
         if (label) label.style.opacity = String(Math.max(0, 1 - ratio * 1.6));
@@ -8839,8 +8874,9 @@ html_content = f"""<!DOCTYPE html>
       function onUp(e) {{
         if (!isDragging) return;
         isDragging = false;
+        const isRtl = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar');
         const currentX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : e.clientX;
-        const delta = currentX - startX;
+        const delta = isRtl ? (startX - currentX) : (currentX - startX);
         if (!hasMoved || delta >= maxSlide * 0.45) {{
           completeSendSlideAnimation();
         }} else {{
@@ -9747,11 +9783,16 @@ html_content = f"""<!DOCTYPE html>
       const appRoot = document.getElementById('phoneFrame') || document.body;
       if (isAr) {{
         appRoot.classList.add('lang-arabic');
+        appRoot.setAttribute('dir', 'rtl');
         document.documentElement.setAttribute('lang', 'ar');
+        document.documentElement.setAttribute('dir', 'rtl');
       }} else {{
         appRoot.classList.remove('lang-arabic');
+        appRoot.setAttribute('dir', 'ltr');
         document.documentElement.setAttribute('lang', 'en');
+        document.documentElement.setAttribute('dir', 'ltr');
       }}
+      if (typeof resetSliderPosition === 'function') resetSliderPosition();
 
       // 1. Walk EVERY text node inside #phoneFrame losslessly using enTextNodeCache & data-i18n-dyn-en
       const walker = document.createTreeWalker(appRoot, NodeFilter.SHOW_TEXT, null, false);
