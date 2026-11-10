@@ -1289,23 +1289,23 @@
         <!-- ======================================================== -->
         <div class="relative w-full overflow-hidden my-1 pt-1 pb-2 px-0 select-none">
           <div class="relative w-full h-[184px] overflow-hidden cursor-grab active:cursor-grabbing" id="cardCarouselContainer">
+            <!-- Fixed Sticky Add Button Pill on Left Edge (Non-scrollable) -->
+            <div id="addCardPillBtn" onclick="openAddCardModal()" class="absolute left-0 top-[3px] z-30 w-7 h-[178px] rounded-r-[20px] bg-[#161136]/85 hover:bg-[#231b54]/95 active:scale-95 border-y border-r border-white/15 backdrop-blur-xl flex items-center justify-center cursor-pointer transition-all apple-press group shadow-lg" title="Add New Card to Wallet">
+              <span class="text-xl font-light text-white/70 group-hover:text-white group-hover:scale-125 transition-all -translate-x-0.5">+</span>
+            </div>
+
             <!-- Carousel Track holding cards side by side -->
-            <div id="cardCarouselTrack" class="flex items-center gap-3 absolute left-0 top-0 transition-transform duration-500 ease-out" style="transform: translateX(-11.5px);">
-              
-              <!-- Card 0 / Add Button Pill on Left (Opens Add New Card Modal) -->
-              <div id="addCardPillBtn" onclick="openAddCardModal()" class="w-8 h-[178px] rounded-r-[22px] bg-white/[0.045] hover:bg-white/[0.1] active:scale-95 border-y border-r border-white/15 backdrop-blur-md flex items-center justify-center cursor-pointer flex-shrink-0 transition-all apple-press group" title="Add New Card to Wallet">
-                <span class="text-xl font-light text-white/60 group-hover:text-white group-hover:scale-125 transition-all -translate-x-0.5">+</span>
-              </div>
+            <div id="cardCarouselTrack" class="flex items-center gap-3 absolute left-0 top-[3px] transition-transform duration-500 ease-out" style="transform: translateX(33px);">
 
               <!-- Card 1: Balance Card (Sunrise Amber/Pink/Blue) -->
-              <div id="card-item-1" onclick="handleCardClick(1)" class="w-[310px] h-[178px] rounded-[28px] debit-card-gradient p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press">
+              <div id="card-item-1" data-card-name="Cashleap Mastercard" data-card-digits="0329" onclick="handleCardClick(1)" class="wallet-card w-[310px] h-[178px] rounded-[28px] debit-card-gradient p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press">
                 <!-- Dynamic Holographic Specular Glint -->
                 <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
 
                 <!-- Active badge (tappable for card details) -->
-                <div id="card1-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(1);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span id="homeCardActiveText">Active</span>
+                <div id="card1-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(1);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer z-10">
+                  <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="homeCardActiveText" data-i18n-dyn-en="Active">Active</span>
                 </div>
 
                 <div>
@@ -1340,20 +1340,15 @@
               </div>
 
               <!-- Card 2: Debit Card (Exact design from uploaded PDF with Mastercard) -->
-              <div id="card-item-2" onclick="handleCardClick(2)" class="w-[310px] h-[178px] rounded-[28px] overflow-hidden relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] bg-[#1a183d] apple-press">
+              <div id="card-item-2" data-card-name="Cashleap Debit Card" data-card-digits="0319" onclick="handleCardClick(2)" class="wallet-card w-[310px] h-[178px] rounded-[28px] overflow-hidden relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] bg-[#1a183d] apple-press">
                 <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
                 <img src="data:image/webp;base64,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" alt="Debit Card" class="w-full h-full object-cover rounded-[28px] select-none pointer-events-none" />
                 
                 <!-- Active badge for Card 2 -->
-                <div id="card2-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(2);" class="absolute top-3.5 right-4 bg-black/40 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 opacity-0 transition-all cursor-pointer">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  Active
+                <div id="card2-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(2);" class="absolute top-3.5 right-4 bg-black/40 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 opacity-0 transition-all cursor-pointer z-10">
+                  <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span data-i18n-dyn-en="Active">Active</span>
                 </div>
-              </div>
-
-              <!-- Card 3 / Add Button Pill on Right (Touches Right Edge) -->
-              <div onclick="openCardSelectionModal()" class="w-8 h-[178px] rounded-l-[22px] bg-white/[0.045] border-y border-l border-white/15 backdrop-blur-md flex items-center justify-center cursor-pointer flex-shrink-0 hover:bg-white/[0.08] transition apple-press" title="Select or Add Debit Card">
-                <span class="text-lg font-light text-white/50">+</span>
               </div>
 
             </div>
@@ -5453,6 +5448,109 @@
       </div>
     </div>
 
+    <!-- ======================================================== -->
+    <!-- CARD HOLD CONTEXT ACTION SHEET (#cardContextModal)       -->
+    <!-- ======================================================== -->
+    <div id="cardContextModal" onclick="if(event.target === this) closeCardContextModal()" class="absolute inset-0 apple-sheet-backdrop z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none text-white select-none">
+      <div id="cardContextSheet" class="liquid-glass-sheet relative overflow-hidden w-full rounded-t-[34px] px-5 pt-3.5 pb-8 transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col gap-3">
+        <!-- Drag Handle -->
+        <div class="w-11 h-1.5 rounded-full bg-white/25 mx-auto mb-0.5 cursor-grab"></div>
+
+        <!-- Card Context Header -->
+        <div class="flex items-center justify-between px-1 pb-2 border-b border-white/[0.08]">
+          <div class="flex items-center gap-3">
+            <div id="cardCtxPreviewChip" class="w-11 h-7 rounded-lg debit-card-gradient border border-white/20 flex items-center justify-center shadow-sm">
+              <span id="cardCtxDigits" class="text-[9px] font-mono font-bold text-white">0329</span>
+            </div>
+            <div class="flex flex-col">
+              <h3 id="cardCtxTitle" class="text-[15px] font-bold text-white leading-tight">Cashleap Mastercard</h3>
+              <span id="cardCtxSubtitle" class="text-[11px] text-[#9e94b8] mt-0.5">Card Options</span>
+            </div>
+          </div>
+          <button onclick="closeCardContextModal()" class="w-8 h-8 rounded-full bg-white/[0.07] hover:bg-white/[0.14] flex items-center justify-center text-white/70 hover:text-white transition cursor-pointer" title="Close">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Contextual Options -->
+        <div class="w-full rounded-[22px] bg-white/[0.04] border border-white/[0.09] overflow-hidden divide-y divide-white/[0.07]">
+          <!-- Option 1: Deactivate / Reactivate Card -->
+          <button type="button" onclick="openCardActionConfirm('toggle-active')" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-white/[0.06] active:bg-white/[0.1] transition cursor-pointer text-start">
+            <div class="flex items-center gap-3">
+              <div id="cardCtxDeactivateIconWrap" class="w-9 h-9 rounded-full bg-amber-500/15 border border-amber-400/25 flex items-center justify-center text-amber-300 flex-shrink-0">
+                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="10" y1="15" x2="10" y2="9"></line>
+                  <line x1="14" y1="15" x2="14" y2="9"></line>
+                </svg>
+              </div>
+              <div class="flex flex-col">
+                <span id="cardCtxDeactivateTitle" class="text-[13.5px] font-semibold text-white leading-tight">Deactivate Card</span>
+                <span id="cardCtxDeactivateSub" class="text-[11px] text-[#9e94b8] mt-0.5">Temporarily disable card payments</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-white/40 rtl-flip flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Option 2: Remove Card -->
+          <button type="button" onclick="openCardActionConfirm('remove')" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-rose-500/[0.08] active:bg-rose-500/[0.15] transition cursor-pointer text-start">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-rose-500/15 border border-rose-400/25 flex items-center justify-center text-rose-400 flex-shrink-0">
+                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[13.5px] font-semibold text-rose-400 leading-tight">Remove Card</span>
+                <span class="text-[11px] text-[#9e94b8] mt-0.5">Unlink and remove card from wallet</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-rose-400/50 rtl-flip flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <button type="button" onclick="closeCardContextModal()" class="w-full py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 font-semibold text-xs text-white transition cursor-pointer apple-press">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- CARD ACTION CONFIRMATION POPUP (#cardConfirmModal)       -->
+    <!-- ======================================================== -->
+    <div id="cardConfirmModal" onclick="if(event.target === this) closeCardConfirmModal()" class="absolute inset-0 bg-black/70 backdrop-blur-md z-[60] flex items-center justify-center px-6 transition-opacity duration-250 opacity-0 pointer-events-none text-white select-none">
+      <div id="cardConfirmDialog" class="liquid-glass-sheet w-full max-w-[310px] rounded-[28px] p-5 text-center shadow-2xl border border-white/15 transform scale-95 transition-transform duration-250">
+        <div id="cardConfirmIconWrap" class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <h3 id="cardConfirmTitle" class="text-[16.5px] font-bold text-white leading-snug mb-1.5">Deactivate Card?</h3>
+        <p id="cardConfirmDesc" class="text-[12px] text-[#9e94b8] leading-relaxed mb-5">Your card will stop processing payments until you reactivate it.</p>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button type="button" onclick="closeCardConfirmModal()" class="py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-semibold text-xs text-white transition cursor-pointer apple-press">
+            Cancel
+          </button>
+          <button type="button" id="cardConfirmSubmitBtn" onclick="confirmPendingCardAction()" class="py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
 
 
     <div id="iosFaceIdModal" class="absolute inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center px-8 transition-opacity duration-300 opacity-0 pointer-events-none">
@@ -5855,15 +5953,45 @@
       });
     }
 
+    function resetAllBottomSheetsToDefault() {
+      try {
+        if (typeof setSheetExpanded === 'function') setSheetExpanded(false);
+        if (typeof setStatsSheetExpanded === 'function') setStatsSheetExpanded(false);
+        if (typeof setFinanceSheetExpanded === 'function') setFinanceSheetExpanded(false);
+        if (typeof setOthersSheetExpanded === 'function') setOthersSheetExpanded(false);
+        if (typeof setVaultSheetExpanded === 'function') setVaultSheetExpanded(false);
+        if (typeof setSendSheetExpanded === 'function') setSendSheetExpanded(false);
+        ['sheetScrollArea', 'statsCategoriesList', 'financeAccountsList', 'othersFeaturesList', 'vaultGoalsList', 'sendBeneficiariesList'].forEach(id => {
+          const list = document.getElementById(id);
+          if (list) list.scrollTop = 0;
+        });
+        if (typeof closeCardContextModal === 'function') closeCardContextModal(true);
+        if (typeof closeCardConfirmModal === 'function') closeCardConfirmModal(true);
+        ['addCardModal', 'selectCardModal', 'cardDetailsModal', 'userProfileModal', 'txDetailModal', 'notificationsModal', 'addFundsModal', 'sendMoneyModal', 'withdrawModal', 'scheduleModal', 'billPayModal', 'splitBillModal', 'giftCardsModal', 'rewardsModal', 'transferModal', 'exchangeModal', 'supportChatModal', 'createVaultModal', 'vaultActionModal', 'addBeneficiaryModal', 'signOutModal'].forEach(mId => {
+          const m = document.getElementById(mId);
+          if (m && !m.classList.contains('opacity-0')) {
+            m.classList.add('opacity-0', 'pointer-events-none');
+            const sh = m.querySelector('.liquid-glass-sheet');
+            if (sh && sh.classList.contains('transition-transform')) sh.classList.add('translate-y-full');
+          }
+        });
+      } catch (e) {}
+    }
+
     function showScreen(target) {
       clearTimeout(splashTimer);
       clearTimeout(welcomeTimer);
       hideFaceIdFailureModal();
 
+      const prevScreen = currentScreen;
       const screenKeys = Object.keys(screens);
       const prevIndex = screenKeys.indexOf(currentScreen);
       const nextIndex = screenKeys.indexOf(target);
       currentScreen = target;
+
+      if (prevScreen !== target) {
+        resetAllBottomSheetsToDefault();
+      }
 
       screenKeys.forEach((key, index) => {
         const el = screens[key];
@@ -6430,12 +6558,19 @@
     let totalCards = 2;
     let isDraggingCard = false;
     let cardDragStartX = 0;
-    let cardInitialTranslate = -11.5;
+    let cardInitialTranslate = 33;
     let cardDragDeltaX = 0;
     let cardHasMoved = false;
+    let cardHoldTimer = null;
+    let cardHoldTriggered = false;
+    let contextTargetCardIdx = 1;
+    let pendingCardActionType = null;
 
     function getBaseCardTranslate(idx) {
-      return -11.5 - (idx - 1) * 322;
+      const container = document.getElementById('cardCarouselContainer');
+      const cw = (container && container.clientWidth) ? container.clientWidth : 376;
+      const centerOffset = (cw - 310) / 2;
+      return centerOffset - (idx - 1) * 322;
     }
 
     function selectCardIndex(idx, showNotification = true) {
@@ -6479,30 +6614,302 @@
       }
 
       if (showNotification) {
-        if (idx === 1) showToast('Card Balance (0329) selected • 3,350.60 AED');
-        else if (idx === 2) showToast('Debit Card (0319) selected • 2,150.60 AED');
-        else if (idx === 3) showToast('Virtual Card (8821) selected • 1,500.00 AED');
-        else if (idx === 4) showToast('Platinum Card (4412) selected • 5,000.00 AED');
+        const cardEl = document.getElementById('card-item-' + idx);
+        const cardName = (cardEl && cardEl.getAttribute('data-card-name')) || ('Card ' + idx);
+        const cardDigits = (cardEl && cardEl.getAttribute('data-card-digits')) || '0329';
+        if (idx === 1 && cardDigits === '0329') showToast('Card Balance (0329) selected • 3,350.60 AED');
+        else if (idx === 2 && cardDigits === '0319') showToast('Debit Card (0319) selected • 2,150.60 AED');
+        else showToast(cardName + ' (' + cardDigits + ') selected');
       }
 
       if (typeof syncModalRadios === 'function') syncModalRadios(idx);
     }
 
     function handleCardClick(idx) {
-      if (!cardHasMoved) {
+      if (!cardHasMoved && !cardHoldTriggered) {
         selectCardIndex(idx, false);
         openCardDetailsScreen(idx);
       }
     }
 
-    // Real-time Dragging Gesture for Card Carousel (Pointer Events + Damping)
+    /* Card Long-Press Context Sheet & Confirmation Popup */
+    function getCardMetaInfo(idx) {
+      const cardEl = document.getElementById('card-item-' + idx);
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const name = (cardEl && cardEl.getAttribute('data-card-name')) || ((idx === 1) ? 'Cashleap Mastercard' : (idx === 2 ? 'Cashleap Debit Card' : 'Mastercard Debit'));
+      const digits = (cardEl && cardEl.getAttribute('data-card-digits')) || ((idx === 1) ? '0329' : (idx === 2 ? '0319' : '8821'));
+      const deactivated = !!(cardEl && cardEl.dataset.deactivated === 'true');
+      return { cardEl, name, digits, deactivated, t };
+    }
+
+    function openCardContextModal(idx) {
+      contextTargetCardIdx = idx;
+      const meta = getCardMetaInfo(idx);
+      if (!meta.cardEl) return;
+
+      const t = meta.t;
+      const titleEl = document.getElementById('cardCtxTitle');
+      const subEl = document.getElementById('cardCtxSubtitle');
+      const digitsEl = document.getElementById('cardCtxDigits');
+      const chipEl = document.getElementById('cardCtxPreviewChip');
+      const deactTitleEl = document.getElementById('cardCtxDeactivateTitle');
+      const deactSubEl = document.getElementById('cardCtxDeactivateSub');
+      const deactIconWrap = document.getElementById('cardCtxDeactivateIconWrap');
+
+      if (titleEl) {
+        titleEl.setAttribute('data-i18n-dyn-en', meta.name);
+        titleEl.textContent = t(meta.name);
+      }
+      const enStatus = '•••• ' + meta.digits + ' • ' + (meta.deactivated ? 'Deactivated' : 'Active');
+      if (subEl) {
+        subEl.setAttribute('data-i18n-dyn-en', enStatus);
+        subEl.textContent = t(enStatus);
+      }
+      if (digitsEl) digitsEl.textContent = meta.digits;
+      if (chipEl) {
+        if (meta.cardEl.style.background) {
+          chipEl.className = 'w-11 h-7 rounded-lg border border-white/20 flex items-center justify-center shadow-sm';
+          chipEl.style.background = meta.cardEl.style.background;
+        } else {
+          chipEl.style.background = '';
+          chipEl.className = (idx === 2)
+            ? 'w-11 h-7 rounded-lg bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 border border-white/20 flex items-center justify-center shadow-sm'
+            : 'w-11 h-7 rounded-lg debit-card-gradient border border-white/20 flex items-center justify-center shadow-sm';
+        }
+      }
+
+      if (meta.deactivated) {
+        if (deactTitleEl) {
+          deactTitleEl.setAttribute('data-i18n-dyn-en', 'Reactivate Card');
+          deactTitleEl.textContent = t('Reactivate Card');
+        }
+        if (deactSubEl) {
+          deactSubEl.setAttribute('data-i18n-dyn-en', 'Re-enable card for payments');
+          deactSubEl.textContent = t('Re-enable card for payments');
+        }
+        if (deactIconWrap) {
+          deactIconWrap.className = 'w-9 h-9 rounded-full bg-emerald-500/15 border border-emerald-400/25 flex items-center justify-center text-emerald-300 flex-shrink-0';
+        }
+      } else {
+        if (deactTitleEl) {
+          deactTitleEl.setAttribute('data-i18n-dyn-en', 'Deactivate Card');
+          deactTitleEl.textContent = t('Deactivate Card');
+        }
+        if (deactSubEl) {
+          deactSubEl.setAttribute('data-i18n-dyn-en', 'Temporarily disable card payments');
+          deactSubEl.textContent = t('Temporarily disable card payments');
+        }
+        if (deactIconWrap) {
+          deactIconWrap.className = 'w-9 h-9 rounded-full bg-amber-500/15 border border-amber-400/25 flex items-center justify-center text-amber-300 flex-shrink-0';
+        }
+      }
+
+      const modal = document.getElementById('cardContextModal');
+      const sheet = document.getElementById('cardContextSheet');
+      if (modal && sheet) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        requestAnimationFrame(() => {
+          sheet.classList.remove('translate-y-full');
+        });
+      }
+    }
+
+    function closeCardContextModal(silent = false) {
+      if (!silent && typeof playHapticTick === 'function') playHapticTick();
+      const modal = document.getElementById('cardContextModal');
+      const sheet = document.getElementById('cardContextSheet');
+      if (sheet) sheet.classList.add('translate-y-full');
+      if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function openCardActionConfirm(actionType) {
+      playHapticTick();
+      pendingCardActionType = actionType;
+      closeCardContextModal(true);
+
+      const meta = getCardMetaInfo(contextTargetCardIdx);
+      const t = meta.t;
+      const iconWrap = document.getElementById('cardConfirmIconWrap');
+      const titleEl = document.getElementById('cardConfirmTitle');
+      const descEl = document.getElementById('cardConfirmDesc');
+      const submitBtn = document.getElementById('cardConfirmSubmitBtn');
+
+      let enTitle = '';
+      let enDesc = '';
+      let enBtn = '';
+
+      if (actionType === 'remove') {
+        enTitle = 'Remove Card •••• ' + meta.digits + '?';
+        enDesc = 'This card will be unlinked and permanently removed from your Cashleap wallet.';
+        enBtn = 'Remove Card';
+        if (iconWrap) {
+          iconWrap.className = 'w-12 h-12 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-400 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
+        }
+        if (submitBtn) {
+          submitBtn.className = 'py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md';
+        }
+      } else if (meta.deactivated) {
+        enTitle = 'Reactivate Card •••• ' + meta.digits + '?';
+        enDesc = 'Your card will immediately be ready for contactless and online payments.';
+        enBtn = 'Reactivate Card';
+        if (iconWrap) {
+          iconWrap.className = 'w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+        }
+        if (submitBtn) {
+          submitBtn.className = 'py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md';
+        }
+      } else {
+        enTitle = 'Deactivate Card •••• ' + meta.digits + '?';
+        enDesc = 'Your card will stop processing payments until you reactivate it.';
+        enBtn = 'Deactivate Card';
+        if (iconWrap) {
+          iconWrap.className = 'w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+        }
+        if (submitBtn) {
+          submitBtn.className = 'py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 font-bold text-xs text-slate-950 transition cursor-pointer apple-press shadow-md';
+        }
+      }
+
+      if (titleEl) { titleEl.setAttribute('data-i18n-dyn-en', enTitle); titleEl.textContent = t(enTitle); }
+      if (descEl) { descEl.setAttribute('data-i18n-dyn-en', enDesc); descEl.textContent = t(enDesc); }
+      if (submitBtn) { submitBtn.setAttribute('data-i18n-dyn-en', enBtn); submitBtn.textContent = t(enBtn); }
+
+      const modal = document.getElementById('cardConfirmModal');
+      const dialog = document.getElementById('cardConfirmDialog');
+      if (modal) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        if (dialog) {
+          dialog.classList.remove('scale-95');
+          dialog.classList.add('scale-100');
+        }
+      }
+    }
+
+    function closeCardConfirmModal(silent = false) {
+      if (!silent && typeof playHapticTick === 'function') playHapticTick();
+      const modal = document.getElementById('cardConfirmModal');
+      const dialog = document.getElementById('cardConfirmDialog');
+      if (dialog) {
+        dialog.classList.remove('scale-100');
+        dialog.classList.add('scale-95');
+      }
+      if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function reindexWalletCards() {
+      const track = document.getElementById('cardCarouselTrack');
+      if (!track) return;
+      const cards = Array.from(track.querySelectorAll('.wallet-card'));
+      totalCards = cards.length;
+      cards.forEach((el, i) => {
+        const idx = i + 1;
+        el.id = 'card-item-' + idx;
+        el.setAttribute('onclick', 'handleCardClick(' + idx + ')');
+        const badge = el.querySelector('[id$="-active-badge"]');
+        if (badge) {
+          badge.id = 'card' + idx + '-active-badge';
+          badge.setAttribute('onclick', 'event.stopPropagation(); openCardDetailsScreen(' + idx + ');');
+        }
+      });
+      const profileBadge = document.getElementById('profileCardsCountBadge');
+      if (profileBadge) {
+        const cardCountEn = totalCards === 1 ? '1 Card' : (totalCards + ' Cards');
+        profileBadge.setAttribute('data-i18n-dyn-en', cardCountEn);
+        profileBadge.textContent = (typeof trText === 'function') ? trText(cardCountEn) : cardCountEn;
+      }
+    }
+
+    function confirmPendingCardAction() {
+      const actionType = pendingCardActionType;
+      const idx = contextTargetCardIdx;
+      const meta = getCardMetaInfo(idx);
+      const t = meta.t;
+      pendingCardActionType = null;
+      closeCardConfirmModal(true);
+
+      if (!meta.cardEl) return;
+
+      if (actionType === 'remove') {
+        if (totalCards <= 1) {
+          showToast('At least one primary card must remain linked');
+          return;
+        }
+        if (typeof playSuccessChime === 'function') playSuccessChime();
+        const removedDigits = meta.digits;
+        meta.cardEl.remove();
+        reindexWalletCards();
+        const targetIdx = Math.min(idx, totalCards);
+        selectCardIndex(targetIdx, false);
+        triggerDynamicIsland('Card Removed', '•••• ' + removedDigits + ' • Removed from wallet');
+        showToast('Card ending in ' + removedDigits + ' removed from wallet');
+      } else if (actionType === 'toggle-active') {
+        const nowDeactivated = !meta.deactivated;
+        meta.cardEl.dataset.deactivated = nowDeactivated ? 'true' : 'false';
+        const badge = document.getElementById('card' + idx + '-active-badge');
+        const dot = badge ? badge.querySelector('.card-status-dot') : null;
+        const labelEl = badge ? badge.querySelector('[data-i18n-dyn-en]') : null;
+
+        if (nowDeactivated) {
+          meta.cardEl.classList.add('opacity-65', 'grayscale-[45%]');
+          if (badge) {
+            badge.classList.remove('bg-black/35', 'bg-black/40', 'border-white/20');
+            badge.classList.add('bg-rose-950/75', 'border-rose-400/40');
+          }
+          if (dot) {
+            dot.classList.remove('bg-emerald-400', 'animate-pulse');
+            dot.classList.add('bg-rose-400');
+          }
+          if (labelEl) {
+            labelEl.setAttribute('data-i18n-dyn-en', 'Deactivated');
+            labelEl.textContent = t('Deactivated');
+          }
+          playHapticTick();
+          triggerDynamicIsland('Card Deactivated', '•••• ' + meta.digits);
+          showToast('Card •••• ' + meta.digits + ' deactivated');
+        } else {
+          meta.cardEl.classList.remove('opacity-65', 'grayscale-[45%]');
+          if (badge) {
+            badge.classList.remove('bg-rose-950/75', 'border-rose-400/40');
+            badge.classList.add('bg-black/35', 'border-white/20');
+          }
+          if (dot) {
+            dot.classList.remove('bg-rose-400');
+            dot.classList.add('bg-emerald-400', 'animate-pulse');
+          }
+          if (labelEl) {
+            labelEl.setAttribute('data-i18n-dyn-en', 'Active');
+            labelEl.textContent = t('Active');
+          }
+          if (typeof playSuccessChime === 'function') playSuccessChime();
+          triggerDynamicIsland('Card Reactivated', '•••• ' + meta.digits);
+          showToast('Card •••• ' + meta.digits + ' reactivated');
+        }
+      }
+    }
+
+    // Real-time Dragging Gesture for Card Carousel (Pointer Events + Long-Press + Damping)
     function initCardCarouselDragging() {
       const container = document.getElementById('cardCarouselContainer');
       const track = document.getElementById('cardCarouselTrack');
       if (!container || !track) return;
 
+      // Ensure Card 1 starts cleanly centered on initial load
+      selectCardIndex(currentCardIndex, false);
+
+      function clearHoldTimer() {
+        if (cardHoldTimer) {
+          clearTimeout(cardHoldTimer);
+          cardHoldTimer = null;
+        }
+      }
+
       function onCardPointerDown(e) {
         if (e.target.closest('#addCardPillBtn') || e.target.closest('[id$="-active-badge"]')) return;
+        clearHoldTimer();
+        cardHoldTriggered = false;
         isDraggingCard = true;
         cardHasMoved = false;
         cardDragStartX = e.clientX;
@@ -6510,6 +6917,21 @@
         cardInitialTranslate = getBaseCardTranslate(currentCardIndex);
         track.style.transition = 'none';
         container.style.cursor = 'grabbing';
+
+        const touchedCard = e.target.closest ? e.target.closest('.wallet-card') : null;
+        if (touchedCard) {
+          const holdIdx = parseInt(touchedCard.id.replace('card-item-', ''), 10);
+          cardHoldTimer = setTimeout(() => {
+            if (isDraggingCard && !cardHasMoved && holdIdx >= 1) {
+              cardHoldTriggered = true;
+              isDraggingCard = false;
+              container.style.cursor = 'grab';
+              selectCardIndex(currentCardIndex, false);
+              if (typeof playHapticTick === 'function') playHapticTick();
+              openCardContextModal(holdIdx);
+            }
+          }, 460);
+        }
 
         if (container.setPointerCapture && e.pointerId !== undefined) {
           try { container.setPointerCapture(e.pointerId); } catch(err) {}
@@ -6521,22 +6943,30 @@
         cardDragDeltaX = e.clientX - cardDragStartX;
         if (Math.abs(cardDragDeltaX) > 4) {
           cardHasMoved = true;
+          clearHoldTimer();
           if (e.cancelable) e.preventDefault();
         }
 
         let newX = cardInitialTranslate + cardDragDeltaX;
+        const maxTranslate = getBaseCardTranslate(1);
         const minTranslate = getBaseCardTranslate(totalCards);
 
         // Smooth rubber-band resistance at boundaries
-        if (newX > 15) {
-          newX = 15 + (newX - 15) * 0.22;
-        } else if (newX < minTranslate - 20) {
-          newX = (minTranslate - 20) + (newX - (minTranslate - 20)) * 0.22;
+        if (newX > maxTranslate + 24) {
+          newX = (maxTranslate + 24) + (newX - (maxTranslate + 24)) * 0.22;
+        } else if (newX < minTranslate - 24) {
+          newX = (minTranslate - 24) + (newX - (minTranslate - 24)) * 0.22;
         }
         track.style.transform = 'translateX(' + newX + 'px)';
       }
 
       function onCardPointerUp(e) {
+        clearHoldTimer();
+        if (cardHoldTriggered) {
+          isDraggingCard = false;
+          setTimeout(() => { cardHoldTriggered = false; }, 80);
+          return;
+        }
         if (!isDraggingCard) return;
         isDraggingCard = false;
         container.style.cursor = 'grab';
@@ -6572,6 +7002,21 @@
       container.addEventListener('pointermove', onCardPointerMove);
       container.addEventListener('pointerup', onCardPointerUp);
       container.addEventListener('pointercancel', onCardPointerUp);
+      container.addEventListener('contextmenu', (e) => {
+        const card = e.target.closest ? e.target.closest('.wallet-card') : null;
+        if (card && !e.target.closest('[id$="-active-badge"]')) {
+          e.preventDefault();
+          clearHoldTimer();
+          cardHoldTriggered = true;
+          isDraggingCard = false;
+          const idx = parseInt(card.id.replace('card-item-', ''), 10);
+          if (idx >= 1) {
+            if (typeof playHapticTick === 'function') playHapticTick();
+            openCardContextModal(idx);
+          }
+          setTimeout(() => { cardHoldTriggered = false; }, 120);
+        }
+      });
 
       // Touch fallback
       container.addEventListener('touchstart', (e) => {
@@ -6600,12 +7045,12 @@
       }, { passive: false });
 
       window.addEventListener('touchend', (e) => {
-        if (isDraggingCard) onCardPointerUp(e);
+        if (isDraggingCard || cardHoldTimer) onCardPointerUp(e);
       });
 
       // Mouse fallback
       container.addEventListener('mousedown', (e) => {
-        if (e.target.closest('#addCardPillBtn')) return;
+        if (e.button === 2 || e.target.closest('#addCardPillBtn')) return;
         e.preventDefault();
         onCardPointerDown(e);
       });
@@ -6613,8 +7058,9 @@
         if (isDraggingCard) onCardPointerMove(e);
       });
       window.addEventListener('mouseup', (e) => {
-        if (isDraggingCard) onCardPointerUp(e);
+        if (isDraggingCard || cardHoldTimer) onCardPointerUp(e);
       });
+      window.addEventListener('resize', () => selectCardIndex(currentCardIndex, false));
     }
 
     /* ========================================================
@@ -6772,20 +7218,23 @@
 
       // Create & Append New Card Element to Carousel Track
       const track = document.getElementById('cardCarouselTrack');
+      const cardTypeTitle = (newCardType === 'virtual') ? 'Virtual Card' : 'Mastercard Debit';
       if (track) {
         const cardEl = document.createElement('div');
         cardEl.id = 'card-item-' + newIdx;
-        cardEl.className = 'w-[310px] h-[178px] rounded-[28px] p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press border border-white/15';
+        cardEl.setAttribute('data-card-name', cardTypeTitle);
+        cardEl.setAttribute('data-card-digits', lastFour);
+        cardEl.className = 'wallet-card w-[310px] h-[178px] rounded-[28px] p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press border border-white/15';
         cardEl.style.background = chosenGrad;
         cardEl.setAttribute('onclick', 'handleCardClick(' + newIdx + ')');
         cardEl.innerHTML = `
           <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
-          <div id="card` + newIdx + `-active-badge" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            ` + ((typeof trText === 'function') ? trText('Active') : 'Active') + `
+          <div id="card` + newIdx + `-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(` + newIdx + `);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer z-10">
+            <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span data-i18n-dyn-en="Active">` + ((typeof trText === 'function') ? trText('Active') : 'Active') + `</span>
           </div>
           <div>
-            <span class="text-[11px] font-medium text-white/80 tracking-wide">` + ((typeof trText === 'function') ? trText('Card Balance') : 'Card Balance') + `</span>
+            <span class="text-[11px] font-medium text-white/80 tracking-wide" data-i18n-dyn-en="Card Balance">` + ((typeof trText === 'function') ? trText('Card Balance') : 'Card Balance') + `</span>
             <div class="flex items-baseline gap-1 mt-0.5">
               <span class="text-[29px] font-bold tracking-tight text-white leading-none">` + balanceStr + `</span>
               <span class="currency-label text-[13px] font-bold text-white/90">` + ((typeof trText === 'function') ? trText('AED') : 'AED') + `</span>
@@ -6797,8 +7246,8 @@
           <div class="flex items-center justify-between pt-1">
             <div class="flex items-center gap-2">
               <div class="flex flex-col text-[7px] font-bold uppercase tracking-wider text-white/70 leading-tight">
-                <span>` + ((typeof trText === 'function') ? trText('VALID') : 'VALID') + `</span>
-                <span>` + ((typeof trText === 'function') ? trText('THRU') : 'THRU') + `</span>
+                <span data-i18n-dyn-en="VALID">` + ((typeof trText === 'function') ? trText('VALID') : 'VALID') + `</span>
+                <span data-i18n-dyn-en="THRU">` + ((typeof trText === 'function') ? trText('THRU') : 'THRU') + `</span>
               </div>
               <span class="text-[13px] font-bold text-white tracking-wide">` + expiryVal + `</span>
             </div>
@@ -6814,12 +7263,7 @@
       }
 
       // Update profile badge
-      const profileBadge = document.getElementById('profileCardsCountBadge');
-      if (profileBadge) {
-        const cardCountEn = totalCards + ' Cards';
-        profileBadge.setAttribute('data-i18n-dyn-en', cardCountEn);
-        profileBadge.textContent = (typeof trText === 'function') ? trText(cardCountEn) : cardCountEn;
-      }
+      reindexWalletCards();
 
       closeAddCardModal();
       selectCardIndex(newIdx, false);
@@ -9615,7 +10059,26 @@
       'Beneficiary Added': 'تمت إضافة المستفيد',
       'User Verified': 'تم التحقق من المستخدم',
       'Split Link Copied': 'تم نسخ رابط التقسيم',
-      'Cashback Available': 'كاش باك متاح'
+      'Cashback Available': 'كاش باك متاح',
+      'Card Options': 'خيارات البطاقة',
+      'Deactivated': 'معطّلة',
+      'Deactivate Card': 'إيقاف البطاقة',
+      'Reactivate Card': 'إعادة تفعيل البطاقة',
+      'Temporarily disable card payments': 'إيقاف مدفوعات البطاقة مؤقتاً',
+      'Re-enable card for payments': 'إعادة تفعيل البطاقة للمدفوعات',
+      'Remove Card': 'إزالة البطاقة',
+      'Unlink and remove card from wallet': 'إلغاء ربط البطاقة وإزالتها من المحفظة',
+      'Deactivate Card?': 'إيقاف البطاقة؟',
+      'Confirm': 'تأكيد',
+      'Your card will stop processing payments until you reactivate it.': 'ستتوقف بطاقتك عن معالجة المدفوعات حتى تقوم بإعادة تفعيلها.',
+      'Your card will immediately be ready for contactless and online payments.': 'ستكون بطاقتك جاهزة فوراً للمدفوعات اللاتلامسية وعبر الإنترنت.',
+      'This card will be unlinked and permanently removed from your Cashleap wallet.': 'سيتم إلغاء ربط هذه البطاقة وإزالتها نهائياً من محفظة كاش ليب الخاصة بك.',
+      'Card Deactivated': 'تم إيقاف البطاقة',
+      'Card Reactivated': 'تمت إعادة تفعيل البطاقة',
+      'Card Removed': 'تمت إزالة البطاقة',
+      'Removed from wallet': 'تمت الإزالة من المحفظة',
+      '1 Card': 'بطاقة واحدة',
+      'At least one primary card must remain linked': 'يجب بقاء بطاقة رئيسية واحدة على الأقل مرتبطة بالمحفظة'
     };
 
     const I18N_MONTHS_AR = {
@@ -9717,6 +10180,13 @@
       if ((m = clean.match(/^Added (.+) to Saved Beneficiaries$/))) return 'تمت إضافة ' + translateCoreToAr(m[1]) + ' إلى المستفيدين المحفوظين';
       if ((m = clean.match(/^Verified Cashleap user @(.+)$/))) return 'تم التحقق من مستخدم كاش ليب @' + m[1];
       if ((m = clean.match(/^Card ending in (\d+) linked to wallet$/))) return 'تم ربط البطاقة المنتهية بـ ' + m[1] + ' بالمحفظة';
+      if ((m = clean.match(/^Card ending in (\d+) removed from wallet$/))) return 'تمت إزالة البطاقة المنتهية بـ ' + m[1] + ' من المحفظة';
+      if ((m = clean.match(/^Deactivate Card •••• (\d+)\?$/))) return 'إيقاف البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Reactivate Card •••• (\d+)\?$/))) return 'إعادة تفعيل البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Remove Card •••• (\d+)\?$/))) return 'إزالة البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Card •••• (\d+) deactivated$/))) return 'تم إيقاف البطاقة •••• ' + m[1];
+      if ((m = clean.match(/^Card •••• (\d+) reactivated$/))) return 'تمت إعادة تفعيل البطاقة •••• ' + m[1];
+      if ((m = clean.match(/^(.+) \((\d+)\) selected$/))) return translateCoreToAr(m[1]) + ' (' + m[2] + ') محددة';
       if ((m = clean.match(/^Mastercard •••• (\d+)$/))) return 'ماستركارد •••• ' + m[1];
       if ((m = clean.match(/^Card Balance \((\d+)\) selected • (.+)$/))) return 'تم اختيار بطاقة الرصيد (' + m[1] + ') • ' + replaceAedToAr(m[2]);
       if ((m = clean.match(/^Debit Card \((\d+)\) selected • (.+)$/))) return 'تم اختيار بطاقة الخصم (' + m[1] + ') • ' + replaceAedToAr(m[2]);
@@ -10612,7 +11082,8 @@
         { modalId: 'supportChatModal', sheetId: 'supportChatSheet', closeFn: closeSupportChat },
         { modalId: 'createVaultModal', sheetId: 'createVaultSheet', closeFn: closeCreateVaultModal },
         { modalId: 'vaultActionModal', sheetId: 'vaultActionSheet', closeFn: closeVaultActionModal },
-        { modalId: 'addBeneficiaryModal', sheetId: 'addBeneficiarySheet', closeFn: closeAddBeneficiaryModal }
+        { modalId: 'addBeneficiaryModal', sheetId: 'addBeneficiarySheet', closeFn: closeAddBeneficiaryModal },
+        { modalId: 'cardContextModal', sheetId: 'cardContextSheet', closeFn: closeCardContextModal }
       ];
 
       modalConfigs.forEach(cfg => {

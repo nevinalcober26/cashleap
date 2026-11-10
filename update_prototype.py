@@ -1296,23 +1296,23 @@ html_content = f"""<!DOCTYPE html>
         <!-- ======================================================== -->
         <div class="relative w-full overflow-hidden my-1 pt-1 pb-2 px-0 select-none">
           <div class="relative w-full h-[184px] overflow-hidden cursor-grab active:cursor-grabbing" id="cardCarouselContainer">
+            <!-- Fixed Sticky Add Button Pill on Left Edge (Non-scrollable) -->
+            <div id="addCardPillBtn" onclick="openAddCardModal()" class="absolute left-0 top-[3px] z-30 w-7 h-[178px] rounded-r-[20px] bg-[#161136]/85 hover:bg-[#231b54]/95 active:scale-95 border-y border-r border-white/15 backdrop-blur-xl flex items-center justify-center cursor-pointer transition-all apple-press group shadow-lg" title="Add New Card to Wallet">
+              <span class="text-xl font-light text-white/70 group-hover:text-white group-hover:scale-125 transition-all -translate-x-0.5">+</span>
+            </div>
+
             <!-- Carousel Track holding cards side by side -->
-            <div id="cardCarouselTrack" class="flex items-center gap-3 absolute left-0 top-0 transition-transform duration-500 ease-out" style="transform: translateX(-11.5px);">
-              
-              <!-- Card 0 / Add Button Pill on Left (Opens Add New Card Modal) -->
-              <div id="addCardPillBtn" onclick="openAddCardModal()" class="w-8 h-[178px] rounded-r-[22px] bg-white/[0.045] hover:bg-white/[0.1] active:scale-95 border-y border-r border-white/15 backdrop-blur-md flex items-center justify-center cursor-pointer flex-shrink-0 transition-all apple-press group" title="Add New Card to Wallet">
-                <span class="text-xl font-light text-white/60 group-hover:text-white group-hover:scale-125 transition-all -translate-x-0.5">+</span>
-              </div>
+            <div id="cardCarouselTrack" class="flex items-center gap-3 absolute left-0 top-[3px] transition-transform duration-500 ease-out" style="transform: translateX(33px);">
 
               <!-- Card 1: Balance Card (Sunrise Amber/Pink/Blue) -->
-              <div id="card-item-1" onclick="handleCardClick(1)" class="w-[310px] h-[178px] rounded-[28px] debit-card-gradient p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press">
+              <div id="card-item-1" data-card-name="Cashleap Mastercard" data-card-digits="0329" onclick="handleCardClick(1)" class="wallet-card w-[310px] h-[178px] rounded-[28px] debit-card-gradient p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press">
                 <!-- Dynamic Holographic Specular Glint -->
                 <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
 
                 <!-- Active badge (tappable for card details) -->
-                <div id="card1-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(1);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span id="homeCardActiveText">Active</span>
+                <div id="card1-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(1);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer z-10">
+                  <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="homeCardActiveText" data-i18n-dyn-en="Active">Active</span>
                 </div>
 
                 <div>
@@ -1347,20 +1347,15 @@ html_content = f"""<!DOCTYPE html>
               </div>
 
               <!-- Card 2: Debit Card (Exact design from uploaded PDF with Mastercard) -->
-              <div id="card-item-2" onclick="handleCardClick(2)" class="w-[310px] h-[178px] rounded-[28px] overflow-hidden relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] bg-[#1a183d] apple-press">
+              <div id="card-item-2" data-card-name="Cashleap Debit Card" data-card-digits="0319" onclick="handleCardClick(2)" class="wallet-card w-[310px] h-[178px] rounded-[28px] overflow-hidden relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] bg-[#1a183d] apple-press">
                 <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
                 <img src="{card2_b64}" alt="Debit Card" class="w-full h-full object-cover rounded-[28px] select-none pointer-events-none" />
                 
                 <!-- Active badge for Card 2 -->
-                <div id="card2-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(2);" class="absolute top-3.5 right-4 bg-black/40 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 opacity-0 transition-all cursor-pointer">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  Active
+                <div id="card2-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(2);" class="absolute top-3.5 right-4 bg-black/40 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 opacity-0 transition-all cursor-pointer z-10">
+                  <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span data-i18n-dyn-en="Active">Active</span>
                 </div>
-              </div>
-
-              <!-- Card 3 / Add Button Pill on Right (Touches Right Edge) -->
-              <div onclick="openCardSelectionModal()" class="w-8 h-[178px] rounded-l-[22px] bg-white/[0.045] border-y border-l border-white/15 backdrop-blur-md flex items-center justify-center cursor-pointer flex-shrink-0 hover:bg-white/[0.08] transition apple-press" title="Select or Add Debit Card">
-                <span class="text-lg font-light text-white/50">+</span>
               </div>
 
             </div>
@@ -5458,6 +5453,109 @@ html_content = f"""<!DOCTYPE html>
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- CARD HOLD CONTEXT ACTION SHEET (#cardContextModal)       -->
+    <!-- ======================================================== -->
+    <div id="cardContextModal" onclick="if(event.target === this) closeCardContextModal()" class="absolute inset-0 apple-sheet-backdrop z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none text-white select-none">
+      <div id="cardContextSheet" class="liquid-glass-sheet relative overflow-hidden w-full rounded-t-[34px] px-5 pt-3.5 pb-8 transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col gap-3">
+        <!-- Drag Handle -->
+        <div class="w-11 h-1.5 rounded-full bg-white/25 mx-auto mb-0.5 cursor-grab"></div>
+
+        <!-- Card Context Header -->
+        <div class="flex items-center justify-between px-1 pb-2 border-b border-white/[0.08]">
+          <div class="flex items-center gap-3">
+            <div id="cardCtxPreviewChip" class="w-11 h-7 rounded-lg debit-card-gradient border border-white/20 flex items-center justify-center shadow-sm">
+              <span id="cardCtxDigits" class="text-[9px] font-mono font-bold text-white">0329</span>
+            </div>
+            <div class="flex flex-col">
+              <h3 id="cardCtxTitle" class="text-[15px] font-bold text-white leading-tight">Cashleap Mastercard</h3>
+              <span id="cardCtxSubtitle" class="text-[11px] text-[#9e94b8] mt-0.5">Card Options</span>
+            </div>
+          </div>
+          <button onclick="closeCardContextModal()" class="w-8 h-8 rounded-full bg-white/[0.07] hover:bg-white/[0.14] flex items-center justify-center text-white/70 hover:text-white transition cursor-pointer" title="Close">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Contextual Options -->
+        <div class="w-full rounded-[22px] bg-white/[0.04] border border-white/[0.09] overflow-hidden divide-y divide-white/[0.07]">
+          <!-- Option 1: Deactivate / Reactivate Card -->
+          <button type="button" onclick="openCardActionConfirm('toggle-active')" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-white/[0.06] active:bg-white/[0.1] transition cursor-pointer text-start">
+            <div class="flex items-center gap-3">
+              <div id="cardCtxDeactivateIconWrap" class="w-9 h-9 rounded-full bg-amber-500/15 border border-amber-400/25 flex items-center justify-center text-amber-300 flex-shrink-0">
+                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="10" y1="15" x2="10" y2="9"></line>
+                  <line x1="14" y1="15" x2="14" y2="9"></line>
+                </svg>
+              </div>
+              <div class="flex flex-col">
+                <span id="cardCtxDeactivateTitle" class="text-[13.5px] font-semibold text-white leading-tight">Deactivate Card</span>
+                <span id="cardCtxDeactivateSub" class="text-[11px] text-[#9e94b8] mt-0.5">Temporarily disable card payments</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-white/40 rtl-flip flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Option 2: Remove Card -->
+          <button type="button" onclick="openCardActionConfirm('remove')" class="w-full px-4 py-3.5 flex items-center justify-between hover:bg-rose-500/[0.08] active:bg-rose-500/[0.15] transition cursor-pointer text-start">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-rose-500/15 border border-rose-400/25 flex items-center justify-center text-rose-400 flex-shrink-0">
+                <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[13.5px] font-semibold text-rose-400 leading-tight">Remove Card</span>
+                <span class="text-[11px] text-[#9e94b8] mt-0.5">Unlink and remove card from wallet</span>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-rose-400/50 rtl-flip flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <button type="button" onclick="closeCardContextModal()" class="w-full py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/10 font-semibold text-xs text-white transition cursor-pointer apple-press">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- CARD ACTION CONFIRMATION POPUP (#cardConfirmModal)       -->
+    <!-- ======================================================== -->
+    <div id="cardConfirmModal" onclick="if(event.target === this) closeCardConfirmModal()" class="absolute inset-0 bg-black/70 backdrop-blur-md z-[60] flex items-center justify-center px-6 transition-opacity duration-250 opacity-0 pointer-events-none text-white select-none">
+      <div id="cardConfirmDialog" class="liquid-glass-sheet w-full max-w-[310px] rounded-[28px] p-5 text-center shadow-2xl border border-white/15 transform scale-95 transition-transform duration-250">
+        <div id="cardConfirmIconWrap" class="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <h3 id="cardConfirmTitle" class="text-[16.5px] font-bold text-white leading-snug mb-1.5">Deactivate Card?</h3>
+        <p id="cardConfirmDesc" class="text-[12px] text-[#9e94b8] leading-relaxed mb-5">Your card will stop processing payments until you reactivate it.</p>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button type="button" onclick="closeCardConfirmModal()" class="py-2.5 rounded-xl bg-white/10 hover:bg-white/15 font-semibold text-xs text-white transition cursor-pointer apple-press">
+            Cancel
+          </button>
+          <button type="button" id="cardConfirmSubmitBtn" onclick="confirmPendingCardAction()" class="py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md">
+            Confirm
+          </button>
+        </div>
+      </div>
     </div>\n\n
 
     <div id="iosFaceIdModal" class="absolute inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center px-8 transition-opacity duration-300 opacity-0 pointer-events-none">
@@ -5860,15 +5958,45 @@ html_content = f"""<!DOCTYPE html>
       }});
     }}
 
+    function resetAllBottomSheetsToDefault() {{
+      try {{
+        if (typeof setSheetExpanded === 'function') setSheetExpanded(false);
+        if (typeof setStatsSheetExpanded === 'function') setStatsSheetExpanded(false);
+        if (typeof setFinanceSheetExpanded === 'function') setFinanceSheetExpanded(false);
+        if (typeof setOthersSheetExpanded === 'function') setOthersSheetExpanded(false);
+        if (typeof setVaultSheetExpanded === 'function') setVaultSheetExpanded(false);
+        if (typeof setSendSheetExpanded === 'function') setSendSheetExpanded(false);
+        ['sheetScrollArea', 'statsCategoriesList', 'financeAccountsList', 'othersFeaturesList', 'vaultGoalsList', 'sendBeneficiariesList'].forEach(id => {{
+          const list = document.getElementById(id);
+          if (list) list.scrollTop = 0;
+        }});
+        if (typeof closeCardContextModal === 'function') closeCardContextModal(true);
+        if (typeof closeCardConfirmModal === 'function') closeCardConfirmModal(true);
+        ['addCardModal', 'selectCardModal', 'cardDetailsModal', 'userProfileModal', 'txDetailModal', 'notificationsModal', 'addFundsModal', 'sendMoneyModal', 'withdrawModal', 'scheduleModal', 'billPayModal', 'splitBillModal', 'giftCardsModal', 'rewardsModal', 'transferModal', 'exchangeModal', 'supportChatModal', 'createVaultModal', 'vaultActionModal', 'addBeneficiaryModal', 'signOutModal'].forEach(mId => {{
+          const m = document.getElementById(mId);
+          if (m && !m.classList.contains('opacity-0')) {{
+            m.classList.add('opacity-0', 'pointer-events-none');
+            const sh = m.querySelector('.liquid-glass-sheet');
+            if (sh && sh.classList.contains('transition-transform')) sh.classList.add('translate-y-full');
+          }}
+        }});
+      }} catch (e) {{}}
+    }}
+
     function showScreen(target) {{
       clearTimeout(splashTimer);
       clearTimeout(welcomeTimer);
       hideFaceIdFailureModal();
 
+      const prevScreen = currentScreen;
       const screenKeys = Object.keys(screens);
       const prevIndex = screenKeys.indexOf(currentScreen);
       const nextIndex = screenKeys.indexOf(target);
       currentScreen = target;
+
+      if (prevScreen !== target) {{
+        resetAllBottomSheetsToDefault();
+      }}
 
       screenKeys.forEach((key, index) => {{
         const el = screens[key];
@@ -6435,12 +6563,19 @@ html_content = f"""<!DOCTYPE html>
     let totalCards = 2;
     let isDraggingCard = false;
     let cardDragStartX = 0;
-    let cardInitialTranslate = -11.5;
+    let cardInitialTranslate = 33;
     let cardDragDeltaX = 0;
     let cardHasMoved = false;
+    let cardHoldTimer = null;
+    let cardHoldTriggered = false;
+    let contextTargetCardIdx = 1;
+    let pendingCardActionType = null;
 
     function getBaseCardTranslate(idx) {{
-      return -11.5 - (idx - 1) * 322;
+      const container = document.getElementById('cardCarouselContainer');
+      const cw = (container && container.clientWidth) ? container.clientWidth : 376;
+      const centerOffset = (cw - 310) / 2;
+      return centerOffset - (idx - 1) * 322;
     }}
 
     function selectCardIndex(idx, showNotification = true) {{
@@ -6484,30 +6619,302 @@ html_content = f"""<!DOCTYPE html>
       }}
 
       if (showNotification) {{
-        if (idx === 1) showToast('Card Balance (0329) selected • 3,350.60 AED');
-        else if (idx === 2) showToast('Debit Card (0319) selected • 2,150.60 AED');
-        else if (idx === 3) showToast('Virtual Card (8821) selected • 1,500.00 AED');
-        else if (idx === 4) showToast('Platinum Card (4412) selected • 5,000.00 AED');
+        const cardEl = document.getElementById('card-item-' + idx);
+        const cardName = (cardEl && cardEl.getAttribute('data-card-name')) || ('Card ' + idx);
+        const cardDigits = (cardEl && cardEl.getAttribute('data-card-digits')) || '0329';
+        if (idx === 1 && cardDigits === '0329') showToast('Card Balance (0329) selected • 3,350.60 AED');
+        else if (idx === 2 && cardDigits === '0319') showToast('Debit Card (0319) selected • 2,150.60 AED');
+        else showToast(cardName + ' (' + cardDigits + ') selected');
       }}
 
       if (typeof syncModalRadios === 'function') syncModalRadios(idx);
     }}
 
     function handleCardClick(idx) {{
-      if (!cardHasMoved) {{
+      if (!cardHasMoved && !cardHoldTriggered) {{
         selectCardIndex(idx, false);
         openCardDetailsScreen(idx);
       }}
     }}
 
-    // Real-time Dragging Gesture for Card Carousel (Pointer Events + Damping)
+    /* Card Long-Press Context Sheet & Confirmation Popup */
+    function getCardMetaInfo(idx) {{
+      const cardEl = document.getElementById('card-item-' + idx);
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const name = (cardEl && cardEl.getAttribute('data-card-name')) || ((idx === 1) ? 'Cashleap Mastercard' : (idx === 2 ? 'Cashleap Debit Card' : 'Mastercard Debit'));
+      const digits = (cardEl && cardEl.getAttribute('data-card-digits')) || ((idx === 1) ? '0329' : (idx === 2 ? '0319' : '8821'));
+      const deactivated = !!(cardEl && cardEl.dataset.deactivated === 'true');
+      return {{ cardEl, name, digits, deactivated, t }};
+    }}
+
+    function openCardContextModal(idx) {{
+      contextTargetCardIdx = idx;
+      const meta = getCardMetaInfo(idx);
+      if (!meta.cardEl) return;
+
+      const t = meta.t;
+      const titleEl = document.getElementById('cardCtxTitle');
+      const subEl = document.getElementById('cardCtxSubtitle');
+      const digitsEl = document.getElementById('cardCtxDigits');
+      const chipEl = document.getElementById('cardCtxPreviewChip');
+      const deactTitleEl = document.getElementById('cardCtxDeactivateTitle');
+      const deactSubEl = document.getElementById('cardCtxDeactivateSub');
+      const deactIconWrap = document.getElementById('cardCtxDeactivateIconWrap');
+
+      if (titleEl) {{
+        titleEl.setAttribute('data-i18n-dyn-en', meta.name);
+        titleEl.textContent = t(meta.name);
+      }}
+      const enStatus = '•••• ' + meta.digits + ' • ' + (meta.deactivated ? 'Deactivated' : 'Active');
+      if (subEl) {{
+        subEl.setAttribute('data-i18n-dyn-en', enStatus);
+        subEl.textContent = t(enStatus);
+      }}
+      if (digitsEl) digitsEl.textContent = meta.digits;
+      if (chipEl) {{
+        if (meta.cardEl.style.background) {{
+          chipEl.className = 'w-11 h-7 rounded-lg border border-white/20 flex items-center justify-center shadow-sm';
+          chipEl.style.background = meta.cardEl.style.background;
+        }} else {{
+          chipEl.style.background = '';
+          chipEl.className = (idx === 2)
+            ? 'w-11 h-7 rounded-lg bg-gradient-to-tr from-pink-500 via-purple-500 to-cyan-400 border border-white/20 flex items-center justify-center shadow-sm'
+            : 'w-11 h-7 rounded-lg debit-card-gradient border border-white/20 flex items-center justify-center shadow-sm';
+        }}
+      }}
+
+      if (meta.deactivated) {{
+        if (deactTitleEl) {{
+          deactTitleEl.setAttribute('data-i18n-dyn-en', 'Reactivate Card');
+          deactTitleEl.textContent = t('Reactivate Card');
+        }}
+        if (deactSubEl) {{
+          deactSubEl.setAttribute('data-i18n-dyn-en', 'Re-enable card for payments');
+          deactSubEl.textContent = t('Re-enable card for payments');
+        }}
+        if (deactIconWrap) {{
+          deactIconWrap.className = 'w-9 h-9 rounded-full bg-emerald-500/15 border border-emerald-400/25 flex items-center justify-center text-emerald-300 flex-shrink-0';
+        }}
+      }} else {{
+        if (deactTitleEl) {{
+          deactTitleEl.setAttribute('data-i18n-dyn-en', 'Deactivate Card');
+          deactTitleEl.textContent = t('Deactivate Card');
+        }}
+        if (deactSubEl) {{
+          deactSubEl.setAttribute('data-i18n-dyn-en', 'Temporarily disable card payments');
+          deactSubEl.textContent = t('Temporarily disable card payments');
+        }}
+        if (deactIconWrap) {{
+          deactIconWrap.className = 'w-9 h-9 rounded-full bg-amber-500/15 border border-amber-400/25 flex items-center justify-center text-amber-300 flex-shrink-0';
+        }}
+      }}
+
+      const modal = document.getElementById('cardContextModal');
+      const sheet = document.getElementById('cardContextSheet');
+      if (modal && sheet) {{
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        requestAnimationFrame(() => {{
+          sheet.classList.remove('translate-y-full');
+        }});
+      }}
+    }}
+
+    function closeCardContextModal(silent = false) {{
+      if (!silent && typeof playHapticTick === 'function') playHapticTick();
+      const modal = document.getElementById('cardContextModal');
+      const sheet = document.getElementById('cardContextSheet');
+      if (sheet) sheet.classList.add('translate-y-full');
+      if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+    }}
+
+    function openCardActionConfirm(actionType) {{
+      playHapticTick();
+      pendingCardActionType = actionType;
+      closeCardContextModal(true);
+
+      const meta = getCardMetaInfo(contextTargetCardIdx);
+      const t = meta.t;
+      const iconWrap = document.getElementById('cardConfirmIconWrap');
+      const titleEl = document.getElementById('cardConfirmTitle');
+      const descEl = document.getElementById('cardConfirmDesc');
+      const submitBtn = document.getElementById('cardConfirmSubmitBtn');
+
+      let enTitle = '';
+      let enDesc = '';
+      let enBtn = '';
+
+      if (actionType === 'remove') {{
+        enTitle = 'Remove Card •••• ' + meta.digits + '?';
+        enDesc = 'This card will be unlinked and permanently removed from your Cashleap wallet.';
+        enBtn = 'Remove Card';
+        if (iconWrap) {{
+          iconWrap.className = 'w-12 h-12 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-400 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>';
+        }}
+        if (submitBtn) {{
+          submitBtn.className = 'py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md';
+        }}
+      }} else if (meta.deactivated) {{
+        enTitle = 'Reactivate Card •••• ' + meta.digits + '?';
+        enDesc = 'Your card will immediately be ready for contactless and online payments.';
+        enBtn = 'Reactivate Card';
+        if (iconWrap) {{
+          iconWrap.className = 'w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+        }}
+        if (submitBtn) {{
+          submitBtn.className = 'py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition cursor-pointer apple-press shadow-md';
+        }}
+      }} else {{
+        enTitle = 'Deactivate Card •••• ' + meta.digits + '?';
+        enDesc = 'Your card will stop processing payments until you reactivate it.';
+        enBtn = 'Deactivate Card';
+        if (iconWrap) {{
+          iconWrap.className = 'w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 flex items-center justify-center mx-auto mb-3';
+          iconWrap.innerHTML = '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+        }}
+        if (submitBtn) {{
+          submitBtn.className = 'py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 font-bold text-xs text-slate-950 transition cursor-pointer apple-press shadow-md';
+        }}
+      }}
+
+      if (titleEl) {{ titleEl.setAttribute('data-i18n-dyn-en', enTitle); titleEl.textContent = t(enTitle); }}
+      if (descEl) {{ descEl.setAttribute('data-i18n-dyn-en', enDesc); descEl.textContent = t(enDesc); }}
+      if (submitBtn) {{ submitBtn.setAttribute('data-i18n-dyn-en', enBtn); submitBtn.textContent = t(enBtn); }}
+
+      const modal = document.getElementById('cardConfirmModal');
+      const dialog = document.getElementById('cardConfirmDialog');
+      if (modal) {{
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        if (dialog) {{
+          dialog.classList.remove('scale-95');
+          dialog.classList.add('scale-100');
+        }}
+      }}
+    }}
+
+    function closeCardConfirmModal(silent = false) {{
+      if (!silent && typeof playHapticTick === 'function') playHapticTick();
+      const modal = document.getElementById('cardConfirmModal');
+      const dialog = document.getElementById('cardConfirmDialog');
+      if (dialog) {{
+        dialog.classList.remove('scale-100');
+        dialog.classList.add('scale-95');
+      }}
+      if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+    }}
+
+    function reindexWalletCards() {{
+      const track = document.getElementById('cardCarouselTrack');
+      if (!track) return;
+      const cards = Array.from(track.querySelectorAll('.wallet-card'));
+      totalCards = cards.length;
+      cards.forEach((el, i) => {{
+        const idx = i + 1;
+        el.id = 'card-item-' + idx;
+        el.setAttribute('onclick', 'handleCardClick(' + idx + ')');
+        const badge = el.querySelector('[id$="-active-badge"]');
+        if (badge) {{
+          badge.id = 'card' + idx + '-active-badge';
+          badge.setAttribute('onclick', 'event.stopPropagation(); openCardDetailsScreen(' + idx + ');');
+        }}
+      }});
+      const profileBadge = document.getElementById('profileCardsCountBadge');
+      if (profileBadge) {{
+        const cardCountEn = totalCards === 1 ? '1 Card' : (totalCards + ' Cards');
+        profileBadge.setAttribute('data-i18n-dyn-en', cardCountEn);
+        profileBadge.textContent = (typeof trText === 'function') ? trText(cardCountEn) : cardCountEn;
+      }}
+    }}
+
+    function confirmPendingCardAction() {{
+      const actionType = pendingCardActionType;
+      const idx = contextTargetCardIdx;
+      const meta = getCardMetaInfo(idx);
+      const t = meta.t;
+      pendingCardActionType = null;
+      closeCardConfirmModal(true);
+
+      if (!meta.cardEl) return;
+
+      if (actionType === 'remove') {{
+        if (totalCards <= 1) {{
+          showToast('At least one primary card must remain linked');
+          return;
+        }}
+        if (typeof playSuccessChime === 'function') playSuccessChime();
+        const removedDigits = meta.digits;
+        meta.cardEl.remove();
+        reindexWalletCards();
+        const targetIdx = Math.min(idx, totalCards);
+        selectCardIndex(targetIdx, false);
+        triggerDynamicIsland('Card Removed', '•••• ' + removedDigits + ' • Removed from wallet');
+        showToast('Card ending in ' + removedDigits + ' removed from wallet');
+      }} else if (actionType === 'toggle-active') {{
+        const nowDeactivated = !meta.deactivated;
+        meta.cardEl.dataset.deactivated = nowDeactivated ? 'true' : 'false';
+        const badge = document.getElementById('card' + idx + '-active-badge');
+        const dot = badge ? badge.querySelector('.card-status-dot') : null;
+        const labelEl = badge ? badge.querySelector('[data-i18n-dyn-en]') : null;
+
+        if (nowDeactivated) {{
+          meta.cardEl.classList.add('opacity-65', 'grayscale-[45%]');
+          if (badge) {{
+            badge.classList.remove('bg-black/35', 'bg-black/40', 'border-white/20');
+            badge.classList.add('bg-rose-950/75', 'border-rose-400/40');
+          }}
+          if (dot) {{
+            dot.classList.remove('bg-emerald-400', 'animate-pulse');
+            dot.classList.add('bg-rose-400');
+          }}
+          if (labelEl) {{
+            labelEl.setAttribute('data-i18n-dyn-en', 'Deactivated');
+            labelEl.textContent = t('Deactivated');
+          }}
+          playHapticTick();
+          triggerDynamicIsland('Card Deactivated', '•••• ' + meta.digits);
+          showToast('Card •••• ' + meta.digits + ' deactivated');
+        }} else {{
+          meta.cardEl.classList.remove('opacity-65', 'grayscale-[45%]');
+          if (badge) {{
+            badge.classList.remove('bg-rose-950/75', 'border-rose-400/40');
+            badge.classList.add('bg-black/35', 'border-white/20');
+          }}
+          if (dot) {{
+            dot.classList.remove('bg-rose-400');
+            dot.classList.add('bg-emerald-400', 'animate-pulse');
+          }}
+          if (labelEl) {{
+            labelEl.setAttribute('data-i18n-dyn-en', 'Active');
+            labelEl.textContent = t('Active');
+          }}
+          if (typeof playSuccessChime === 'function') playSuccessChime();
+          triggerDynamicIsland('Card Reactivated', '•••• ' + meta.digits);
+          showToast('Card •••• ' + meta.digits + ' reactivated');
+        }}
+      }}
+    }}
+
+    // Real-time Dragging Gesture for Card Carousel (Pointer Events + Long-Press + Damping)
     function initCardCarouselDragging() {{
       const container = document.getElementById('cardCarouselContainer');
       const track = document.getElementById('cardCarouselTrack');
       if (!container || !track) return;
 
+      // Ensure Card 1 starts cleanly centered on initial load
+      selectCardIndex(currentCardIndex, false);
+
+      function clearHoldTimer() {{
+        if (cardHoldTimer) {{
+          clearTimeout(cardHoldTimer);
+          cardHoldTimer = null;
+        }}
+      }}
+
       function onCardPointerDown(e) {{
         if (e.target.closest('#addCardPillBtn') || e.target.closest('[id$="-active-badge"]')) return;
+        clearHoldTimer();
+        cardHoldTriggered = false;
         isDraggingCard = true;
         cardHasMoved = false;
         cardDragStartX = e.clientX;
@@ -6515,6 +6922,21 @@ html_content = f"""<!DOCTYPE html>
         cardInitialTranslate = getBaseCardTranslate(currentCardIndex);
         track.style.transition = 'none';
         container.style.cursor = 'grabbing';
+
+        const touchedCard = e.target.closest ? e.target.closest('.wallet-card') : null;
+        if (touchedCard) {{
+          const holdIdx = parseInt(touchedCard.id.replace('card-item-', ''), 10);
+          cardHoldTimer = setTimeout(() => {{
+            if (isDraggingCard && !cardHasMoved && holdIdx >= 1) {{
+              cardHoldTriggered = true;
+              isDraggingCard = false;
+              container.style.cursor = 'grab';
+              selectCardIndex(currentCardIndex, false);
+              if (typeof playHapticTick === 'function') playHapticTick();
+              openCardContextModal(holdIdx);
+            }}
+          }}, 460);
+        }}
 
         if (container.setPointerCapture && e.pointerId !== undefined) {{
           try {{ container.setPointerCapture(e.pointerId); }} catch(err) {{}}
@@ -6526,22 +6948,30 @@ html_content = f"""<!DOCTYPE html>
         cardDragDeltaX = e.clientX - cardDragStartX;
         if (Math.abs(cardDragDeltaX) > 4) {{
           cardHasMoved = true;
+          clearHoldTimer();
           if (e.cancelable) e.preventDefault();
         }}
 
         let newX = cardInitialTranslate + cardDragDeltaX;
+        const maxTranslate = getBaseCardTranslate(1);
         const minTranslate = getBaseCardTranslate(totalCards);
 
         // Smooth rubber-band resistance at boundaries
-        if (newX > 15) {{
-          newX = 15 + (newX - 15) * 0.22;
-        }} else if (newX < minTranslate - 20) {{
-          newX = (minTranslate - 20) + (newX - (minTranslate - 20)) * 0.22;
+        if (newX > maxTranslate + 24) {{
+          newX = (maxTranslate + 24) + (newX - (maxTranslate + 24)) * 0.22;
+        }} else if (newX < minTranslate - 24) {{
+          newX = (minTranslate - 24) + (newX - (minTranslate - 24)) * 0.22;
         }}
         track.style.transform = 'translateX(' + newX + 'px)';
       }}
 
       function onCardPointerUp(e) {{
+        clearHoldTimer();
+        if (cardHoldTriggered) {{
+          isDraggingCard = false;
+          setTimeout(() => {{ cardHoldTriggered = false; }}, 80);
+          return;
+        }}
         if (!isDraggingCard) return;
         isDraggingCard = false;
         container.style.cursor = 'grab';
@@ -6577,6 +7007,21 @@ html_content = f"""<!DOCTYPE html>
       container.addEventListener('pointermove', onCardPointerMove);
       container.addEventListener('pointerup', onCardPointerUp);
       container.addEventListener('pointercancel', onCardPointerUp);
+      container.addEventListener('contextmenu', (e) => {{
+        const card = e.target.closest ? e.target.closest('.wallet-card') : null;
+        if (card && !e.target.closest('[id$="-active-badge"]')) {{
+          e.preventDefault();
+          clearHoldTimer();
+          cardHoldTriggered = true;
+          isDraggingCard = false;
+          const idx = parseInt(card.id.replace('card-item-', ''), 10);
+          if (idx >= 1) {{
+            if (typeof playHapticTick === 'function') playHapticTick();
+            openCardContextModal(idx);
+          }}
+          setTimeout(() => {{ cardHoldTriggered = false; }}, 120);
+        }}
+      }});
 
       // Touch fallback
       container.addEventListener('touchstart', (e) => {{
@@ -6605,12 +7050,12 @@ html_content = f"""<!DOCTYPE html>
       }}, {{ passive: false }});
 
       window.addEventListener('touchend', (e) => {{
-        if (isDraggingCard) onCardPointerUp(e);
+        if (isDraggingCard || cardHoldTimer) onCardPointerUp(e);
       }});
 
       // Mouse fallback
       container.addEventListener('mousedown', (e) => {{
-        if (e.target.closest('#addCardPillBtn')) return;
+        if (e.button === 2 || e.target.closest('#addCardPillBtn')) return;
         e.preventDefault();
         onCardPointerDown(e);
       }});
@@ -6618,8 +7063,9 @@ html_content = f"""<!DOCTYPE html>
         if (isDraggingCard) onCardPointerMove(e);
       }});
       window.addEventListener('mouseup', (e) => {{
-        if (isDraggingCard) onCardPointerUp(e);
+        if (isDraggingCard || cardHoldTimer) onCardPointerUp(e);
       }});
+      window.addEventListener('resize', () => selectCardIndex(currentCardIndex, false));
     }}
 
     /* ========================================================
@@ -6777,20 +7223,23 @@ html_content = f"""<!DOCTYPE html>
 
       // Create & Append New Card Element to Carousel Track
       const track = document.getElementById('cardCarouselTrack');
+      const cardTypeTitle = (newCardType === 'virtual') ? 'Virtual Card' : 'Mastercard Debit';
       if (track) {{
         const cardEl = document.createElement('div');
         cardEl.id = 'card-item-' + newIdx;
-        cardEl.className = 'w-[310px] h-[178px] rounded-[28px] p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press border border-white/15';
+        cardEl.setAttribute('data-card-name', cardTypeTitle);
+        cardEl.setAttribute('data-card-digits', lastFour);
+        cardEl.className = 'wallet-card w-[310px] h-[178px] rounded-[28px] p-5 flex flex-col justify-between text-white relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-[1.01] overflow-hidden apple-press border border-white/15';
         cardEl.style.background = chosenGrad;
         cardEl.setAttribute('onclick', 'handleCardClick(' + newIdx + ')');
         cardEl.innerHTML = `
           <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
-          <div id="card` + newIdx + `-active-badge" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            ` + ((typeof trText === 'function') ? trText('Active') : 'Active') + `
+          <div id="card` + newIdx + `-active-badge" onclick="event.stopPropagation(); openCardDetailsScreen(` + newIdx + `);" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all cursor-pointer z-10">
+            <span class="card-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span data-i18n-dyn-en="Active">` + ((typeof trText === 'function') ? trText('Active') : 'Active') + `</span>
           </div>
           <div>
-            <span class="text-[11px] font-medium text-white/80 tracking-wide">` + ((typeof trText === 'function') ? trText('Card Balance') : 'Card Balance') + `</span>
+            <span class="text-[11px] font-medium text-white/80 tracking-wide" data-i18n-dyn-en="Card Balance">` + ((typeof trText === 'function') ? trText('Card Balance') : 'Card Balance') + `</span>
             <div class="flex items-baseline gap-1 mt-0.5">
               <span class="text-[29px] font-bold tracking-tight text-white leading-none">` + balanceStr + `</span>
               <span class="currency-label text-[13px] font-bold text-white/90">` + ((typeof trText === 'function') ? trText('AED') : 'AED') + `</span>
@@ -6802,8 +7251,8 @@ html_content = f"""<!DOCTYPE html>
           <div class="flex items-center justify-between pt-1">
             <div class="flex items-center gap-2">
               <div class="flex flex-col text-[7px] font-bold uppercase tracking-wider text-white/70 leading-tight">
-                <span>` + ((typeof trText === 'function') ? trText('VALID') : 'VALID') + `</span>
-                <span>` + ((typeof trText === 'function') ? trText('THRU') : 'THRU') + `</span>
+                <span data-i18n-dyn-en="VALID">` + ((typeof trText === 'function') ? trText('VALID') : 'VALID') + `</span>
+                <span data-i18n-dyn-en="THRU">` + ((typeof trText === 'function') ? trText('THRU') : 'THRU') + `</span>
               </div>
               <span class="text-[13px] font-bold text-white tracking-wide">` + expiryVal + `</span>
             </div>
@@ -6819,12 +7268,7 @@ html_content = f"""<!DOCTYPE html>
       }}
 
       // Update profile badge
-      const profileBadge = document.getElementById('profileCardsCountBadge');
-      if (profileBadge) {{
-        const cardCountEn = totalCards + ' Cards';
-        profileBadge.setAttribute('data-i18n-dyn-en', cardCountEn);
-        profileBadge.textContent = (typeof trText === 'function') ? trText(cardCountEn) : cardCountEn;
-      }}
+      reindexWalletCards();
 
       closeAddCardModal();
       selectCardIndex(newIdx, false);
@@ -9620,7 +10064,26 @@ html_content = f"""<!DOCTYPE html>
       'Beneficiary Added': 'تمت إضافة المستفيد',
       'User Verified': 'تم التحقق من المستخدم',
       'Split Link Copied': 'تم نسخ رابط التقسيم',
-      'Cashback Available': 'كاش باك متاح'
+      'Cashback Available': 'كاش باك متاح',
+      'Card Options': 'خيارات البطاقة',
+      'Deactivated': 'معطّلة',
+      'Deactivate Card': 'إيقاف البطاقة',
+      'Reactivate Card': 'إعادة تفعيل البطاقة',
+      'Temporarily disable card payments': 'إيقاف مدفوعات البطاقة مؤقتاً',
+      'Re-enable card for payments': 'إعادة تفعيل البطاقة للمدفوعات',
+      'Remove Card': 'إزالة البطاقة',
+      'Unlink and remove card from wallet': 'إلغاء ربط البطاقة وإزالتها من المحفظة',
+      'Deactivate Card?': 'إيقاف البطاقة؟',
+      'Confirm': 'تأكيد',
+      'Your card will stop processing payments until you reactivate it.': 'ستتوقف بطاقتك عن معالجة المدفوعات حتى تقوم بإعادة تفعيلها.',
+      'Your card will immediately be ready for contactless and online payments.': 'ستكون بطاقتك جاهزة فوراً للمدفوعات اللاتلامسية وعبر الإنترنت.',
+      'This card will be unlinked and permanently removed from your Cashleap wallet.': 'سيتم إلغاء ربط هذه البطاقة وإزالتها نهائياً من محفظة كاش ليب الخاصة بك.',
+      'Card Deactivated': 'تم إيقاف البطاقة',
+      'Card Reactivated': 'تمت إعادة تفعيل البطاقة',
+      'Card Removed': 'تمت إزالة البطاقة',
+      'Removed from wallet': 'تمت الإزالة من المحفظة',
+      '1 Card': 'بطاقة واحدة',
+      'At least one primary card must remain linked': 'يجب بقاء بطاقة رئيسية واحدة على الأقل مرتبطة بالمحفظة'
     }};
 
     const I18N_MONTHS_AR = {{
@@ -9722,6 +10185,13 @@ html_content = f"""<!DOCTYPE html>
       if ((m = clean.match(/^Added (.+) to Saved Beneficiaries$/))) return 'تمت إضافة ' + translateCoreToAr(m[1]) + ' إلى المستفيدين المحفوظين';
       if ((m = clean.match(/^Verified Cashleap user @(.+)$/))) return 'تم التحقق من مستخدم كاش ليب @' + m[1];
       if ((m = clean.match(/^Card ending in (\\d+) linked to wallet$/))) return 'تم ربط البطاقة المنتهية بـ ' + m[1] + ' بالمحفظة';
+      if ((m = clean.match(/^Card ending in (\\d+) removed from wallet$/))) return 'تمت إزالة البطاقة المنتهية بـ ' + m[1] + ' من المحفظة';
+      if ((m = clean.match(/^Deactivate Card •••• (\\d+)\\?$/))) return 'إيقاف البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Reactivate Card •••• (\\d+)\\?$/))) return 'إعادة تفعيل البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Remove Card •••• (\\d+)\\?$/))) return 'إزالة البطاقة •••• ' + m[1] + '؟';
+      if ((m = clean.match(/^Card •••• (\\d+) deactivated$/))) return 'تم إيقاف البطاقة •••• ' + m[1];
+      if ((m = clean.match(/^Card •••• (\\d+) reactivated$/))) return 'تمت إعادة تفعيل البطاقة •••• ' + m[1];
+      if ((m = clean.match(/^(.+) \\((\\d+)\\) selected$/))) return translateCoreToAr(m[1]) + ' (' + m[2] + ') محددة';
       if ((m = clean.match(/^Mastercard •••• (\\d+)$/))) return 'ماستركارد •••• ' + m[1];
       if ((m = clean.match(/^Card Balance \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار بطاقة الرصيد (' + m[1] + ') • ' + replaceAedToAr(m[2]);
       if ((m = clean.match(/^Debit Card \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار بطاقة الخصم (' + m[1] + ') • ' + replaceAedToAr(m[2]);
@@ -10617,7 +11087,8 @@ html_content = f"""<!DOCTYPE html>
         {{ modalId: 'supportChatModal', sheetId: 'supportChatSheet', closeFn: closeSupportChat }},
         {{ modalId: 'createVaultModal', sheetId: 'createVaultSheet', closeFn: closeCreateVaultModal }},
         {{ modalId: 'vaultActionModal', sheetId: 'vaultActionSheet', closeFn: closeVaultActionModal }},
-        {{ modalId: 'addBeneficiaryModal', sheetId: 'addBeneficiarySheet', closeFn: closeAddBeneficiaryModal }}
+        {{ modalId: 'addBeneficiaryModal', sheetId: 'addBeneficiarySheet', closeFn: closeAddBeneficiaryModal }},
+        {{ modalId: 'cardContextModal', sheetId: 'cardContextSheet', closeFn: closeCardContextModal }}
       ];
 
       modalConfigs.forEach(cfg => {{
