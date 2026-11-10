@@ -14,10 +14,22 @@ html_content = f"""<!DOCTYPE html>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {{
       --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }}
+
+    .lang-arabic {{
+      font-family: 'IBM Plex Sans Arabic', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }}
+    .lang-arabic * {{
+      letter-spacing: 0 !important;
+    }}
+    .lang-arabic .font-mono,
+    .lang-arabic [dir="ltr"] {{
+      direction: ltr;
+      unicode-bidi: isolate;
     }}
 
     body {{
@@ -5718,7 +5730,10 @@ html_content = f"""<!DOCTYPE html>
       const toast = document.getElementById('homeToast');
       const toastMsg = document.getElementById('toastMsg');
       if (!toast) return;
-      if (toastMsg) toastMsg.textContent = msg;
+      const outMsg = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar' && typeof trText === 'function')
+        ? trText(msg)
+        : msg;
+      if (toastMsg) toastMsg.textContent = outMsg;
       toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
       toast.classList.add('opacity-100', 'translate-y-0');
       setTimeout(() => {{
@@ -5926,9 +5941,9 @@ html_content = f"""<!DOCTYPE html>
       box.classList.add('is-scanning');
       defaultSvg.classList.remove('hidden');
       successBadge.classList.add('hidden');
-      heading.textContent = 'Scanning Face ID...';
+      heading.textContent = (typeof trText === 'function') ? trText('Scanning Face ID...') : 'Scanning Face ID...';
       heading.className = 'text-[22px] font-bold text-white tracking-tight';
-      desc.textContent = 'Position your face in front of the camera to unlock Cashleap';
+      desc.textContent = (typeof trText === 'function') ? trText('Position your face in front of the camera to unlock Cashleap') : 'Position your face in front of the camera to unlock Cashleap';
     }}
 
     function triggerFaceIdScan() {{
@@ -5942,7 +5957,7 @@ html_content = f"""<!DOCTYPE html>
       const heading = document.getElementById('faceidStatusHeading');
       const desc = document.getElementById('faceidStatusDesc');
 
-      heading.textContent = 'Scanning Face ID...';
+      heading.textContent = (typeof trText === 'function') ? trText('Scanning Face ID...') : 'Scanning Face ID...';
 
       setTimeout(() => {{
         if (currentScreen !== 'faceid') return;
@@ -5951,9 +5966,9 @@ html_content = f"""<!DOCTYPE html>
         defaultSvg.classList.add('hidden');
         successBadge.classList.remove('hidden');
 
-        heading.textContent = 'Face Recognized!';
+        heading.textContent = (typeof trText === 'function') ? trText('Face Recognized!') : 'Face Recognized!';
         heading.className = 'text-[22px] font-bold text-emerald-400 tracking-tight';
-        desc.textContent = 'Authentication successful. Redirecting...';
+        desc.textContent = (typeof trText === 'function') ? trText('Authentication successful. Redirecting...') : 'Authentication successful. Redirecting...';
 
         setTimeout(() => {{
           if (currentScreen === 'faceid') {{
@@ -6106,12 +6121,13 @@ html_content = f"""<!DOCTYPE html>
       ['D', 'W', 'M', 'Y'].forEach(p => {{
         const btn = document.getElementById('btn-period-' + p);
         if (!btn) return;
+        const pLabel = (typeof trText === 'function') ? trText(p) : p;
         if (p === period) {{
-          btn.className = 'text-[13px] font-bold text-[#ff2a6d] relative flex flex-col items-center cursor-pointer px-1';
-          btn.innerHTML = p + '<span class="w-1.5 h-1.5 rounded-full bg-[#ff2a6d] mt-0.5 shadow-[0_0_6px_#ff2a6d]"></span>';
+          btn.className = 'text-[12px] font-bold text-[#ff2a6d] relative flex flex-col items-center cursor-pointer px-1';
+          btn.innerHTML = pLabel + '<span class="w-1.5 h-1.5 rounded-full bg-[#ff2a6d] mt-0.5 shadow-[0_0_6px_#ff2a6d]"></span>';
         }} else {{
-          btn.className = 'text-[13px] font-semibold text-[#8c82ab] hover:text-white transition cursor-pointer px-1';
-          btn.innerHTML = p;
+          btn.className = 'text-[12px] font-semibold text-[#8c82ab] hover:text-white transition cursor-pointer px-1';
+          btn.innerHTML = pLabel;
         }}
       }});
 
@@ -6125,7 +6141,7 @@ html_content = f"""<!DOCTYPE html>
       for (let i = 0; i < 7; i++) {{
         const dayBtn = document.getElementById('stats-day-' + i);
         if (dayBtn && data.days[i]) {{
-          dayBtn.textContent = data.days[i].name;
+          dayBtn.textContent = (typeof trText === 'function') ? trText(data.days[i].name) : data.days[i].name;
         }}
       }}
 
@@ -6144,9 +6160,9 @@ html_content = f"""<!DOCTYPE html>
         const dayBtn = document.getElementById('stats-day-' + i);
         if (!dayBtn) continue;
         if (i === idx) {{
-          dayBtn.className = 'text-[12px] font-bold text-white bg-white/[0.14] border border-white/10 rounded-full px-3 py-1 cursor-pointer transition';
+          dayBtn.className = 'text-[11px] font-bold text-white bg-white/[0.14] border border-white/10 rounded-full px-2.5 py-1 cursor-pointer transition';
         }} else {{
-          dayBtn.className = 'text-[12px] font-medium text-[#8c82ab] hover:text-white transition py-1 px-2 cursor-pointer';
+          dayBtn.className = 'text-[11px] font-medium text-[#8c82ab] hover:text-white transition py-1 px-1.5 cursor-pointer';
         }}
       }}
 
@@ -6178,7 +6194,7 @@ html_content = f"""<!DOCTYPE html>
         badge.style.top = (pt.y - 8) + 'px';
       }}
       if (badgeText) {{
-        badgeText.textContent = pt.amount;
+        badgeText.textContent = (typeof trText === 'function') ? trText(pt.amount) : pt.amount;
       }}
 
       // Update Current Balance
@@ -6190,7 +6206,9 @@ html_content = f"""<!DOCTYPE html>
 
     function handleCategoryClick(name, amount) {{
       playHapticFeedback('light');
-      triggerDynamicIsland('icon-card', name, amount);
+      const dispName = (typeof trText === 'function') ? trText(name) : name;
+      const dispAmt = (typeof trText === 'function') ? trText(amount) : amount;
+      triggerDynamicIsland('icon-card', dispName, dispAmt);
       showToast(name + ': ' + amount + ' spent this period');
     }}
 
@@ -6645,7 +6663,9 @@ html_content = f"""<!DOCTYPE html>
       newCardType = type;
       const badge = document.getElementById('previewCardTypeBadge');
       if (badge) {{
-        badge.textContent = (type === 'virtual') ? 'Virtual Card' : 'Mastercard Debit';
+        const enType = (type === 'virtual') ? 'Virtual Card' : 'Mastercard Debit';
+        badge.setAttribute('data-i18n-dyn-en', enType);
+        badge.textContent = (typeof trText === 'function') ? trText(enType) : enType;
       }}
     }}
 
@@ -6683,7 +6703,11 @@ html_content = f"""<!DOCTYPE html>
       const expEl = document.getElementById('previewCardExpiry');
 
       if (nameInput && holderEl) {{
-        holderEl.textContent = (nameInput.value.trim() || 'MARICE CERVANTES').toUpperCase();
+        const val = nameInput.value.trim();
+        const dispName = (!val || val === 'Marice Cervantes' || val === 'ماريس سيرفانتس')
+          ? ((typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar') ? 'ماريس سيرفانتس' : 'MARICE CERVANTES')
+          : val.toUpperCase();
+        holderEl.textContent = dispName;
       }}
       if (numInput && numEl) {{
         const raw = numInput.value.trim() || '5412 7512 3412 8821';
@@ -6731,13 +6755,13 @@ html_content = f"""<!DOCTYPE html>
           <div class="card-holographic-glint absolute inset-0 pointer-events-none rounded-[28px] opacity-0 transition-opacity duration-300"></div>
           <div id="card` + newIdx + `-active-badge" class="absolute top-3.5 right-4 bg-black/35 hover:bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 transition-all">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            Active
+            ` + ((typeof trText === 'function') ? trText('Active') : 'Active') + `
           </div>
           <div>
-            <span class="text-[11px] font-medium text-white/80 tracking-wide">Card Balance</span>
+            <span class="text-[11px] font-medium text-white/80 tracking-wide">` + ((typeof trText === 'function') ? trText('Card Balance') : 'Card Balance') + `</span>
             <div class="flex items-baseline gap-1 mt-0.5">
               <span class="text-[29px] font-bold tracking-tight text-white leading-none">` + balanceStr + `</span>
-              <span class="text-[13px] font-bold text-white/90">AED</span>
+              <span class="currency-label text-[13px] font-bold text-white/90">` + ((typeof trText === 'function') ? trText('AED') : 'AED') + `</span>
             </div>
           </div>
           <div class="text-[13.5px] font-mono tracking-[0.2em] text-white/90 font-medium">
@@ -6746,8 +6770,8 @@ html_content = f"""<!DOCTYPE html>
           <div class="flex items-center justify-between pt-1">
             <div class="flex items-center gap-2">
               <div class="flex flex-col text-[7px] font-bold uppercase tracking-wider text-white/70 leading-tight">
-                <span>VALID</span>
-                <span>THRU</span>
+                <span>` + ((typeof trText === 'function') ? trText('VALID') : 'VALID') + `</span>
+                <span>` + ((typeof trText === 'function') ? trText('THRU') : 'THRU') + `</span>
               </div>
               <span class="text-[13px] font-bold text-white tracking-wide">` + expiryVal + `</span>
             </div>
@@ -6764,7 +6788,11 @@ html_content = f"""<!DOCTYPE html>
 
       // Update profile badge
       const profileBadge = document.getElementById('profileCardsCountBadge');
-      if (profileBadge) profileBadge.textContent = totalCards + ' Cards';
+      if (profileBadge) {{
+        const cardCountEn = totalCards + ' Cards';
+        profileBadge.setAttribute('data-i18n-dyn-en', cardCountEn);
+        profileBadge.textContent = (typeof trText === 'function') ? trText(cardCountEn) : cardCountEn;
+      }}
 
       closeAddCardModal();
       selectCardIndex(newIdx, false);
@@ -7421,7 +7449,7 @@ html_content = f"""<!DOCTYPE html>
       sheet.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       const targetY = expanded ? VAULT_SHEET_EXPANDED_Y : VAULT_SHEET_COLLAPSED_Y;
       sheet.style.transform = 'translateY(' + targetY + 'px)';
-      if (label) label.textContent = expanded ? 'Collapse' : 'See All';
+      if (label) label.textContent = getSheetToggleText(expanded);
       if (chevron) chevron.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
     }}
 
@@ -7432,6 +7460,7 @@ html_content = f"""<!DOCTYPE html>
     function refreshVaultTotalsUI() {{
       let totalBal = 0;
       let totalTarget = 0;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       Object.keys(vaultsState).forEach(k => {{
         const v = vaultsState[k];
         totalBal += v.balance;
@@ -7440,8 +7469,16 @@ html_content = f"""<!DOCTYPE html>
         const balEl = document.getElementById('vault-bal-' + k);
         const pctEl = document.getElementById('vault-pct-' + k);
         const barEl = document.getElementById('vault-bar-' + k);
-        if (balEl) balEl.textContent = v.balance.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED';
-        if (pctEl) pctEl.textContent = pct + '% of ' + v.target.toLocaleString('en-US');
+        if (balEl) {{
+          const enBal = v.balance.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED';
+          balEl.setAttribute('data-i18n-dyn-en', enBal);
+          balEl.textContent = t(enBal);
+        }}
+        if (pctEl) {{
+          const enPct = pct + '% of ' + v.target.toLocaleString('en-US');
+          pctEl.setAttribute('data-i18n-dyn-en', enPct);
+          pctEl.textContent = t(enPct);
+        }}
         if (barEl) barEl.style.width = pct + '%';
       }});
 
@@ -7449,26 +7486,39 @@ html_content = f"""<!DOCTYPE html>
       const vaultTotalEl = document.getElementById('vaultTotalBalance');
       const financeVaultsEl = document.getElementById('financeVaultsBal');
       if (vaultTotalEl) vaultTotalEl.textContent = formattedTotal;
-      if (financeVaultsEl) financeVaultsEl.textContent = formattedTotal + ' AED';
+      if (financeVaultsEl) {{
+        const enFinVault = formattedTotal + ' AED';
+        financeVaultsEl.setAttribute('data-i18n-dyn-en', enFinVault);
+        financeVaultsEl.textContent = t(enFinVault);
+      }}
 
       const overallPct = Math.min(100, Math.round((totalBal / Math.max(1, totalTarget)) * 100));
       const overallLabel = document.getElementById('vaultOverallProgressLabel');
       const overallBar = document.getElementById('vaultOverallProgressBar');
-      if (overallLabel) overallLabel.textContent = overallPct + '% of ' + totalTarget.toLocaleString('en-US') + ' AED';
+      if (overallLabel) {{
+        const enOv = overallPct + '% of ' + totalTarget.toLocaleString('en-US') + ' AED';
+        overallLabel.setAttribute('data-i18n-dyn-en', enOv);
+        overallLabel.textContent = t(enOv);
+      }}
       if (overallBar) overallBar.style.width = overallPct + '%';
 
       const countBadge = document.getElementById('vaultActiveCountBadge');
-      if (countBadge) countBadge.textContent = Object.keys(vaultsState).length + ' Goals';
+      if (countBadge) {{
+        const enCnt = Object.keys(vaultsState).length + ' Goals';
+        countBadge.setAttribute('data-i18n-dyn-en', enCnt);
+        countBadge.textContent = t(enCnt);
+      }}
     }}
 
     function handleAccountClick(name, balance, desc) {{
       playHapticTick();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       if (name.toLowerCase().includes('vault') || name.toLowerCase().includes('tokyo') || name.toLowerCase().includes('emergency')) {{
         showScreen('vault');
-        triggerDynamicIsland('Savings Vaults', name + ' • ' + balance);
+        triggerDynamicIsland('Savings Vaults', t(name) + ' • ' + t(balance));
       }} else {{
         triggerDynamicIsland(name, balance);
-        showToast(name + ': ' + balance);
+        showToast(t(name) + ': ' + t(balance));
       }}
     }}
 
@@ -7494,9 +7544,10 @@ html_content = f"""<!DOCTYPE html>
 
     function selectVaultCategory(cat, defaultName, defaultTarget) {{
       playHapticTick();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const nameInput = document.getElementById('newVaultNameInput');
       const targetInput = document.getElementById('newVaultTargetInput');
-      if (nameInput) nameInput.value = defaultName;
+      if (nameInput) nameInput.value = t(defaultName);
       if (targetInput) targetInput.value = defaultTarget;
 
       const map = {{ Travel: 'vault-cat-travel', Reserve: 'vault-cat-reserve', Purchase: 'vault-cat-tech', Wealth: 'vault-cat-wealth' }};
@@ -7533,7 +7584,8 @@ html_content = f"""<!DOCTYPE html>
       const targetEl = document.getElementById('newVaultTargetInput');
       const initEl = document.getElementById('newVaultInitialInput');
 
-      const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : 'Custom Savings Goal';
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : t('Custom Savings Goal');
       const target = Math.max(500, parseFloat(targetEl ? targetEl.value : '8000') || 8000);
       const initial = Math.max(0, parseFloat(initEl ? initEl.value : '1000') || 1000);
       const pct = Math.min(100, Math.round((initial / target) * 100));
@@ -7551,6 +7603,9 @@ html_content = f"""<!DOCTYPE html>
         const row = document.createElement('div');
         row.className = 'py-3.5 hover:bg-white/[0.04] active:bg-white/[0.08] transition cursor-pointer apple-press';
         row.onclick = function() {{ openVaultActionModal('deposit', key); }};
+        const enSub = selectedVaultTermRate + ' • Custom Goal';
+        const enBal = initial.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED';
+        const enPct = pct + '% of ' + target.toLocaleString('en-US');
         row.innerHTML =
           '<div class="flex items-center justify-between mb-2">' +
             '<div class="flex items-center gap-3.5">' +
@@ -7561,12 +7616,12 @@ html_content = f"""<!DOCTYPE html>
               '</div>' +
               '<div class="flex flex-col">' +
                 '<span class="text-[14.5px] font-semibold text-white tracking-tight">' + name + '</span>' +
-                '<span class="text-[11px] text-[#9e94b8]">' + selectedVaultTermRate + ' • Custom Goal</span>' +
+                '<span class="text-[11px] text-[#9e94b8]" data-i18n-dyn-en="' + enSub + '">' + t(enSub) + '</span>' +
               '</div>' +
             '</div>' +
             '<div class="flex flex-col items-end">' +
-              '<span id="vault-bal-' + key + '" class="text-[14.5px] font-bold text-white tracking-tight whitespace-nowrap">' + initial.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED</span>' +
-              '<span id="vault-pct-' + key + '" class="text-[10.5px] text-emerald-400 font-semibold">' + pct + '% of ' + target.toLocaleString('en-US') + '</span>' +
+              '<span id="vault-bal-' + key + '" class="text-[14.5px] font-bold text-white tracking-tight whitespace-nowrap" data-i18n-dyn-en="' + enBal + '">' + t(enBal) + '</span>' +
+              '<span id="vault-pct-' + key + '" class="text-[10.5px] text-emerald-400 font-semibold" data-i18n-dyn-en="' + enPct + '">' + t(enPct) + '</span>' +
             '</div>' +
           '</div>' +
           '<div class="w-full h-1.5 rounded-full bg-white/[0.07] overflow-hidden">' +
@@ -7612,6 +7667,7 @@ html_content = f"""<!DOCTYPE html>
     function setVaultActionMode(mode) {{
       playHapticTick();
       currentVaultActionMode = mode;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const depBtn = document.getElementById('vault-mode-deposit');
       const witBtn = document.getElementById('vault-mode-withdraw');
       const titleEl = document.getElementById('vaultActionModalTitle');
@@ -7621,15 +7677,15 @@ html_content = f"""<!DOCTYPE html>
       if (mode === 'deposit') {{
         if (depBtn) depBtn.className = 'py-2 rounded-lg bg-blue-600 text-white text-xs font-bold transition cursor-pointer';
         if (witBtn) witBtn.className = 'py-2 rounded-lg text-[#9e94b8] hover:text-white text-xs font-semibold transition cursor-pointer';
-        if (titleEl) titleEl.textContent = 'Deposit to Vault';
-        if (subEl) subEl.textContent = 'Instant transfer from Cashleap Mastercard (•••• 0329)';
-        if (submitBtn) submitBtn.innerHTML = '<span>Confirm Instant Deposit</span>';
+        if (titleEl) {{ titleEl.setAttribute('data-i18n-dyn-en', 'Deposit to Vault'); titleEl.textContent = t('Deposit to Vault'); }}
+        if (subEl) {{ subEl.setAttribute('data-i18n-dyn-en', 'Instant transfer from Cashleap Mastercard (•••• 0329)'); subEl.textContent = t('Instant transfer from Cashleap Mastercard (•••• 0329)'); }}
+        if (submitBtn) submitBtn.innerHTML = '<span data-i18n-dyn-en="Confirm Instant Deposit">' + t('Confirm Instant Deposit') + '</span>';
       }} else {{
         if (witBtn) witBtn.className = 'py-2 rounded-lg bg-indigo-600 text-white text-xs font-bold transition cursor-pointer';
         if (depBtn) depBtn.className = 'py-2 rounded-lg text-[#9e94b8] hover:text-white text-xs font-semibold transition cursor-pointer';
-        if (titleEl) titleEl.textContent = 'Withdraw from Vault';
-        if (subEl) subEl.textContent = 'Instant release back to Cashleap Mastercard (•••• 0329)';
-        if (submitBtn) submitBtn.innerHTML = '<span>Confirm Instant Withdrawal</span>';
+        if (titleEl) {{ titleEl.setAttribute('data-i18n-dyn-en', 'Withdraw from Vault'); titleEl.textContent = t('Withdraw from Vault'); }}
+        if (subEl) {{ subEl.setAttribute('data-i18n-dyn-en', 'Instant release back to Cashleap Mastercard (•••• 0329)'); subEl.textContent = t('Instant release back to Cashleap Mastercard (•••• 0329)'); }}
+        if (submitBtn) submitBtn.innerHTML = '<span data-i18n-dyn-en="Confirm Instant Withdrawal">' + t('Confirm Instant Withdrawal') + '</span>';
       }}
     }}
 
@@ -7638,6 +7694,7 @@ html_content = f"""<!DOCTYPE html>
       if (!vaultsState[key]) key = 'emergency';
       currentSelectedVaultKey = key;
       const v = vaultsState[key];
+      const t = (typeof trText === 'function') ? trText : (s) => s;
 
       ['emergency', 'tokyo', 'gold'].forEach(k => {{
         const btn = document.getElementById('vault-sel-' + k);
@@ -7652,9 +7709,11 @@ html_content = f"""<!DOCTYPE html>
       const nameLbl = document.getElementById('vaultSelectedNameLabel');
       const apyLbl = document.getElementById('vaultSelectedApyLabel');
       const balLbl = document.getElementById('vaultSelectedBalLabel');
-      if (nameLbl) nameLbl.textContent = v.name;
-      if (apyLbl) apyLbl.textContent = v.apy + ' • Goal: ' + v.target.toLocaleString('en-US') + ' AED';
-      if (balLbl) balLbl.textContent = v.balance.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED';
+      if (nameLbl) {{ nameLbl.setAttribute('data-i18n-dyn-en', v.name); nameLbl.textContent = t(v.name); }}
+      const enApy = v.apy + ' • Goal: ' + v.target.toLocaleString('en-US') + ' AED';
+      if (apyLbl) {{ apyLbl.setAttribute('data-i18n-dyn-en', enApy); apyLbl.textContent = t(enApy); }}
+      const enBal = v.balance.toLocaleString('en-US', {{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}) + ' AED';
+      if (balLbl) {{ balLbl.setAttribute('data-i18n-dyn-en', enBal); balLbl.textContent = t(enBal); }}
     }}
 
     function setVaultPresetAmount(val) {{
@@ -7687,16 +7746,19 @@ html_content = f"""<!DOCTYPE html>
       playHapticTick();
       isVaultAutoSaveOn = !isVaultAutoSaveOn;
       const lbl = document.getElementById('vaultAutoSaveQuickLabel');
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       if (isVaultAutoSaveOn) {{
         if (lbl) {{
-          lbl.textContent = 'Auto-Save';
+          lbl.setAttribute('data-i18n-dyn-en', 'Auto-Save');
+          lbl.textContent = t('Auto-Save');
           lbl.className = 'text-xs text-emerald-400 font-medium mt-1.5';
         }}
         triggerDynamicIsland('Auto-Save Enabled', '2x Spare Change Round-Up active');
         showToast('Spare change round-up enabled for active vaults');
       }} else {{
         if (lbl) {{
-          lbl.textContent = 'Paused';
+          lbl.setAttribute('data-i18n-dyn-en', 'Paused');
+          lbl.textContent = t('Paused');
           lbl.className = 'text-xs text-[#a09bb8] font-medium mt-1.5';
         }}
         triggerDynamicIsland('Auto-Save Paused', 'Round-Up transfers paused');
@@ -7711,6 +7773,7 @@ html_content = f"""<!DOCTYPE html>
     function selectBillProvider(name) {{
       playHapticTick();
       selectedBillProvider = name;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const pills = document.querySelectorAll('.bill-provider-pill');
       pills.forEach(p => {{
         p.classList.remove('active', 'border-blue-400', 'text-white');
@@ -7720,21 +7783,21 @@ html_content = f"""<!DOCTYPE html>
         const b = document.getElementById('provider-dewa');
         if (b) {{ b.classList.add('active', 'border-blue-400', 'text-white'); b.classList.remove('text-[#9e94b8]'); }}
         const l = document.getElementById('billAccountLabel');
-        if (l) l.textContent = 'DEWA Premise Number';
+        if (l) {{ l.setAttribute('data-i18n-dyn-en', 'DEWA Premise Number'); l.textContent = t('DEWA Premise Number'); }}
         const a = document.getElementById('billAmountInput');
         if (a) a.value = '285.50';
       }} else if (name.startsWith('Salik')) {{
         const b = document.getElementById('provider-salik');
         if (b) {{ b.classList.add('active', 'border-blue-400', 'text-white'); b.classList.remove('text-[#9e94b8]'); }}
         const l = document.getElementById('billAccountLabel');
-        if (l) l.textContent = 'Salik Tag Account PIN';
+        if (l) {{ l.setAttribute('data-i18n-dyn-en', 'Salik Tag Account PIN'); l.textContent = t('Salik Tag Account PIN'); }}
         const a = document.getElementById('billAmountInput');
         if (a) a.value = '100.00';
       }} else {{
         const b = document.getElementById('provider-telecom');
         if (b) {{ b.classList.add('active', 'border-blue-400', 'text-white'); b.classList.remove('text-[#9e94b8]'); }}
         const l = document.getElementById('billAccountLabel');
-        if (l) l.textContent = 'Mobile Phone Number';
+        if (l) {{ l.setAttribute('data-i18n-dyn-en', 'Mobile Phone Number'); l.textContent = t('Mobile Phone Number'); }}
         const a = document.getElementById('billAmountInput');
         if (a) a.value = '150.00';
       }}
@@ -7868,17 +7931,21 @@ html_content = f"""<!DOCTYPE html>
       // Prepend transaction to Home Recent Transactions list
       const list = document.getElementById('sheetScrollArea');
       if (list) {{
+        const t = (typeof trText === 'function') ? trText : (s) => s;
         const row = document.createElement('div');
         row.className = 'flex items-center justify-between py-3 border-b border-white/[0.08] hover:bg-white/[0.04] transition cursor-pointer rounded-xl px-2 -mx-2 select-none';
+        const enTitle = brand + ' Voucher';
+        const enSub = 'Just now • Digital e-Card';
+        const enAmt = '-' + Number(amount).toFixed(2) + ' AED';
         row.innerHTML =
           '<div class="flex items-center gap-3.5">' +
             '<div class="w-11 h-11 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">VC</div>' +
             '<div>' +
-              '<h4 class="text-sm font-semibold text-white leading-tight">' + brand + ' Voucher</h4>' +
-              '<p class="text-xs text-[#8e8ca6] mt-0.5">Just now • Digital e-Card</p>' +
+              '<h4 class="text-sm font-semibold text-white leading-tight" data-i18n-dyn-en="' + enTitle + '">' + t(enTitle) + '</h4>' +
+              '<p class="text-xs text-[#8e8ca6] mt-0.5" data-i18n-dyn-en="' + enSub + '">' + t(enSub) + '</p>' +
             '</div>' +
           '</div>' +
-          '<span class="text-sm font-semibold text-white tracking-tight">-' + Number(amount).toFixed(2) + ' AED</span>';
+          '<span class="text-sm font-semibold text-white tracking-tight" data-i18n-dyn-en="' + enAmt + '">' + t(enAmt) + '</span>';
         list.insertBefore(row, list.firstChild);
       }}
 
@@ -8024,16 +8091,20 @@ html_content = f"""<!DOCTYPE html>
     function updateNotifBadges() {{
       const headerBadge = document.getElementById('headerNotificationBadge');
       const countBadge = document.getElementById('notifCountBadge');
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       if (unreadNotifCount <= 0) {{
         if (headerBadge) headerBadge.classList.add('scale-0', 'opacity-0');
         if (countBadge) {{
-          countBadge.textContent = '0 New';
+          countBadge.setAttribute('data-i18n-dyn-en', '0 New');
+          countBadge.textContent = t('0 New');
           countBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-slate-400 border border-white/15';
         }}
       }} else {{
         if (headerBadge) headerBadge.classList.remove('scale-0', 'opacity-0');
         if (countBadge) {{
-          countBadge.textContent = `${{unreadNotifCount}} New`;
+          const enCount = `${{unreadNotifCount}} New`;
+          countBadge.setAttribute('data-i18n-dyn-en', enCount);
+          countBadge.textContent = t(enCount);
           countBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#ff2a6d]/20 text-[#ff2a6d] border border-[#ff2a6d]/30';
         }}
       }}
@@ -8050,11 +8121,12 @@ html_content = f"""<!DOCTYPE html>
       const iconDot = document.getElementById('islandIconDot');
       if (!island) return;
 
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       island.classList.remove('opacity-0');
       island.classList.add('dynamic-island-expanded', 'opacity-100');
-      titleEl.textContent = title;
+      titleEl.textContent = t(title);
       titleEl.classList.remove('hidden');
-      subEl.textContent = sub;
+      subEl.textContent = t(sub);
       subEl.className = 'text-[11px] font-bold text-white flex-shrink-0';
       if (iconHtml) {{
         iconDot.outerHTML = `<div id="islandIconDot" class="flex-shrink-0">${{iconHtml}}</div>`;
@@ -8066,7 +8138,7 @@ html_content = f"""<!DOCTYPE html>
         island.classList.remove('dynamic-island-expanded', 'opacity-100');
         island.classList.add('opacity-0');
         titleEl.classList.add('hidden');
-        subEl.textContent = 'AED';
+        subEl.textContent = (typeof currentAppLanguage !== 'undefined' && currentAppLanguage === 'ar') ? 'د.إ' : 'AED';
         subEl.className = 'text-[9.5px] font-mono font-medium text-emerald-400';
       }}, duration);
     }}
@@ -8145,11 +8217,19 @@ html_content = f"""<!DOCTYPE html>
       playHapticTick();
       const tx = txReceipts[txKey];
       if (!tx) return;
-      document.getElementById('txDetailName').textContent = tx.name;
-      document.getElementById('txDetailCategory').textContent = tx.category;
-      document.getElementById('txDetailAmount').textContent = tx.amount;
-      document.getElementById('txDetailCard').textContent = tx.card;
-      document.getElementById('txDetailTime').textContent = tx.time;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const setD = (id, val) => {{
+        const el = document.getElementById(id);
+        if (el) {{
+          el.setAttribute('data-i18n-dyn-en', val);
+          el.textContent = t(val);
+        }}
+      }};
+      setD('txDetailName', tx.name);
+      setD('txDetailCategory', tx.category);
+      setD('txDetailAmount', tx.amount);
+      setD('txDetailCard', tx.card);
+      setD('txDetailTime', tx.time);
       document.getElementById('txDetailRef').textContent = tx.ref;
       const logoEl = document.getElementById('txDetailLogo');
       logoEl.style.backgroundColor = tx.bg;
@@ -8314,7 +8394,7 @@ html_content = f"""<!DOCTYPE html>
       sheet.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       const targetY = expanded ? SEND_SHEET_EXPANDED_Y : SEND_SHEET_COLLAPSED_Y;
       sheet.style.transform = 'translateY(' + targetY + 'px)';
-      if (label) label.textContent = expanded ? 'Collapse' : 'See All';
+      if (label) label.textContent = getSheetToggleText(expanded);
       if (chevron) chevron.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
     }}
 
@@ -8355,54 +8435,58 @@ html_content = f"""<!DOCTYPE html>
       playHapticTick();
       const ben = beneficiariesDirectory[benKey] || beneficiariesDirectory.sarah;
       currentActiveBeneficiaryKey = benKey;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
 
       const nameEl = document.getElementById('sendRecipientName');
       const avatarEl = document.getElementById('sendRecipientAvatar');
       const badgeEl = document.getElementById('sendRecipientBadge');
       const handleEl = document.getElementById('sendRecipientHandle');
 
-      if (nameEl) nameEl.textContent = ben.name;
+      if (nameEl) {{ nameEl.setAttribute('data-i18n-dyn-en', ben.name); nameEl.textContent = t(ben.name); }}
       if (avatarEl) {{
         avatarEl.textContent = ben.initials;
         avatarEl.className = ben.avatarClass;
       }}
       if (badgeEl) {{
-        badgeEl.textContent = ben.badge;
+        badgeEl.setAttribute('data-i18n-dyn-en', ben.badge);
+        badgeEl.textContent = t(ben.badge);
         badgeEl.className = (ben.type === 'cashleap')
           ? 'flex-shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300'
           : 'flex-shrink-0 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[#9e94b8]';
       }}
-      if (handleEl) handleEl.textContent = ben.handle;
+      if (handleEl) {{ handleEl.setAttribute('data-i18n-dyn-en', ben.handle); handleEl.textContent = t(ben.handle); }}
 
       const panel = document.getElementById('sendSheetBeneficiariesPanel');
       const btn = document.getElementById('sendSheetBrowseToggleBtn');
       if (panel && !panel.classList.contains('hidden')) {{
         panel.classList.add('hidden');
-        if (btn) btn.textContent = 'Directory ▾';
+        if (btn) {{ btn.setAttribute('data-i18n-dyn-en', 'Directory ▾'); btn.textContent = t('Directory ▾'); }}
       }}
     }}
 
     function toggleSendSheetBeneficiariesList() {{
       playHapticTick();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const panel = document.getElementById('sendSheetBeneficiariesPanel');
       const btn = document.getElementById('sendSheetBrowseToggleBtn');
       if (!panel) return;
       if (panel.classList.contains('hidden')) {{
         panel.classList.remove('hidden');
-        if (btn) btn.textContent = 'Hide ▴';
+        if (btn) {{ btn.setAttribute('data-i18n-dyn-en', 'Hide ▴'); btn.textContent = t('Hide ▴'); }}
       }} else {{
         panel.classList.add('hidden');
-        if (btn) btn.textContent = 'Directory ▾';
+        if (btn) {{ btn.setAttribute('data-i18n-dyn-en', 'Directory ▾'); btn.textContent = t('Directory ▾'); }}
       }}
     }}
 
     function filterSendSheetBeneficiaries(query) {{
       const q = (query || '').toLowerCase().trim();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const panel = document.getElementById('sendSheetBeneficiariesPanel');
       const btn = document.getElementById('sendSheetBrowseToggleBtn');
       if (panel && q.length > 0 && panel.classList.contains('hidden')) {{
         panel.classList.remove('hidden');
-        if (btn) btn.textContent = 'Hide ▴';
+        if (btn) {{ btn.setAttribute('data-i18n-dyn-en', 'Hide ▴'); btn.textContent = t('Hide ▴'); }}
       }}
       const rows = document.querySelectorAll('#sendSheetBeneficiariesPanel .sheet-ben-row');
       rows.forEach(r => {{
@@ -8447,20 +8531,23 @@ html_content = f"""<!DOCTYPE html>
       if (noteEl) noteEl.value = '';
 
       // Prepend transaction to Home Recent Transactions list
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const list = document.getElementById('sheetScrollArea');
       if (list) {{
         const row = document.createElement('div');
         row.className = 'flex items-center justify-between py-3 border-b border-white/[0.08] hover:bg-white/[0.04] transition cursor-pointer rounded-xl px-2 -mx-2 select-none';
         const initials = recipient.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        const enSub = 'Just now • ' + note;
+        const enAmt = '-' + amt.toFixed(2) + ' AED';
         row.innerHTML =
           '<div class="flex items-center gap-3.5">' +
             '<div class="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">' + initials + '</div>' +
             '<div>' +
-              '<h4 class="text-sm font-semibold text-white leading-tight">' + recipient + '</h4>' +
-              '<p class="text-xs text-[#8e8ca6] mt-0.5">Just now • ' + note + '</p>' +
+              '<h4 class="text-sm font-semibold text-white leading-tight">' + t(recipient) + '</h4>' +
+              '<p class="text-xs text-[#8e8ca6] mt-0.5" data-i18n-dyn-en="' + enSub + '">' + t(enSub) + '</p>' +
             '</div>' +
           '</div>' +
-          '<span class="text-sm font-semibold text-white tracking-tight">-' + amt.toFixed(2) + ' AED</span>';
+          '<span class="text-sm font-semibold text-white tracking-tight" data-i18n-dyn-en="' + enAmt + '">' + t(enAmt) + '</span>';
         list.insertBefore(row, list.firstChild);
       }}
 
@@ -8514,11 +8601,14 @@ html_content = f"""<!DOCTYPE html>
     function onBenLeapTagInput(val) {{
       const clean = (val || '').replace(/^@/, '').trim() || 'user';
       const subEl = document.getElementById('newBenPreviewSub');
-      if (subEl) subEl.textContent = '@' + clean + ' • Instant P2P';
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const enVal = '@' + clean + ' • Instant P2P';
+      if (subEl) {{ subEl.setAttribute('data-i18n-dyn-en', enVal); subEl.textContent = t(enVal); }}
     }}
 
     function onBenFullNameInput(val) {{
-      const name = (val || '').trim() || 'Cashleap User';
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const name = (val || '').trim() || t('Cashleap User');
       const nameEl = document.getElementById('newBenPreviewName');
       const avEl = document.getElementById('newBenPreviewAvatar');
       if (nameEl) nameEl.textContent = name;
@@ -8599,12 +8689,14 @@ html_content = f"""<!DOCTYPE html>
 
       // 2. Add to Saved Beneficiaries Bottom Sheet List
       const list = document.getElementById('sendBeneficiariesList');
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       if (list) {{
         const row = document.createElement('div');
         row.setAttribute('data-ben-type', isCashleap ? 'cashleap' : 'iban');
         row.setAttribute('data-ben-search', (fullName + ' @' + cleanTag + ' ' + rawIban).toLowerCase());
         row.className = 'beneficiary-row py-3 flex items-center justify-between hover:bg-white/[0.04] active:bg-white/[0.08] transition cursor-pointer apple-press';
         row.onclick = function() {{ openSendToBeneficiary(key); }};
+        const badgeEn = isCashleap ? 'Cashleap' : 'IBAN';
         row.innerHTML =
           '<div class="flex items-center gap-3.5">' +
             '<div class="relative flex-shrink-0">' +
@@ -8613,14 +8705,14 @@ html_content = f"""<!DOCTYPE html>
             '</div>' +
             '<div class="flex flex-col">' +
               '<div class="flex items-center gap-1.5">' +
-                '<span class="text-[14px] font-semibold text-white tracking-tight">' + fullName + '</span>' +
-                '<span class="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded ' + (isCashleap ? 'bg-blue-500/20 border border-blue-400/30 text-blue-300' : 'bg-white/10 border border-white/15 text-[#9e94b8]') + '">' + (isCashleap ? 'Cashleap' : 'IBAN') + '</span>' +
+                '<span class="text-[14px] font-semibold text-white tracking-tight">' + t(fullName) + '</span>' +
+                '<span class="text-[9px] font-bold uppercase px-1.5 py-0.2 rounded ' + (isCashleap ? 'bg-blue-500/20 border border-blue-400/30 text-blue-300' : 'bg-white/10 border border-white/15 text-[#9e94b8]') + '" data-i18n-dyn-en="' + badgeEn + '">' + t(badgeEn) + '</span>' +
               '</div>' +
-              '<span class="text-[11px] text-[#9e94b8]">' + beneficiariesDirectory[key].sub + '</span>' +
+              '<span class="text-[11px] text-[#9e94b8]" data-i18n-dyn-en="' + beneficiariesDirectory[key].sub + '">' + t(beneficiariesDirectory[key].sub) + '</span>' +
             '</div>' +
           '</div>' +
           '<div class="flex items-center gap-2">' +
-            '<span class="text-[11.5px] font-semibold text-blue-400">Send</span>' +
+            '<span class="text-[11.5px] font-semibold text-blue-400" data-i18n-dyn-en="Send">' + t('Send') + '</span>' +
             '<svg class="w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>' +
           '</div>';
         list.insertBefore(row, list.firstChild);
@@ -8629,7 +8721,11 @@ html_content = f"""<!DOCTYPE html>
       // Update Saved count badges
       const totalCount = Object.keys(beneficiariesDirectory).length;
       const badge = document.getElementById('sendBeneficiariesCountBadge');
-      if (badge) badge.textContent = totalCount + ' Saved';
+      if (badge) {{
+        const enSaved = totalCount + ' Saved';
+        badge.setAttribute('data-i18n-dyn-en', enSaved);
+        badge.textContent = t(enSaved);
+      }}
       const sheetCount = document.getElementById('sendSheetCountBadge');
       if (sheetCount) sheetCount.textContent = String(totalCount);
 
@@ -8769,17 +8865,18 @@ html_content = f"""<!DOCTYPE html>
     /* Card Details Sheet */
     function openCardDetailsModal(cardIdx = 1) {{
       playHapticTick();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const title = document.getElementById('cardDetailsTitle');
       const sub = document.getElementById('cardDetailsSubtitle');
       const num = document.getElementById('cardDetailsNum');
       if (cardIdx === 2 || (!cardIdx && currentCardIndex === 2)) {{
-        if (title) title.textContent = 'Cashleap Debit Card';
-        if (sub) sub.textContent = 'Mastercard Debit • Active';
+        if (title) {{ title.setAttribute('data-i18n-dyn-en', 'Cashleap Debit Card'); title.textContent = t('Cashleap Debit Card'); }}
+        if (sub) {{ sub.setAttribute('data-i18n-dyn-en', 'Mastercard Debit • Active'); sub.textContent = t('Mastercard Debit • Active'); }}
         if (num) num.textContent = '5412 •••• •••• 0319';
         triggerDynamicIsland('Debit Card 0319', 'Active ● Apple Pay');
       }} else {{
-        if (title) title.textContent = 'Cashleap Mastercard';
-        if (sub) sub.textContent = 'Card Controls & Apple Pay';
+        if (title) {{ title.setAttribute('data-i18n-dyn-en', 'Cashleap Mastercard'); title.textContent = t('Cashleap Mastercard'); }}
+        if (sub) {{ sub.setAttribute('data-i18n-dyn-en', 'Card Controls & Apple Pay'); sub.textContent = t('Card Controls & Apple Pay'); }}
         if (num) num.textContent = '5412 •••• •••• 0329';
         triggerDynamicIsland('Mastercard 0329', 'Active ● Apple Pay');
       }}
@@ -8798,6 +8895,10 @@ html_content = f"""<!DOCTYPE html>
     let isAccountFrozen = false;
     function openCardDetailsScreen(cardIdx = 1) {{
       playHapticTick();
+      const t = (typeof trText === 'function') ? trText : (s) => s;
+      const setD = (el, val) => {{
+        if (el) {{ el.setAttribute('data-i18n-dyn-en', val); el.textContent = t(val); }}
+      }};
       const balEl = document.getElementById('cdCurrentBalance');
       const creditEl = document.getElementById('cdCreditLimit');
       const minDueEl = document.getElementById('cdMinDue');
@@ -8806,17 +8907,17 @@ html_content = f"""<!DOCTYPE html>
       
       if (cardIdx === 2 || (!cardIdx && currentCardIndex === 2)) {{
         if (balEl) balEl.textContent = '2,150.60';
-        if (creditEl) creditEl.textContent = '25,000.00 AED';
-        if (minDueEl) minDueEl.textContent = '450.00 AED';
-        if (lastPayEl) lastPayEl.textContent = 'Oct 18, 2024';
-        if (cashbackEl) cashbackEl.textContent = '125.00 AED';
+        setD(creditEl, '25,000.00 AED');
+        setD(minDueEl, '450.00 AED');
+        setD(lastPayEl, 'Oct 18, 2024');
+        setD(cashbackEl, '125.00 AED');
         triggerDynamicIsland('Debit Card 0319', 'Account Details');
       }} else {{
         if (balEl) balEl.textContent = '3,350.60';
-        if (creditEl) creditEl.textContent = '35,000.00 AED';
-        if (minDueEl) minDueEl.textContent = '960.00 AED';
-        if (lastPayEl) lastPayEl.textContent = 'May 25, 2024';
-        if (cashbackEl) cashbackEl.textContent = '200.00 AED';
+        setD(creditEl, '35,000.00 AED');
+        setD(minDueEl, '960.00 AED');
+        setD(lastPayEl, 'May 25, 2024');
+        setD(cashbackEl, '200.00 AED');
         triggerDynamicIsland('Cashleap Mastercard', 'Account Details');
       }}
       showScreen('carddetail');
@@ -8842,15 +8943,18 @@ html_content = f"""<!DOCTYPE html>
       playHapticTick();
       isAccountFrozen = !isAccountFrozen;
       const label = document.getElementById('cdFreezeLabel');
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       if (isAccountFrozen) {{
         if (label) {{
-          label.textContent = 'Unfreeze my Account';
+          label.setAttribute('data-i18n-dyn-en', 'Unfreeze my Account');
+          label.textContent = t('Unfreeze my Account');
           label.classList.add('text-rose-400');
         }}
         triggerDynamicIsland('Account Frozen', 'All payments disabled');
       }} else {{
         if (label) {{
-          label.textContent = 'Freeze my Account';
+          label.setAttribute('data-i18n-dyn-en', 'Freeze my Account');
+          label.textContent = t('Freeze my Account');
           label.classList.remove('text-rose-400');
         }}
         triggerDynamicIsland('Account Active', 'Ready for Apple Pay', '<span class="text-xs text-emerald-400">✓</span>');
@@ -8869,346 +8973,870 @@ html_content = f"""<!DOCTYPE html>
     }}
 
     let currentAppLanguage = 'en'; // 'en' or 'ar'
+    const enTextNodeCache = new WeakMap();
+    const enPlaceholderCache = new WeakMap();
+    const enTitleCache = new WeakMap();
+
+    const I18N_EXACT_AR = {{
+      // Brand & General
+      'Cashleap': 'كاش ليب',
+      'AED': 'د.إ',
+      'USD': 'دولار',
+      'VAULT': 'خزينة',
+      'IBAN': 'آيبان',
+      'Done': 'تم',
+      'Close': 'إغلاق',
+      'Cancel': 'إلغاء',
+      'Change': 'تغيير',
+      'Copy': 'نسخ',
+      'Next': 'التالي',
+      'Manage': 'إدارة',
+      'Lookup': 'بحث',
+      'Send': 'إرسال',
+      'Deposit': 'إيداع',
+      'Withdraw': 'سحب',
+      'Transfer': 'تحويل',
+      'Exchange': 'صرف عملات',
+      'Top Up': 'شحن',
+      'Vault': 'خزينة',
+      'Schedule': 'جدولة',
+      'Add': 'إيداع',
+      'Active': 'نشطة',
+      'Ready': 'جاهز',
+      'Visible': 'مرئي',
+      'Hidden': 'مخفي',
+      'Locked': 'مقفل',
+      'Instant': 'فوري',
+      'Default': 'افتراضية',
+      'Official': 'رسمي',
+      'Express': 'سريع',
+      'Direct': 'مباشر',
+      'Paused': 'متوقف مؤقتاً',
+      'Completed': 'مكتملة',
+      'Verified': 'موثق',
+      'Cashback': 'استرداد نقدي',
+      'Statements': 'كشوف الحساب',
+      'Transactions': 'المعاملات',
+      'Language': 'اللغة',
+      'Language / اللغة': 'اللغة / Language',
+      'See All': 'عرض الكل',
+      'Collapse': 'طي',
+      'Directory ▾': 'الدليل ▾',
+      'Hide ▴': 'إخفاء ▴',
+
+      // Auth Screens (2–5)
+      'Choose login type': 'اختر طريقة تسجيل الدخول',
+      'You can choose one of 3 ways to protect your data': 'يمكنك اختيار إحدى الطرق الثلاث لحماية بياناتك',
+      'Face ID': 'بصمة الوجه',
+      'Secret Key': 'الرمز السري',
+      'Biometric Login': 'تسجيل الدخول البيومتري',
+      'Scanning Face ID...': 'جارٍ مسح بصمة الوجه...',
+      'Position your face in front of the camera to unlock Cashleap': 'وجّه وجهك أمام الكاميرا لفتح كاش ليب',
+      'Face Recognized!': 'تم التعرف على الوجه!',
+      'Authentication successful. Redirecting...': 'تم التحقق بنجاح. جارٍ التحويل...',
+      'Verify Face ID': 'التحقق ببصمة الوجه',
+      'Simulate Failure': 'محاكاة فشل التحقق',
+      'Use Secret Key': 'استخدام الرمز السري',
+      'Passcode': 'رمز المرور',
+      'Enter Secret Key': 'أدخل الرمز السري',
+      'Enter your 6-digit key to authenticate': 'أدخل رمزك المكوّن من ٦ أرقام للتحقق',
+      'Quick Fill: 123456': 'تعبئة سريعة: 123456',
+      'Welcome back,': 'مرحباً بعودتك،',
+      'Marice!': 'ماريس!',
+      'Opening Cashleap...': 'جارٍ فتح كاش ليب...',
+      'Face Not Recognized': 'لم يتم التعرف على الوجه',
+      'Try again or authenticate using your secret key.': 'حاول مرة أخرى أو سجّل الدخول باستخدام الرمز السري.',
+      'Try Face ID Again': 'إعادة محاولة بصمة الوجه',
+
+      // User Greetings & Dock
+      'Hello,': 'مرحباً،',
+      'Marice Cervantes': 'ماريس سيرفانتس',
+      'MARICE CERVANTES': 'ماريس سيرفانتس',
+      'Home': 'الرئيسية',
+      'Finance': 'المالية',
+      'Statistics': 'الإحصائيات',
+      'Others': 'المزيد',
+
+      // Home Screen Card & Transactions
+      'Card Balance': 'رصيد البطاقة',
+      'VALID': 'صالحة',
+      'THRU': 'حتى',
+      'Recent Transaction': 'أحدث المعاملات',
+      'Amazon Prime': 'أمازون برايم',
+      'Amazon Prime Video': 'أمازون برايم فيديو',
+      'Spotify': 'سبوتيفاي',
+      'Spotify Premium': 'سبوتيفاي بريميوم',
+      'Amazon Store': 'متجر أمازون',
+      'eBay': 'إيباي',
+      'eBay Marketplace': 'متجر إيباي',
+      'Walmart': 'وولمارت',
+      'Walmart Supercenter': 'سوبر سنتر وولمارت',
+      'Apple Services': 'خدمات آبل',
+      'Starbucks Coffee': 'ستاربكس كوفي',
+      'Netflix': 'نتفليكس',
+      'Netflix Ultra HD': 'نتفليكس فائق الدقة',
+      'Subscription': 'اشتراك',
+      'Streaming Subscription': 'اشتراك بث مباشر',
+      'Music Streaming': 'بث موسيقي',
+      'E-Commerce': 'تسوق إلكتروني',
+      'E-Commerce Retail': 'متاجر وتجارة إلكترونية',
+      'Marketplace': 'متجر إلكتروني',
+      'Online Auction & Goods': 'تسوق ومزادات إلكترونية',
+      'Groceries & Household': 'بقالة ومستلزمات منزلية',
+      'iCloud+ 2TB Storage': 'تخزين آيكلاود بلس ٢ تيرابايت',
+      'Food & Beverage': 'مأكولات ومشروبات',
+      'Video Streaming': 'بث الفيديو',
+      'Cloud & Apps': 'سحابة وتطبيقات',
+      'Dining': 'مطاعم ومقاهي',
+
+      // Card Details Screen & Modal
+      'Current Balance': 'الرصيد الحالي',
+      'Credit': 'الحد الائتماني',
+      'Minimum Amount due': 'الحد الأدنى المستحق',
+      'Last Payment': 'آخر دفعة مسددة',
+      'Customize Card': 'تخصيص البطاقة',
+      'Freeze my Account': 'تجميد الحساب والبطاقة',
+      'Unfreeze my Account': 'إلغاء تجميد الحساب',
+      'Add Apple Wallet': 'إضافة إلى محفظة آبل',
+      'Cashleap Mastercard': 'ماستركارد كاش ليب',
+      'Cashleap Debit Card': 'بطاقة خصم كاش ليب',
+      'Mastercard Debit • Active': 'ماستركارد للخصم • نشطة',
+      'Card Controls & Apple Pay': 'إعدادات البطاقة وآبل باي',
+      'Card Number': 'رقم البطاقة',
+      'Switch Active Card': 'تبديل البطاقة النشطة',
+      'Select Debit Card or Balance Card': 'اختر بطاقة الخصم أو بطاقة الرصيد',
+      'Lock / Freeze Card': 'قفل / تجميد البطاقة',
+      'Temporarily disable all transactions': 'تعطيل كافة المعاملات مؤقتاً',
+      'Contactless Apple Pay': 'الدفع بدون تلامس آبل باي',
+      'Ready for iPhone & Apple Watch': 'جاهز لأجهزة آيفون وساعة آبل',
+
+      // Statistics Screen
+      'My Expenses': 'مصروفاتي',
+      'D': 'يوم',
+      'W': 'أسبوع',
+      'M': 'شهر',
+      'Y': 'سنة',
+      'Sun': 'الأحد',
+      'Mon': 'الإثنين',
+      'Tue': 'الثلاثاء',
+      'Wed': 'الأربعاء',
+      'Thu': 'الخميس',
+      'Fri': 'الجمعة',
+      'Sat': 'السبت',
+      '12a': '12ص',
+      '4a': '4ص',
+      '8a': '8ص',
+      '12p': '12م',
+      '4p': '4م',
+      '8p': '8م',
+      '11p': '11م',
+      'W1': 'أ1',
+      'W2': 'أ2',
+      'W3': 'أ3',
+      'W4': 'أ4',
+      'W5': 'أ5',
+      'W6': 'أ6',
+      'W7': 'أ7',
+      'Categories': 'الفئات',
+      'Groceries': 'البقالة والتموين',
+      'Entertainment': 'الترفيه والألعاب',
+      'Shopping': 'التسوق والمشتريات',
+      'Dining & Cafe': 'المطاعم والمقاهي',
+      'Subscriptions': 'الاشتراكات الرقمية',
+      'Travel & Transit': 'السفر والتنقل',
+
+      // Finance Screen
+      'Total Portfolio & Net Worth': 'إجمالي المحفظة وصافي القيمة',
+      'Available Balance': 'الرصيد المتاح',
+      'Locked Vaults': 'الخزائن المقفلة',
+      'Connected Accounts': 'الحسابات والخزائن',
+      'Primary Checking': 'الحساب الجاري الرئيسي',
+      '•••• 8920 • Direct Sync': '•••• 8920 • مزامنة فورية',
+      'Salary Account': 'حساب الراتب',
+      '•••• 4129 • Monthly Payroll': '•••• 4129 • الراتب الشهري',
+      'Emergency Reserve': 'احتياطي الطوارئ',
+      '3.75% APY • Auto-Save Vault': 'عائد 3.75% سنوياً • ادخار تلقائي',
+      'Tokyo Vacation 2025': 'عطلة طوكيو 2025',
+      'Global Currency Pocket': 'محفظة العملات العالمية',
+      'USD, EUR, GBP Pockets': 'محافظ الدولار واليورو والجنيه',
+
+      // Others Screen (Wallet Features)
+      'Wallet Features': 'ميزات المحفظة',
+      'Apple Wallet & NFC Pass': 'محفظة آبل وتقنية NFC',
+      'Contactless Tap to Pay provisioned': 'الدفع بدون تلامس مفعّل وجاهز',
+      'View Pass in Apple Wallet': 'عرض البطاقة في محفظة آبل',
+      'Bill Pay': 'سداد الفواتير',
+      'Split Bill': 'تقسيم الحساب',
+      'Vouchers': 'القسائم',
+      'Rewards': 'المكافآت',
+      'All Features': 'جميع الخدمات والميزات',
+      'Utility & Telecom Bills': 'فواتير الخدمات والاتصالات',
+      'DEWA, SEWA, Salik, Du, Etisalat': 'ديوا، سيوا، سالك، دو، اتصالات',
+      'Pay Now': 'ادفع الآن',
+      'Split Bill / Group Leap': 'تقسيم الفاتورة / الدفع الجماعي',
+      'Split dining, groceries or rent': 'تقسيم فواتير المطاعم أو التسوق أو الإيجار',
+      'Share Link': 'مشاركة الرابط',
+      'Digital Brand Vouchers': 'قسائم الماركات الرقمية',
+      'Amazon, Apple, Noon, PlayStation': 'أمازون، آبل، نون، بلاي ستيشن',
+      'Shop 40+': 'تسوّق +40',
+      'LeapPoints Rewards': 'مكافآت نقاط ليب',
+      '1,420 Pts • 2% Unlimited Cashback': '1,420 نقطة • استرداد نقدي ٢٪ غير محدود',
+      'Redeem': 'استبدال',
+      'Global Travel Currency': 'عملات السفر العالمية',
+      '0% FX Markup on USD, EUR, GBP': 'بدون عمولة صرف على الدولار واليورو والجنيه',
+      'Convert': 'تحويل',
+      'Worldwide Money Wire': 'حوالات مالية دولية',
+      'Send money to 60+ countries': 'أرسل الأموال إلى أكثر من 60 دولة',
+      'Send Wire': 'إرسال حوالة',
+      '24/7 Live Support Chat': 'دردشة دعم مباشر 24/7',
+      'Cashleap Client Concierge': 'خدمة كونسيرج كاش ليب للعملاء',
+      'Live 24/7': 'متاح 24/7',
+
+      // Savings Vaults Screen & Modals
+      'Finance Portfolio': 'المحفظة المالية',
+      'Savings Vaults': 'خزائن الادخار',
+      'New Vault': 'خزينة جديدة',
+      'My Vaults': 'خزائني',
+      'Up to 5.10% APY': 'عائد يصل إلى 5.10% سنوياً',
+      'Total Vault Balance': 'إجمالي رصيد الخزائن',
+      'Yield Earned YTD': 'الأرباح المكتسبة منذ بداية العام',
+      'Combined Goal Progress': 'تقدم الأهداف المجمّع',
+      'New Goal': 'هدف جديد',
+      'Auto-Save': 'ادخار تلقائي',
+      'Active Vaults': 'الخزائن النشطة',
+      '4.85% APY • Auto-Save Active': '4.85% سنوياً • الادخار التلقائي مفعّل',
+      '4.50% APY • 2x Spare Change': '4.50% سنوياً • مضاعفة الفكة 2x',
+      'Gold & Yield Reserve': 'احتياطي الذهب والعوائد',
+      '5.10% APY • 90-Day Fixed Term': '5.10% سنوياً • وديعة ثابتة 90 يوماً',
+      'Create Savings Vault': 'إنشاء خزينة ادخار',
+      'Earn daily compound yield up to 5.10% APY': 'اكسب عائداً مركباً يومياً يصل إلى 5.10% سنوياً',
+      'Vault Category': 'فئة الخزينة',
+      'Travel': 'السفر',
+      'Reserve': 'الاحتياطي',
+      'Purchase': 'مشتريات',
+      'Wealth': 'نمو الثروة',
+      'Vault Name': 'اسم الخزينة',
+      'Target Goal (AED)': 'المبلغ المستهدف (د.إ)',
+      'Initial Deposit': 'الإيداع المبدئي',
+      'Yield Term & APY': 'مدة العائد والنسبة السنوية',
+      'Flexible': 'مرنة',
+      'Withdraw anytime instantly': 'سحب فوري في أي وقت',
+      '90-Day Lock': 'ربط 90 يوماً',
+      'Boosted fixed rate': 'عائد ثابت معزز',
+      'Create & Fund Vault': 'إنشاء وتمويل الخزينة',
+      'Deposit to Vault': 'إيداع في الخزينة',
+      'Withdraw from Vault': 'سحب من الخزينة',
+      'Instant transfer from Cashleap Mastercard (•••• 0329)': 'تحويل فوري من ماستركارد كاش ليب (•••• 0329)',
+      'Instant release back to Cashleap Mastercard (•••• 0329)': 'إرجاع فوري إلى ماستركارد كاش ليب (•••• 0329)',
+      'Deposit Funds': 'إيداع أموال',
+      'Withdraw to Card': 'سحب إلى البطاقة',
+      'Select Savings Vault': 'اختر خزينة الادخار',
+      'Tokyo Vacation': 'عطلة طوكيو',
+      'Gold Reserve': 'احتياطي الذهب',
+      'Emergency Reserve Vault': 'خزينة احتياطي الطوارئ',
+      'Amount (AED)': 'المبلغ (د.إ)',
+      'Confirm Instant Deposit': 'تأكيد الإيداع الفوري',
+      'Confirm Instant Withdrawal': 'تأكيد السحب الفوري',
+      'Custom Savings Goal': 'هدف ادخار مخصص',
+      'Europe Summer Trip': 'رحلة صيف أوروبا',
+      'Rainy Day Fund': 'صندوق الطوارئ الاحتياطي',
+      'MacBook Pro M4': 'ماك بوك برو M4',
+      'Real Estate Deposit': 'دفعة استثمار عقاري',
+
+      // Send Money & Beneficiaries
+      'Instant P2P & Bank': 'تحويل فوري للأفراد والبنوك',
+      'Send Money': 'إرسال الأموال',
+      'Add Beneficiary': 'إضافة مستفيد',
+      'Recipients': 'المستفيدون',
+      'Cashleap Network Users': 'مستخدمو شبكة كاش ليب',
+      'Instant • @leaptag': 'فوري • @leaptag',
+      'Add New': 'إضافة جديد',
+      'Sarah': 'سارة',
+      'Alex': 'أليكس',
+      'David': 'ديفيد',
+      'Omar': 'عمر',
+      'Elena': 'إيلينا',
+      'Cashleap User': 'مستخدم كاش ليب',
+      'Bank IBAN': 'حساب بنكي (آيبان)',
+      'Scan QR': 'مسح QR',
+      'Quick Send': 'إرسال سريع',
+      'Saved Beneficiaries': 'المستفيدون المحفوظون',
+      'All Recipients': 'الكل',
+      'Cashleap Users': 'مستخدمو كاش ليب',
+      'Sarah Jenkins': 'سارة جينكينز',
+      'Alex Rivera': 'أليكس ريفيرا',
+      'David Chen': 'ديفيد تشين',
+      'Omar Al Maktoum': 'عمر آل مكتوم',
+      'Elena Rostova': 'إيلينا روستوفا',
+      'Khalid Al Mansoor': 'خالد المنصور',
+      'Emirates NBD • AE42 •••• 2019': 'الإمارات دبي الوطني • AE42 •••• 2019',
+      'Add a Cashleap user (@leaptag) or bank IBAN': 'أضف مستخدم كاش ليب (@leaptag) أو رقم آيبان بنكي',
+      'Cashleap @leaptag or Mobile Number': 'معرّف كاش ليب @leaptag أو رقم الهاتف',
+      'Verified User': 'مستخدم موثّق',
+      'Zero Fee': 'بدون رسوم',
+      'UAE / International IBAN': 'آيبان إماراتي / دولي',
+      'Select Receiving Bank': 'اختر البنك المستلم',
+      'ENBD': 'دبي الوطني',
+      'ADCB': 'أبوظبي التجاري',
+      'FAB': 'أبوظبي الأول',
+      'Mashreq': 'المشرق',
+      'Emirates NBD': 'الإمارات دبي الوطني',
+      'Recipient Full Name': 'الاسم الكامل للمستفيد',
+      'Relationship Category': 'صلة القرابة / الفئة',
+      'Friend': 'صديق',
+      'Family': 'عائلة',
+      'Business': 'عمل',
+      'Rent / Services': 'إيجار / خدمات',
+      'Save Beneficiary': 'حفظ المستفيد',
+      'Save & Send Now': 'حفظ وإرسال الآن',
+      'Send to Cashleap users (@leaptag) or bank IBAN': 'أرسل لمستخدمي كاش ليب (@leaptag) أو رقم الآيبان',
+      '0.00 AED Fee': 'رسوم 0.00 د.إ',
+      'Cashleap Users & Saved (': 'مستخدمو كاش ليب والمحفوظون (',
+      'Transfer Amount': 'مبلغ التحويل',
+      'Slide to send': 'اسحب للإرسال',
+      'Slide or Tap to Send Instantly': 'اسحب أو اضغط للإرسال الفوري',
+      'Instant Cashleap Transfer': 'تحويل كاش ليب فوري',
+
+      // Bill Pay, Split Bill, Vouchers, Rewards, Scanner
+      'Pay Bills & Utilities': 'دفع الفواتير والخدمات',
+      'Zero processing fees with Cashleap': 'بدون أي رسوم معالجة مع كاش ليب',
+      'Select Provider': 'اختر مزوّد الخدمة',
+      'DEWA': 'ديوا',
+      'Salik': 'سالك',
+      'Telecom': 'اتصالات / دو',
+      'DEWA Electricity & Water': 'هيئة كهرباء ومياه دبي (ديوا)',
+      'DEWA Premise Number': 'رقم حساب ديوا',
+      'Salik Tag Account PIN': 'رقم تعريف بطاقة سالك',
+      'Mobile Phone Number': 'رقم الهاتف المتحرك',
+      'Amount Due': 'المبلغ المستحق',
+      'Confirm & Pay Bill': 'تأكيد وسداد الفاتورة',
+
+      'Split Bill with Friends': 'تقسيم الفاتورة مع الأصدقاء',
+      'Instant shareable payment link': 'رابط دفع فوري قابل للمشاركة',
+      'Total Bill Amount': 'إجمالي الفاتورة',
+      'Split Between': 'التقسيم على',
+      'Each Person Pays': 'حصة كل شخص',
+      'Copy Split Leap Link': 'نسخ رابط تقسيم الفاتورة',
+
+      'Instant activation • 0.00 AED processing fee': 'تفعيل فوري • رسوم معالجة 0.00 د.إ',
+      'All (6)': 'الكل (6)',
+      'Tech & Apps': 'تقنية وتطبيقات',
+      'Gaming': 'ألعاب',
+      'Apple Store': 'متجر آبل',
+      'Hardware & iCloud': 'أجهزة وآيكلاود',
+      '+3% Pts': '+3% نقاط',
+      '5% Back': 'استرداد 5%',
+      'Amazon UAE': 'أمازون الإمارات',
+      'Prime & Retail': 'برايم وتسوق',
+      'Prime': 'برايم',
+      'PlayStation': 'بلاي ستيشن',
+      'PS5, PSN & Plus': 'بلاي ستيشن 5 وبلس',
+      'PSN Code': 'بطاقة PSN',
+      'Noon Shopping': 'نون للتسوق',
+      'Electronics & Trends': 'إلكترونيات ومنتجات',
+      'Audio': 'صوتيات',
+      '3-Month Music Pass': 'اشتراك موسيقى 3 أشهر',
+      'Cinema': 'سينما',
+      'Netflix Code': 'بطاقة نتفليكس',
+      '4K Ultra HD Movies': 'أفلام فائقة الدقة 4K',
+      'Wallet Balance:': 'رصيد المحفظة:',
+      'Instant Delivery': 'تسليم فوري',
+
+      'Your cashback tier and earned points': 'مستوى الكاش باك والنقاط المكتسبة',
+      'Available Rewards Points': 'نقاط المكافآت المتاحة',
+      'Tier 2': 'المستوى 2',
+      'PTS (= 142.00 AED)': 'نقطة (= 142.00 د.إ)',
+      'Card Cashback Rate': 'نسبة الاسترداد النقدي',
+      '2.0% on All Swipes': '2.0% على جميع المشتريات',
+      'Points Expiry': 'صلاحية النقاط',
+      'Never Expires': 'لا تنتهي صلاحيتها أبداً',
+      'Redemption Method': 'طريقة الاستبدال',
+      'Instant Statement Credit': 'رصيد فوري في البطاقة',
+      'Redeem 142.00 AED into Card': 'استبدال 142.00 د.إ إلى البطاقة',
+
+      'Scan QR or Barcode': 'امسح رمز QR أو الباركود',
+      'Align Cashleap or merchant QR code within the frame': 'وجّه رمز كاش ليب أو التاجر داخل الإطار',
+      'Simulate Scan Detection': 'محاكاة المسح الفوري',
+      'Upload from Photo Library': 'رفع من مكتبة الصور',
+
+      // Notifications
+      'Notifications': 'الإشعارات',
+      'Clear All': 'مسح الكل',
+      'Cashback Credited (+15.50 AED)': 'تم إضافة كاش باك (+15.50 د.إ)',
+      '2m ago': 'منذ دقيقتين',
+      'Your reward from Starbucks Oat Flat White has been added to your Cashleap balance.': 'تمت إضافة مكافأتك من ستاربكس إلى رصيد كاش ليب الخاص بك.',
+      'Payment Approved (-16.00 AED)': 'تمت الموافقة على الدفع (-16.00 د.إ)',
+      '1h ago': 'منذ ساعة',
+      'Amazon Prime Video monthly subscription renewed via Mastercard •••• 0329.': 'تم تجديد اشتراك أمازون برايم فيديو الشهري عبر ماستركارد •••• 0329.',
+      'Face ID Sign-in Successful': 'تم تسجيل الدخول ببصمة الوجه بنجاح',
+      '3h ago': 'منذ 3 ساعات',
+      'New login authenticated on iPhone 16 Pro (iOS 18.1).': 'تم توثيق دخول جديد على جهاز آيفون 16 برو (iOS 18.1).',
+      'October Statement Ready': 'كشف حساب أكتوبر جاهز',
+      'Yesterday': 'أمس',
+      'Your monthly spending report is ready to review. Total 3,350.60 AED balance.': 'تقرير الإنفاق الشهري جاهز للمراجعة. إجمالي الرصيد 3,350.60 د.إ.',
+
+      // Receipts, Add Funds, Withdraw, Schedule
+      'Apple Pay Receipt': 'إيصال آبل باي',
+      'Merchant': 'التاجر',
+      'Category': 'الفئة',
+      'Payment Method': 'طريقة الدفع',
+      'Cashleap Mastercard (•••• 0329)': 'ماستركارد كاش ليب (•••• 0329)',
+      'Cashleap Debit (•••• 0319)': 'بطاقة خصم كاش ليب (•••• 0319)',
+      'Date & Time': 'التاريخ والوقت',
+      'Reference ID': 'رقم المرجع',
+      'Repeat Transaction': 'تكرار المعاملة',
+      'Download Apple Wallet PDF': 'تحميل إيصال محفظة آبل (PDF)',
+
+      'Add to Cashleap': 'إيداع في كاش ليب',
+      'Instant Apple Pay deposit': 'إيداع فوري عبر آبل باي',
+      'Deposit Amount': 'مبلغ الإيداع',
+      'Apple Pay': 'آبل باي',
+      'Default Payment Card': 'بطاقة الدفع الافتراضية',
+      'Deposit with Apple Pay': 'إيداع عبر آبل باي',
+
+      'ATM Cardless Cash': 'سحب نقدي بدون بطاقة',
+      'Instant withdrawal at any ATM': 'سحب فوري من أي جهاز صراف آلي',
+      'One-Time ATM Security Code': 'رمز الأمان المؤقت للصراف الآلي',
+      'Expires in': 'تنتهي الصلاحية خلال',
+      'Scan this code at any ATM screen or input the 6 digits to receive physical banknotes instantly.': 'امسح هذا الرمز على شاشة الصراف الآلي أو أدخل الأرقام الستة لاستلام النقود فوراً.',
+
+      'Scheduled Payments': 'المدفوعات المجدولة',
+      'Active Autopay & Subscriptions': 'الاشتراكات والدفع التلقائي النشط',
+      'Netflix 4K UHD': 'نتفليكس 4K فائق الدقة',
+
+      // Add Card & Select Card Modals
+      'Add Payment Card': 'إضافة بطاقة دفع',
+      'Enter your 16-digit card details to link to wallet': 'أدخل بيانات البطاقة المكوّنة من 16 رقماً لربطها بالمحفظة',
+      'Mastercard Debit': 'ماستركارد للخصم المباشر',
+      'Virtual Card': 'بطاقة افتراضية',
+      'CARDHOLDER NAME': 'اسم حامل البطاقة',
+      'EXPIRES': 'تنتهي في',
+      'Scan Card': 'مسح البطاقة',
+      'Cardholder Name': 'اسم حامل البطاقة',
+      'Expiry Date': 'تاريخ الانتهاء',
+      'Security Code (CVV)': 'رمز الأمان (CVV)',
+      'Wallet Card Finish': 'تصميم البطاقة بالمحفظة',
+      'Link Card to Wallet': 'ربط البطاقة بالمحفظة',
+
+      'Select Debit Card': 'اختر بطاقة الدفع',
+      'Choose your active card for payments': 'اختر بطاقتك النشطة للمدفوعات',
+      'Debit Card': 'بطاقة خصم',
+      'Mastercard': 'ماستركارد',
+      'Select & Set as Active Card': 'اختيار وتعيين كبطاقة نشطة',
+
+      // Account & Profile Modal
+      'Account & Profile': 'الحساب والملف الشخصي',
+      'Manage personal security, limits & wallet preferences': 'إدارة الأمان الشخصي والحدود وتفضيلات المحفظة',
+      'BLACK TIER': 'الفئة السوداء',
+      'Total Net Worth': 'إجمالي صافي الثروة',
+      'Active Cards': 'البطاقات النشطة',
+      'Safety Score': 'مؤشر الأمان',
+      'Contact & Residency': 'بيانات الاتصال والإقامة',
+      'Email': 'البريد الإلكتروني',
+      'Mobile Phone': 'رقم الهاتف المتحرك',
+      'Residency': 'مكان الإقامة',
+      'Dubai, United Arab Emirates': 'دبي، الإمارات العربية المتحدة',
+      'Security & Biometrics': 'الأمان والقياسات الحيوية',
+      'Apple Face ID Login': 'تسجيل الدخول ببصمة الوجه',
+      'Biometric authentication for rapid unlocks': 'مصادقة بيومترية لفتح سريع وآمن',
+      '6-Digit Secret Key': 'رمز الأمان السري (٦ أرقام)',
+      'High-security payment passcode': 'رمز مرور عالي الأمان للدفع',
+      'Switch between English & Arabic': 'التبديل بين الإنجليزية والعربية',
+      'Banking Limits': 'حدود المعاملات البنكية',
+      'Daily Transfer Cap': 'سقف التحويل اليومي',
+      'Monthly Spending Limit': 'الحد الشهري للإنفاق',
+      'Download Official Statement (PDF)': 'تحميل كشف الحساب الرسمي (PDF)',
+      'Sign Out of Cashleap': 'تسجيل الخروج من كاش ليب',
+
+      // Transfer & Exchange Modals
+      'Transfer Funds': 'تحويل الأموال',
+      'Instant zero-fee transfer between your accounts': 'تحويل فوري بدون أي رسوم بين حساباتك',
+      'From Source': 'من الحساب',
+      'Primary Wallet •••• 0329': 'المحفظة الرئيسية •••• 0329',
+      'Card •• 0329': 'البطاقة •• 0329',
+      'Debit •• 0319': 'الخصم •• 0319',
+      'ENBD •• 8920': 'الإمارات دبي •• 8920',
+      'To Destination': 'إلى الحساب',
+      'Instant Credit': 'إيداع فوري',
+      'Cashleap Debit': 'بطاقة خصم كاش ليب',
+      'Secondary Card •••• 0319': 'البطاقة الثانوية •••• 0319',
+      'Reserve Vault': 'خزينة الاحتياطي',
+      'No Transfer Fee': 'بدون أي رسوم تحويل',
+      'Confirm Instant Transfer': 'تأكيد التحويل الفوري',
+      'Emirates NBD Checking': 'الحساب الجاري الإمارات دبي الوطني',
+      'Linked Bank •••• 8920': 'حساب بنكي مرتبط •••• 8920',
+      '4.8% APY Savings Vault': 'خزينة ادخار بعائد 4.8% سنوياً',
+
+      'Currency Exchange': 'صرف العملات',
+      'Live FX Rate: 1 USD = 3.6725 AED': 'سعر الصرف المباشر: 1 دولار = 3.6725 د.إ',
+      '0% Commission': 'عمولة 0%',
+      'You Convert': 'المبلغ المحوّل',
+      'You Receive': 'المبلغ المستلم',
+      'Convert to USD Now': 'حوّل إلى دولار الآن',
+
+      // Support Chat & Sign Out
+      'Cashleap Concierge': 'كونسيرج كاش ليب',
+      '● 24/7 Priority Support Agent': '● موظف دعم أولوية على مدار الساعة 24/7',
+      'Hello Marice! Welcome to Cashleap Priority Concierge. How can we assist you with your cards or account today?': 'مرحباً ماريس! أهلاً بك في خدمة كونسيرج كاش ليب. كيف يمكننا مساعدتك بخصوص بطاقاتك أو حسابك اليوم؟',
+      'Thank you for reaching out, Marice. A senior representative is reviewing your request right now.': 'شكراً لتواصلك معنا، ماريس. يقوم أحد ممثلي خدمة العملاء بمراجعة طلبك الآن.',
+      'Sign Out?': 'تسجيل الخروج؟',
+      'You will need your biometric Face ID or 6-digit Secret Key to log back into Cashleap.': 'ستحتاج إلى بصمة الوجه أو الرمز السري المكون من 6 أرقام لتسجيل الدخول مجدداً إلى كاش ليب.',
+      'Sign Out': 'تسجيل الخروج',
+
+      // Placeholders
+      'Add a note (e.g. Dinner split, rent, gift)...': 'أضف ملاحظة (مثلاً: مشاركة عشاء، إيجار، هدية)...',
+      'Enter recipient full name': 'أدخل الاسم الكامل للمستفيد',
+      'MM/YY': 'شهر/سنة',
+      'Name as shown on card': 'الاسم كما يظهر على البطاقة',
+      'Search @leaptag, Cashleap user, or IBAN...': 'ابحث بالمعرف @leaptag، المستخدم، أو الآيبان...',
+      'Search @leaptag, name, phone or IBAN...': 'ابحث بـ @leaptag أو الاسم أو الهاتف أو الآيبان...',
+      'Type your message...': 'اكتب رسالتك هنا...',
+      'e.g. Dream Car Deposit': 'مثلاً: دفعة سيارة الأحلام',
+      'username or +971 50...': 'اسم المستخدم أو +971 50...',
+
+      // Dynamic Toasts & Dynamic Island Titles / Subtitles
+      'Language Changed': 'تغيير اللغة',
+      'Switched to English (UAE)': 'تم التبديل إلى الإنجليزية',
+      'App language switched to English': 'تم تحويل لغة التطبيق إلى الإنجليزية',
+      'Card Controls': 'إعدادات البطاقة',
+      'Account Details': 'تفاصيل الحساب',
+      'Debit Card 0319': 'بطاقة الخصم 0319',
+      'Mastercard 0329': 'ماستركارد 0329',
+      'Active ● Apple Pay': 'نشطة ● آبل باي',
+      'Account Frozen': 'تم تجميد الحساب',
+      'All payments disabled': 'تم إيقاف كافة المدفوعات مؤقتاً',
+      'Account Active': 'الحساب نشط',
+      'Ready for Apple Pay': 'جاهز للدفع عبر آبل باي',
+      'Apple Wallet': 'محفظة آبل',
+      'Mastercard Verified with Face ID': 'تم توثيق ماستركارد ببصمة الوجه',
+      'Apple Wallet Pass': 'بطاقة محفظة آبل',
+      'Cashleap Debit ready in Apple Pay': 'بطاقة كاش ليب جاهزة في آبل باي',
+      'Card verified in Apple Wallet for NFC payments': 'تم تفعيل البطاقة في محفظة آبل للدفع اللاتلامسي',
+      'Privacy Mode': 'وضع الخصوصية',
+      'Balances hidden': 'تم إخفاء الأرصدة',
+      'Portfolio Visible': 'تم إظهار المحفظة',
+      'Transfer Complete': 'اكتمل التحويل',
+      'FX Exchange': 'صرف العملات',
+      'Support Concierge': 'كونسيرج الدعم',
+      'New reply received': 'وصل رد جديد من الدعم',
+      'Signed Out': 'تم تسجيل الخروج',
+      'Security lock enabled': 'تم تفعيل القفل الأمني',
+      'Downloading Statement': 'جارٍ تحميل الكشف',
+      'November 2026 • PDF': 'نوفمبر 2026 • PDF',
+      'Generating official monthly statement PDF...': 'جارٍ إنشاء كشف الحساب الشهري الرسمي (PDF)...',
+      'October 2024 • PDF Ready': 'أكتوبر 2024 • ملف PDF جاهز',
+      'Face ID login enabled for Cashleap': 'تم تفعيل تسجيل الدخول ببصمة الوجه',
+      'Face ID login disabled': 'تم إيقاف تسجيل الدخول ببصمة الوجه',
+      'Enter current Secret Key to update passcode': 'أدخل الرمز السري الحالي لتحديث كلمة المرور',
+      'IBAN Copied': 'تم نسخ الآيبان',
+      'UAE IBAN copied to clipboard!': 'تم نسخ رقم الآيبان الإماراتي إلى الحافظة!',
+      'Card Selected': 'تم اختيار البطاقة',
+      'Cashleap Mastercard (0329)': 'ماستركارد كاش ليب (0329)',
+      'Debit Card (0319)': 'بطاقة الخصم (0319)',
+      'Card Number Copied': 'تم نسخ رقم البطاقة',
+      'Card Frozen': 'تم تجميد البطاقة',
+      'Transactions blocked': 'تم حظر المعاملات مؤقتاً',
+      'Card Unlocked': 'تم فتح البطاقة',
+      'Ready to use': 'جاهزة للاستخدام',
+      'Autopay Paused': 'تم إيقاف الدفع التلقائي',
+      'Tap to resume': 'اضغط للاستئناف',
+      'Autopay Active': 'الدفع التلقائي مفعّل',
+      'Scheduled on due date': 'مجدول في تاريخ الاستحقاق',
+      'Card Linked': 'تم ربط البطاقة',
+      'Card details scanned via camera': 'تم مسح بيانات البطاقة بالكاميرا',
+      'Maximum wallet limit (4 cards) reached': 'تم الوصول للحد الأقصى للمحفظة (٤ بطاقات)',
+      'Maximum 4 cards already linked': 'تم ربط الحد الأقصى (٤ بطاقات) بالفعل',
+      'Add Funds': 'إيداع أموال',
+      'Select amount': 'اختر المبلغ',
+      'Choose contact': 'اختر جهة اتصال',
+      'ATM Code Ready': 'رمز الصراف جاهز',
+      'Autopay': 'الدفع التلقائي',
+      '4 active items': '٤ مدفوعات نشطة',
+      'PDF Saved': 'تم حفظ ملف PDF',
+      'Added to Files': 'تمت الإضافة إلى الملفات',
+      'Payment Repeated': 'تم تكرار الدفع',
+      'Funds Added': 'تم إضافة الرصيد',
+      'Notification Center': 'مركز الإشعارات',
+      'Marked as read': 'تم التحديد كمقروء',
+      'All Caught Up': 'اطلعت على الكل',
+      '0 unread notifications': 'لا توجد إشعارات غير مقروءة',
+      'Camera Scanner': 'ماسح الكاميرا',
+      'Align QR Code': 'وجّه رمز QR داخل الإطار',
+      'Torch ON': 'الإضاءة قيد التشغيل',
+      'Flashlight Active': 'الفلاش مفعّل',
+      'Torch OFF': 'إيقاف الإضاءة',
+      'Normal mode': 'الوضع العادي',
+      'Merchant Verified': 'تم التحقق من التاجر',
+      'Photo Library': 'مكتبة الصور',
+      'QR Detected ✓': 'تم اكتشاف رمز QR ✓',
+      '142.00 AED Redeemed': 'تم استبدال 142.00 د.إ',
+      'Cashback added to card balance': 'تمت إضافة الكاش باك لرصيد البطاقة',
+      '142.00 AED cashback deposited into your debit card!': 'تم إيداع 142.00 د.إ كاش باك في بطاقتك!',
+      'Auto-Save Enabled': 'تم تفعيل الادخار التلقائي',
+      '2x Spare Change Round-Up active': 'مضاعفة تقريب الفكة 2x مفعّلة',
+      'Spare change round-up enabled for active vaults': 'تم تفعيل تقريب الفكة للخزائن النشطة',
+      'Auto-Save Paused': 'تم إيقاف الادخار التلقائي',
+      'Round-Up transfers paused': 'تم إيقاف تحويلات التقريب مؤقتاً',
+      'Spare change auto-save paused': 'تم إيقاف الادخار التلقائي مؤقتاً',
+      'Vault Created': 'تم إنشاء الخزينة',
+      'Vault Deposit': 'إيداع في الخزينة',
+      'Vault Withdrawal': 'سحب من الخزينة',
+      'Beneficiary Added': 'تمت إضافة المستفيد',
+      'User Verified': 'تم التحقق من المستخدم',
+      'Split Link Copied': 'تم نسخ رابط التقسيم',
+      'Cashback Available': 'كاش باك متاح'
+    }};
+
+    const I18N_MONTHS_AR = {{
+      'Jan': 'يناير', 'Feb': 'فبراير', 'Mar': 'مارس', 'Apr': 'أبريل',
+      'May': 'مايو', 'Jun': 'يونيو', 'Jul': 'يوليو', 'Aug': 'أغسطس',
+      'Sep': 'سبتمبر', 'Oct': 'أكتوبر', 'Nov': 'نوفمبر', 'Dec': 'ديسمبر'
+    }};
+
+    function replaceAedToAr(s) {{
+      return String(s).replace(/\\bAED\\b/g, 'د.إ');
+    }}
+
+    function translateCoreToAr(rawCore) {{
+      if (!rawCore) return rawCore;
+      const clean = String(rawCore).replace(/\\s+/g, ' ').trim();
+      if (!clean) return rawCore;
+      if (I18N_EXACT_AR[clean]) return I18N_EXACT_AR[clean];
+
+      let m;
+      // Dates & Transactions
+      if ((m = clean.match(/^Today\\s+([\\d:]+)\\s*•\\s*(.+)$/))) {{
+        return 'اليوم ' + m[1] + ' • ' + translateCoreToAr(m[2]);
+      }}
+      if ((m = clean.match(/^Yesterday\\s+([\\d:]+)\\s*•\\s*(.+)$/))) {{
+        return 'أمس ' + m[1] + ' • ' + translateCoreToAr(m[2]);
+      }}
+      if ((m = clean.match(/^Just now\\s*•\\s*(.+)$/))) {{
+        return 'الآن • ' + translateCoreToAr(m[1]);
+      }}
+      if ((m = clean.match(/^(\\d{{1,2}})\\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec),?\\s+([\\d:]+)\\s*•\\s*(.+)$/))) {{
+        return m[1] + ' ' + (I18N_MONTHS_AR[m[2]] || m[2]) + '، ' + m[3] + ' • ' + translateCoreToAr(m[4]);
+      }}
+      if ((m = clean.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{{1,2}}),\\s+(\\d{{4}})$/))) {{
+        return m[2] + ' ' + (I18N_MONTHS_AR[m[1]] || m[1]) + ' ' + m[3];
+      }}
+      if ((m = clean.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{{1,2}})\\s+at\\s+([\\d:]+)$/))) {{
+        return m[2] + ' ' + (I18N_MONTHS_AR[m[1]] || m[1]) + ' الساعة ' + m[3];
+      }}
+      if ((m = clean.match(/^Today at ([\\d:]+)$/))) {{
+        return 'اليوم الساعة ' + m[1];
+      }}
+      if ((m = clean.match(/^Yesterday at ([\\d:]+)$/))) {{
+        return 'أمس الساعة ' + m[1];
+      }}
+      if ((m = clean.match(/^Due (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\s+(\\d{{1,2}})\\s*•\\s*([\\d.,]+)\\s*AED$/))) {{
+        return 'مستحق ' + m[2] + ' ' + (I18N_MONTHS_AR[m[1]] || m[1]) + ' • ' + m[3] + ' د.إ';
+      }}
+
+      // Counters, Badges, Percentages & Balances
+      if ((m = clean.match(/^CustomerID:\\s*(.+)$/))) return 'معرّف العميل: ' + m[1];
+      if ((m = clean.match(/^(\\d+)\\s+Items$/))) return m[1] + ' عناصر';
+      if ((m = clean.match(/^(\\d+)\\s+Saved$/))) return m[1] + ' محفوظين';
+      if ((m = clean.match(/^(\\d+)\\s+Goals$/))) return m[1] + ' أهداف';
+      if ((m = clean.match(/^(\\d+)\\s+Cards$/))) return m[1] + ' بطاقات';
+      if ((m = clean.match(/^(\\d+)\\s+New$/))) return m[1] + ' جديد';
+      if ((m = clean.match(/^(\\d+)\\s+People$/))) return (m[1] === '2' ? 'شخصين' : m[1] + ' أشخاص');
+      if ((m = clean.match(/^(\\d+)\\s+alerts$/))) return m[1] + ' تنبيهات';
+      if ((m = clean.match(/^(\\d+)% of ([\\d,]+) AED$/))) return m[1] + '% من ' + m[2] + ' د.إ';
+      if ((m = clean.match(/^(\\d+)% of ([\\d,]+)$/))) return m[1] + '% من ' + m[2];
+      if ((m = clean.match(/^Available:\\s*(.+)$/))) return 'المتاح: ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^Avail:\\s*(.+)$/))) return 'المتاح: ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^Card Avail:\\s*(.+)$/))) return 'رصيد البطاقة: ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^Goal Target ([\\d,]+) AED$/))) return 'الهدف المستهدف ' + m[1] + ' د.إ';
+      if ((m = clean.match(/^([\\d.]+)% APY\\s*•\\s*Goal:\\s*([\\d,]+) AED$/))) return m[1] + '% سنوياً • الهدف: ' + m[2] + ' د.إ';
+      if ((m = clean.match(/^([\\d.]+)% APY\\s*•\\s*Custom Goal$/))) return m[1] + '% سنوياً • هدف مخصص';
+      if ((m = clean.match(/^([\\d.]+)% APY$/))) return m[1] + '% سنوياً';
+      if ((m = clean.match(/^([\\d.,]+) AED\\s*•\\s*\\*\\*\\*\\*\\s*(\\d{{4}})$/))) return m[1] + ' د.إ • **** ' + m[2];
+      if ((m = clean.match(/^([\\d.,]+)\\s+AED\\s+e-Card$/))) return 'بطاقة رقمية ' + m[1] + ' د.إ';
+      if ((m = clean.match(/^([\\d.,]+)\\s+AED\\s+Added to Wallet$/))) return 'تمت إضافة ' + m[1] + ' د.إ إلى المحفظة';
+      if ((m = clean.match(/^Purchased\\s+([\\d.,]+)\\s+AED\\s+(.+)\\s+voucher$/))) return 'تم شراء قسيمة ' + translateCoreToAr(m[2]) + ' بقيمة ' + m[1] + ' د.إ';
+      if ((m = clean.match(/^(.+)\\s+Voucher$/))) return 'قسيمة ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^(.+)\\s+e-Card$/))) return 'بطاقة ' + translateCoreToAr(m[1]) + ' الرقمية';
+      if ((m = clean.match(/^Language:\\s*(.+)$/))) return 'اللغة: ' + m[1];
+      if ((m = clean.match(/^@([\\w.]+)\\s*•\\s*Instant 0\\.00 AED Fee$/))) return '@' + m[1] + ' • تحويل فوري بدون رسوم';
+      if ((m = clean.match(/^@([\\w.]+)\\s*•\\s*Verified Cashleap User$/))) return '@' + m[1] + ' • مستخدم كاش ليب موثّق';
+      if ((m = clean.match(/^@([\\w.]+)\\s*•\\s*Instant P2P$/))) return '@' + m[1] + ' • تحويل فوري';
+      if ((m = clean.match(/^@([\\w.]+)\\s+on Cashleap$/))) return '@' + m[1] + ' على كاش ليب';
+      if ((m = clean.match(/^Cashback Available$/))) return 'كاش باك متاح';
+      if ((m = clean.match(/^([\\d.,]+ AED)\\s*•\\s*Tap to Redeem$/))) return replaceAedToAr(m[1]) + ' • اضغط للاستبدال';
+
+      // Dynamic Island & Toast Actions
+      if ((m = clean.match(/^Transferred ([\\d.,]+) AED from (.+) to (.+)$/))) {{
+        return 'تم تحويل ' + m[1] + ' د.إ من ' + translateCoreToAr(m[2]) + ' إلى ' + translateCoreToAr(m[3]);
+      }}
+      if ((m = clean.match(/^([\\d.,]+) AED to (.+)$/))) return m[1] + ' د.إ إلى ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^\\+([\\d.,]+) AED to (.+)$/))) return '+' + m[1] + ' د.إ إلى ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^-([\\d.,]+) AED from (.+)$/))) return '-' + m[1] + ' د.إ من ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^Sent ([\\d.,]+) AED to (.+)$/))) return 'تم إرسال ' + m[1] + ' د.إ إلى ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^Sent to (.+)$/))) return 'تم الإرسال إلى ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^Send to (.+)$/))) return 'إرسال إلى ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^To:\\s*(.+)$/))) return 'إلى: ' + translateCoreToAr(m[1]);
+      if ((m = clean.match(/^Successfully paid ([\\d.,]+) AED for (.+)$/))) return 'تم سداد ' + m[1] + ' د.إ بنجاح لـ ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^Bill Paid:\\s*([\\d.,]+) AED$/))) return 'تم سداد الفاتورة: ' + m[1] + ' د.إ';
+      if ((m = clean.match(/^Deposited ([\\d.,]+) AED into (.+)$/))) return 'تم إيداع ' + m[1] + ' د.إ في ' + translateCoreToAr(m[2]);
+      if ((m = clean.match(/^Withdrew ([\\d.,]+) AED to Mastercard •••• (\\d+)$/))) return 'تم سحب ' + m[1] + ' د.إ إلى ماستركارد •••• ' + m[2];
+      if ((m = clean.match(/^Exchanged ([\\d.,]+) AED to \\$([\\d.,]+) USD$/))) return 'تم تحويل ' + m[1] + ' د.إ إلى $' + m[2] + ' دولار';
+      if ((m = clean.match(/^([\\d.,]+) AED ➔ \\$([\\d.,]+) USD$/))) return m[1] + ' د.إ ➔ $' + m[2] + ' دولار';
+      if ((m = clean.match(/^Created "(.+)" vault with ([\\d.,]+) AED$/))) return 'تم إنشاء خزينة "' + translateCoreToAr(m[1]) + '" بمبلغ ' + m[2] + ' د.إ';
+      if ((m = clean.match(/^Added (.+) to Saved Beneficiaries$/))) return 'تمت إضافة ' + translateCoreToAr(m[1]) + ' إلى المستفيدين المحفوظين';
+      if ((m = clean.match(/^Verified Cashleap user @(.+)$/))) return 'تم التحقق من مستخدم كاش ليب @' + m[1];
+      if ((m = clean.match(/^Card ending in (\\d+) linked to wallet$/))) return 'تم ربط البطاقة المنتهية بـ ' + m[1] + ' بالمحفظة';
+      if ((m = clean.match(/^Mastercard •••• (\\d+)$/))) return 'ماستركارد •••• ' + m[1];
+      if ((m = clean.match(/^Card Balance \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار بطاقة الرصيد (' + m[1] + ') • ' + replaceAedToAr(m[2]);
+      if ((m = clean.match(/^Debit Card \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار بطاقة الخصم (' + m[1] + ') • ' + replaceAedToAr(m[2]);
+      if ((m = clean.match(/^Virtual Card \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار البطاقة الافتراضية (' + m[1] + ') • ' + replaceAedToAr(m[2]);
+      if ((m = clean.match(/^Platinum Card \\((\\d+)\\) selected • (.+)$/))) return 'تم اختيار البطاقة البلاتينية (' + m[1] + ') • ' + replaceAedToAr(m[2]);
+      if ((m = clean.match(/^(.+): (.+) spent this period$/))) return translateCoreToAr(m[1]) + ': تم إنفاق ' + replaceAedToAr(m[2]) + ' في هذه الفترة';
+      if ((m = clean.match(/^([\\d.,]+) AED per person$/))) return m[1] + ' د.إ لكل شخص';
+      if ((m = clean.match(/^Split link copied! Share with your (\\d+) friends$/))) return 'تم نسخ رابط التقسيم! شاركه مع أصدقائك (' + m[1] + ')';
+      if ((m = clean.match(/^(.+)\\s+\\(([\\d.,]+) AED\\)$/))) return translateCoreToAr(m[1]) + ' (' + m[2] + ' د.إ)';
+
+      // Bullet-joined fallback (e.g. "Omar Al Maktoum • @omar.m • ...")
+      if (clean.includes(' • ')) {{
+        const parts = clean.split(' • ').map(p => translateCoreToAr(p.trim()));
+        return parts.join(' • ');
+      }}
+
+      return replaceAedToAr(rawCore);
+    }}
+
+    function trText(enText) {{
+      if (typeof currentAppLanguage === 'undefined' || currentAppLanguage !== 'ar') return enText;
+      return translateCoreToAr(enText);
+    }}
+
+    const I18N_SKIP_ELEMENT_IDS = new Set([
+      'langBtnEn', 'langBtnAr', 'profileLangBtnEn', 'profileLangBtnAr',
+      'cdLangSub', 'profileLangSub', 'profileLangTitle'
+    ]);
+
+    function shouldSkipTextNode(node) {{
+      const p = node.parentElement;
+      if (!p) return true;
+      if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE' || p.id === 'homeToast' || p.closest('#homeToast')) return true;
+      let cur = p;
+      while (cur) {{
+        if (cur.id && I18N_SKIP_ELEMENT_IDS.has(cur.id)) return true;
+        if (cur.hasAttribute && cur.hasAttribute('data-i18n-skip')) return true;
+        cur = cur.parentElement;
+      }}
+      // Skip stylized visual logo glyphs inside merchant icons & 2-letter avatar initials & phone keypad ABC..WXYZ
+      const trimmed = (node.nodeValue || '').trim();
+      if (!trimmed) return true;
+      if (!/[A-Za-z]/.test(trimmed)) return true;
+      if (/^(prime|video|ebay|a|e|b|y|N|SJ|AR|DC|OM|ER|KM|CL|VC|ABC|DEF|GHI|JKL|MNO|PQRS|TUV|WXYZ|Pay)$/.test(trimmed)) return true;
+      if (/^(CL-|TX-|AE\\d{{2}}|marice\\.cervantes@)/.test(trimmed)) return true;
+      if (/^•{{4}}\\s+\\d{{4}}$/.test(trimmed)) return true;
+      if (trimmed === 'Instant • @leaptag') return false;
+      if (trimmed.startsWith('@') && !trimmed.includes(' ')) return true;
+      return false;
+    }}
 
     function switchDomCurrency(isAr) {{
-      const fromStr = isAr ? 'AED' : 'د.إ';
-      const toStr = isAr ? 'د.إ' : 'AED';
-
       document.querySelectorAll('.currency-label').forEach(el => {{
-        el.textContent = toStr;
+        el.textContent = isAr ? 'د.إ' : 'AED';
       }});
-
-      // Walk text nodes inside app
-      const appContainer = document.getElementById('mobileAppContainer') || document.body;
-      const walker = document.createTreeWalker(
-        appContainer,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-      );
-      let node;
-      while ((node = walker.nextNode())) {{
-        if (!node.nodeValue) continue;
-        if (node.parentElement && (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE' || node.parentElement.id === 'homeToast')) continue;
-        if (node.nodeValue.includes(fromStr)) {{
-          node.nodeValue = node.nodeValue.split(fromStr).join(toStr);
-        }}
-      }}
     }}
 
     function applyGlobalTranslations(isAr) {{
-      const appRoot = document.getElementById('mobileAppContainer') || document.body;
+      const appRoot = document.getElementById('phoneFrame') || document.body;
       if (isAr) {{
         appRoot.classList.add('lang-arabic');
+        document.documentElement.setAttribute('lang', 'ar');
       }} else {{
         appRoot.classList.remove('lang-arabic');
+        document.documentElement.setAttribute('lang', 'en');
       }}
 
-      // 1. Top Capsule Greetings across all screens
-      document.querySelectorAll('.user-greeting-hello').forEach(el => {{
-        el.textContent = isAr ? 'مرحباً،' : 'Hello,';
-      }});
-      document.querySelectorAll('.user-greeting-name').forEach(el => {{
-        const svg = el.querySelector('svg');
-        el.textContent = isAr ? 'ماريس سيرفانتس ' : 'Marice Cervantes ';
-        if (svg) el.appendChild(svg);
-      }});
-
-      // 2. Dock Navigation
-      const dockHome = document.getElementById('dockLabelHome');
-      if (dockHome) dockHome.textContent = isAr ? 'الرئيسية' : 'Home';
-      const dockFinance = document.getElementById('dockLabelFinance');
-      if (dockFinance) dockFinance.textContent = isAr ? 'المالية' : 'Finance';
-      const dockStats = document.getElementById('dockLabelStats');
-      if (dockStats) dockStats.textContent = isAr ? 'الإحصائيات' : 'Statistics';
-      const dockOthers = document.getElementById('dockLabelOthers');
-      if (dockOthers) dockOthers.textContent = isAr ? 'المزيد' : 'Others';
-
-      // 3. Home Screen Card & Actions
-      const homeBalLabel = document.getElementById('homeCardBalanceLabel');
-      if (homeBalLabel) homeBalLabel.textContent = isAr ? 'رصيد البطاقة' : 'Card Balance';
-      const homeActive = document.getElementById('homeCardActiveText');
-      if (homeActive) homeActive.textContent = isAr ? 'نشطة' : 'Active';
-      const homeValid = document.getElementById('homeValidText');
-      if (homeValid) homeValid.textContent = isAr ? 'صالح' : 'VALID';
-      const homeThru = document.getElementById('homeThruText');
-      if (homeThru) homeThru.textContent = isAr ? 'حتى' : 'THRU';
-
-      const actAdd = document.getElementById('homeActionAdd');
-      if (actAdd) actAdd.textContent = isAr ? 'إيداع' : 'Add';
-      const actWithdraw = document.getElementById('homeActionWithdraw');
-      if (actWithdraw) actWithdraw.textContent = isAr ? 'سحب' : 'Withdraw';
-      const actSend = document.getElementById('homeActionSend');
-      if (actSend) actSend.textContent = isAr ? 'إرسال' : 'Send';
-      const actSchedule = document.getElementById('homeActionSchedule');
-      if (actSchedule) actSchedule.textContent = isAr ? 'جدولة' : 'Schedule';
-
-      // Recent Transactions Sheet Header
-      const recentTitle = document.getElementById('recentTxHeaderTitle');
-      if (recentTitle) recentTitle.textContent = isAr ? 'أحدث المعاملات' : 'Recent Transaction';
-      const countBadge = document.getElementById('sheetCountBadge');
-      if (countBadge) countBadge.textContent = isAr ? '٨ عناصر' : '8 Items';
-      const toggleLabel = document.getElementById('sheetToggleLabel');
-      if (toggleLabel) toggleLabel.textContent = getSheetToggleText(isSheetExpanded);
-
-      // 4. Statistics Screen
-      const statsTitle = document.getElementById('statsScreenTitle');
-      if (statsTitle) statsTitle.textContent = isAr ? 'مصروفاتي' : 'My Expenses';
-      const statsBalLabel = document.getElementById('statsBalanceLabel');
-      if (statsBalLabel) statsBalLabel.textContent = isAr ? 'الرصيد الحالي' : 'Current Balance';
-      const statsCatTitle = document.getElementById('statsCategoriesTitle');
-      if (statsCatTitle) statsCatTitle.textContent = isAr ? 'الفئات' : 'Categories';
-      const statsToggleLabel = document.getElementById('statsSheetToggleLabel');
-      if (statsToggleLabel) statsToggleLabel.textContent = getSheetToggleText(isStatsSheetExpanded);
-
-      const dayNamesEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const dayNamesAr = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-      for (let i = 0; i <= 6; i++) {{
-        const btn = document.getElementById('stats-day-' + i);
-        if (btn) btn.textContent = isAr ? dayNamesAr[i] : dayNamesEn[i];
-      }}
-
-      // Statistics Categories Items
-      const statsCats = document.querySelectorAll('.stats-cat-item-name');
-      const catTranslations = {{
-        'Groceries': 'البقالة والتموين',
-        'Entertainment': 'الترفيه والألعاب',
-        'Shopping': 'التسوق والمشتريات',
-        'Dining & Cafe': 'المطاعم والمقاهي',
-        'Subscriptions': 'الاشتراكات الرقمية',
-        'Travel & Transit': 'السفر والتنقل'
-      }};
-      const catTranslationsRev = {{
-        'البقالة والتموين': 'Groceries',
-        'الترفيه والألعاب': 'Entertainment',
-        'التسوق والمشتريات': 'Shopping',
-        'المطاعم والمقاهي': 'Dining & Cafe',
-        'الاشتراكات الرقمية': 'Subscriptions',
-        'السفر والتنقل': 'Travel & Transit'
-      }};
-      statsCats.forEach(cat => {{
-        const txt = cat.textContent.trim();
-        if (isAr && catTranslations[txt]) {{
-          cat.textContent = catTranslations[txt];
-        }} else if (!isAr && catTranslationsRev[txt]) {{
-          cat.textContent = catTranslationsRev[txt];
+      // 1. Walk EVERY text node inside #phoneFrame losslessly using enTextNodeCache & data-i18n-dyn-en
+      const walker = document.createTreeWalker(appRoot, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while ((node = walker.nextNode())) {{
+        const parentEl = node.parentElement;
+        if (parentEl && parentEl.hasAttribute('data-i18n-dyn-en')) {{
+          const dynEn = parentEl.getAttribute('data-i18n-dyn-en');
+          node.nodeValue = isAr ? translateCoreToAr(dynEn) : dynEn;
+          continue;
         }}
+        if (enTextNodeCache.has(node)) {{
+          const orig = enTextNodeCache.get(node);
+          if (isAr) {{
+            const leading = orig.match(/^\\s*/)[0];
+            const trailing = orig.match(/\\s*$/)[0];
+            node.nodeValue = leading + translateCoreToAr(orig.trim()) + trailing;
+          }} else {{
+            node.nodeValue = orig;
+          }}
+          continue;
+        }}
+        if (!isAr) continue;
+        if (shouldSkipTextNode(node)) continue;
+        enTextNodeCache.set(node, node.nodeValue);
+        const orig = enTextNodeCache.get(node);
+        const leading = orig.match(/^\\s*/)[0];
+        const trailing = orig.match(/\\s*$/)[0];
+        node.nodeValue = leading + translateCoreToAr(orig.trim()) + trailing;
+      }}
+
+      // 2. Translate ALL input/textarea placeholders
+      appRoot.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(inp => {{
+        if (!enPlaceholderCache.has(inp)) {{
+          enPlaceholderCache.set(inp, inp.getAttribute('placeholder'));
+        }}
+        const origPh = enPlaceholderCache.get(inp);
+        inp.setAttribute('placeholder', isAr ? translateCoreToAr(origPh) : origPh);
       }});
 
-      // 5. Finance Screen
-      const finTitle = document.getElementById('financeScreenTitle');
-      if (finTitle) finTitle.textContent = isAr ? 'المالية والاستثمار' : 'Finance';
-      const finStealth = document.getElementById('financeStealthLabel');
-      if (finStealth) {{
-        if (typeof isStealthMode !== 'undefined' && isStealthMode) {{
-          finStealth.textContent = isAr ? 'مخفي' : 'Hidden';
-        }} else {{
-          finStealth.textContent = isAr ? 'مرئي' : 'Visible';
-        }}
-      }}
-      const finNetWorth = document.getElementById('financeNetWorthLabel');
-      if (finNetWorth) finNetWorth.textContent = isAr ? 'إجمالي المحفظة وصافي القيمة' : 'Total Portfolio & Net Worth';
-      const finAvail = document.getElementById('financeAvailLabel');
-      if (finAvail) finAvail.textContent = isAr ? 'الرصيد المتاح' : 'Available Balance';
-      const finVaults = document.getElementById('financeVaultsLabel');
-      if (finVaults) finVaults.textContent = isAr ? 'الخزائن المقفلة' : 'Locked Vaults';
+      // 3. Translate known default <input> values if still at English/Arabic defaults
+      const defaultInputPairs = [
+        ['newBenFullNameInput', 'Khalid Al Mansoor', 'خالد المنصور'],
+        ['newVaultNameInput', 'Europe Summer Trip', 'رحلة صيف أوروبا'],
+        ['newCardNameInput', 'Marice Cervantes', 'ماريس سيرفانتس']
+      ];
+      defaultInputPairs.forEach(([id, enVal, arVal]) => {{
+        const inp = document.getElementById(id);
+        if (!inp) return;
+        if (isAr && inp.value === enVal) inp.value = arVal;
+        else if (!isAr && inp.value === arVal) inp.value = enVal;
+      }});
 
-      const finTransfer = document.getElementById('financeActionTransfer');
-      if (finTransfer) finTransfer.textContent = isAr ? 'تحويل' : 'Transfer';
-      const finExchange = document.getElementById('financeActionExchange');
-      if (finExchange) finExchange.textContent = isAr ? 'تبديل' : 'Exchange';
-      const finTopUp = document.getElementById('financeActionTopUp');
-      if (finTopUp) finTopUp.textContent = isAr ? 'شحن رصيد' : 'Top Up';
-      const finVault = document.getElementById('financeActionVault');
-      if (finVault) finVault.textContent = isAr ? 'خزينة' : 'Vault';
+      // Sync card preview name
+      if (typeof updateNewCardPreview === 'function') updateNewCardPreview();
 
-      const finAccTitle = document.getElementById('financeAccountsTitle');
-      if (finAccTitle) finAccTitle.textContent = isAr ? 'الحسابات والخزائن' : 'Connected Accounts';
-      const finToggleLabel = document.getElementById('financeSheetToggleLabel');
-      if (finToggleLabel) finToggleLabel.textContent = getSheetToggleText(isFinanceSheetExpanded);
+      // 4. Re-sync dynamic controllers cleanly in selected language
+      if (typeof setStatsPeriod === 'function') setStatsPeriod(currentStatsPeriod || 'W', false);
+      if (typeof refreshVaultTotalsUI === 'function') refreshVaultTotalsUI();
+      if (typeof setVaultActionMode === 'function') setVaultActionMode(currentVaultActionMode || 'deposit');
+      if (typeof selectTargetVault === 'function') selectTargetVault(currentSelectedVaultKey || 'emergency');
+      if (typeof updateNotifBadges === 'function') updateNotifBadges();
+      if (typeof selectTransferFrom === 'function') selectTransferFrom(currentTransferFrom || 'mastercard');
+      if (typeof selectTransferTo === 'function') selectTransferTo(currentTransferTo || 'debit');
+      if (typeof selectSheetBeneficiary === 'function') selectSheetBeneficiary(currentActiveBeneficiaryKey || 'sarah');
 
-      // 6. Others Screen (Wallet Features)
-      const othersTitle = document.getElementById('othersScreenTitle');
-      if (othersTitle) othersTitle.textContent = isAr ? 'ميزات المحفظة' : 'Wallet Features';
-      const appleTitle = document.getElementById('othersAppleCardTitle');
-      if (appleTitle) appleTitle.textContent = isAr ? 'محفظة آبل وتمرير NFC' : 'Apple Wallet & NFC Pass';
-      const appleSub = document.getElementById('othersAppleCardSub');
-      if (appleSub) appleSub.textContent = isAr ? 'الدفع بدون تلامس مفعّل وجاهز' : 'Contactless Tap to Pay provisioned';
-      const appleBtn = document.getElementById('othersAppleCardBtnLabel');
-      if (appleBtn) appleBtn.textContent = isAr ? 'عرض البطاقة في Apple Wallet' : 'View Pass in Apple Wallet';
+      // Re-sync bottom sheet toggle labels
+      const tglMap = [
+        ['sheetToggleLabel', typeof isSheetExpanded !== 'undefined' && isSheetExpanded],
+        ['statsSheetToggleLabel', typeof isStatsSheetExpanded !== 'undefined' && isStatsSheetExpanded],
+        ['financeSheetToggleLabel', typeof isFinanceSheetExpanded !== 'undefined' && isFinanceSheetExpanded],
+        ['othersSheetToggleLabel', typeof isOthersSheetExpanded !== 'undefined' && isOthersSheetExpanded],
+        ['vaultSheetToggleLabel', typeof isVaultSheetExpanded !== 'undefined' && isVaultSheetExpanded],
+        ['sendSheetToggleLabel', typeof isSendSheetExpanded !== 'undefined' && isSendSheetExpanded]
+      ];
+      tglMap.forEach(([id, exp]) => {{
+        const el = document.getElementById(id);
+        if (el) el.textContent = getSheetToggleText(exp);
+      }});
 
-      const othBill = document.getElementById('othersActionBillPay');
-      if (othBill) othBill.textContent = isAr ? 'سداد الفواتير' : 'Bill Pay';
-      const othSplit = document.getElementById('othersActionSplitBill');
-      if (othSplit) othSplit.textContent = isAr ? 'تقسيم الحساب' : 'Split Bill';
-      const othVouch = document.getElementById('othersActionVouchers');
-      if (othVouch) othVouch.textContent = isAr ? 'قسائم الشراء' : 'Vouchers';
-      const othRew = document.getElementById('othersActionRewards');
-      if (othRew) othRew.textContent = isAr ? 'المكافآت' : 'Rewards';
-
-      const othSheetTitle = document.getElementById('othersSheetTitle');
-      if (othSheetTitle) othSheetTitle.textContent = isAr ? 'جميع الخدمات والميزات' : 'All Features';
-      const othToggleLabel = document.getElementById('othersSheetToggleLabel');
-      if (othToggleLabel) othToggleLabel.textContent = getSheetToggleText(isOthersSheetExpanded);
-
-      // 7. Card Details Screen & Modal
-      const cdBal = document.getElementById('cdBalanceLabel');
-      if (cdBal) cdBal.textContent = isAr ? 'الرصيد الحالي' : 'Current Balance';
-      const cdCred = document.getElementById('cdCreditLabel');
-      if (cdCred) cdCred.textContent = isAr ? 'الحد الائتماني' : 'Credit';
-      const cdMin = document.getElementById('cdMinDueLabel');
-      if (cdMin) cdMin.textContent = isAr ? 'الحد الأدنى المستحق' : 'Minimum Amount due';
-      const cdLast = document.getElementById('cdLastPaymentLabel');
-      if (cdLast) cdLast.textContent = isAr ? 'آخر دفعة مسددة' : 'Last Payment';
-      const cdCash = document.getElementById('cdCashbackLabel');
-      if (cdCash) cdCash.textContent = isAr ? 'استرداد نقدي (كاش باك)' : 'Cashback';
-      const cdState = document.getElementById('cdStatementsLabel');
-      if (cdState) cdState.textContent = isAr ? 'كشوف الحسابات' : 'Statements';
-      const cdCust = document.getElementById('cdCustomizeLabel');
-      if (cdCust) cdCust.textContent = isAr ? 'تخصيص البطاقة' : 'Customize Card';
-      const cdFrz = document.getElementById('cdFreezeLabel');
-      if (cdFrz) cdFrz.textContent = isAr ? 'تجميد الحساب والبطاقة' : 'Freeze my Account';
-      const cdApple = document.getElementById('cdAppleWalletLabel');
-      if (cdApple) cdApple.textContent = isAr ? 'إضافة إلى Apple Wallet' : 'Add Apple Wallet';
-      const cdTx = document.getElementById('cdTransactionsLabel');
-      if (cdTx) cdTx.textContent = isAr ? 'سجل المعاملات' : 'Transactions';
-      const cdLang = document.getElementById('cdLangLabel');
-      if (cdLang) cdLang.textContent = isAr ? 'اللغة' : 'Language';
-
-      // Card Details Sheet Modal
-      const cdTitle = document.getElementById('cardDetailsTitle');
-      if (cdTitle) cdTitle.textContent = isAr ? 'ماستركارد كاش ليب' : 'Cashleap Mastercard';
-      const cdSubtitle = document.getElementById('cardDetailsSubtitle');
-      if (cdSubtitle) cdSubtitle.textContent = isAr ? 'إعدادات البطاقة وApple Pay' : 'Card Controls & Apple Pay';
-      const cdNumLabel = document.getElementById('cdNumberLabel');
-      if (cdNumLabel) cdNumLabel.textContent = isAr ? 'رقم البطاقة' : 'Card Number';
-      const cdCopy = document.getElementById('cdCopyBtn');
-      if (cdCopy) cdCopy.textContent = isAr ? 'نسخ' : 'Copy';
-      const cdSwitch = document.getElementById('cdSwitchCardLabel');
-      if (cdSwitch) cdSwitch.textContent = isAr ? 'تبديل البطاقة النشطة' : 'Switch Active Card';
-      const cdSwitchSub = document.getElementById('cdSwitchCardSub');
-      if (cdSwitchSub) cdSwitchSub.textContent = isAr ? 'اختر بطاقة الخصم أو بطاقة الرصيد' : 'Select Debit Card or Balance Card';
-      const cdSwitchBtn = document.getElementById('cdSwitchCardBtn');
-      if (cdSwitchBtn) cdSwitchBtn.textContent = isAr ? 'تغيير' : 'Change';
-      const cdLock = document.getElementById('cdLockLabel');
-      if (cdLock) cdLock.textContent = isAr ? 'قفل / تجميد البطاقة' : 'Lock / Freeze Card';
-      const cdLockSub = document.getElementById('cdLockSub');
-      if (cdLockSub) cdLockSub.textContent = isAr ? 'تعطيل كافة المعاملات مؤقتاً' : 'Temporarily disable all transactions';
-      const cdApplePay = document.getElementById('cdApplePayLabel');
-      if (cdApplePay) cdApplePay.textContent = isAr ? 'الدفع بدون تلامس Apple Pay' : 'Contactless Apple Pay';
-      const cdApplePaySub = document.getElementById('cdApplePaySub');
-      if (cdApplePaySub) cdApplePaySub.textContent = isAr ? 'جاهز لأجهزة آيفون وساعة آبل' : 'Ready for iPhone & Apple Watch';
-      const cdDone = document.getElementById('cdDoneBtn');
-      if (cdDone) cdDone.textContent = isAr ? 'تم' : 'Done';
-
-      // 8. User Profile Modal Sheet
-      const profTitle = document.getElementById('profileSheetTitle');
-      if (profTitle) profTitle.textContent = isAr ? 'الحساب والملف الشخصي' : 'Account & Profile';
-      const profVerif = document.getElementById('profileVerifiedBadge');
-      if (profVerif) profVerif.textContent = isAr ? 'موثق' : 'Verified';
-      const profSub = document.getElementById('profileSheetSub');
-      if (profSub) profSub.textContent = isAr ? 'إدارة الأمان والحدود وتفضيلات المحفظة' : 'Manage personal security, limits & wallet preferences';
-      const profTier = document.getElementById('profileTierBadge');
-      if (profTier) profTier.textContent = isAr ? 'الفئة السوداء' : 'BLACK TIER';
-      const profNetWorth = document.getElementById('profileNetWorthLabel');
-      if (profNetWorth) profNetWorth.textContent = isAr ? 'صافي الثروة' : 'Total Net Worth';
-      const profActiveCards = document.getElementById('profileActiveCardsLabel');
-      if (profActiveCards) profActiveCards.textContent = isAr ? 'البطاقات النشطة' : 'Active Cards';
-      const profCardsCount = document.getElementById('profileCardsCountBadge');
-      if (profCardsCount) profCardsCount.textContent = isAr ? '٢ بطاقات' : '2 Cards';
-      const profSafety = document.getElementById('profileSafetyScoreLabel');
-      if (profSafety) profSafety.textContent = isAr ? 'مؤشر الأمان' : 'Safety Score';
-
-      const profContact = document.getElementById('profileContactHeading');
-      if (profContact) profContact.textContent = isAr ? 'الاتصال والإقامة' : 'Contact & Residency';
-      const profEmail = document.getElementById('profileEmailLabel');
-      if (profEmail) profEmail.textContent = isAr ? 'البريد الإلكتروني' : 'Email';
-      const profPhone = document.getElementById('profilePhoneLabel');
-      if (profPhone) profPhone.textContent = isAr ? 'رقم الهاتف المتحرك' : 'Mobile Phone';
-      const profRes = document.getElementById('profileResidencyLabel');
-      if (profRes) profRes.textContent = isAr ? 'مكان الإقامة' : 'Residency';
-      const profResVal = document.getElementById('profileResidencyVal');
-      if (profResVal) profResVal.textContent = isAr ? 'دبي، الإمارات العربية المتحدة' : 'Dubai, United Arab Emirates';
-
-      const profSec = document.getElementById('profileSecurityHeading');
-      if (profSec) profSec.textContent = isAr ? 'الأمان والقياسات الحيوية' : 'Security & Biometrics';
-      const profFaceId = document.getElementById('profileFaceIdTitle');
-      if (profFaceId) profFaceId.textContent = isAr ? 'تسجيل الدخول بالبصمة البيومترية' : 'Apple Face ID Login';
-      const profFaceIdSub = document.getElementById('profileFaceIdSub');
-      if (profFaceIdSub) profFaceIdSub.textContent = isAr ? 'مصادقة Face ID لفتح سريع وآمن' : 'Biometric authentication for rapid unlocks';
-      const profSecKey = document.getElementById('profileSecretKeyTitle');
-      if (profSecKey) profSecKey.textContent = isAr ? 'رمز الأمان السري (٦ أرقام)' : '6-Digit Secret Key';
-      const profSecKeySub = document.getElementById('profileSecretKeySub');
-      if (profSecKeySub) profSecKeySub.textContent = isAr ? 'رمز مرور عالي الأمان للدفع' : 'High-security payment passcode';
-      const profSecKeyMan = document.getElementById('profileSecretKeyManage');
-      if (profSecKeyMan) profSecKeyMan.textContent = isAr ? 'إدارة' : 'Manage';
-
+      // Sync profile lang title
       const profLang = document.getElementById('profileLangTitle');
       if (profLang) profLang.textContent = isAr ? 'اللغة / Language' : 'Language / اللغة';
-      const profLimits = document.getElementById('profileLimitsHeading');
-      if (profLimits) profLimits.textContent = isAr ? 'حدود المعاملات البنكية' : 'Banking Limits';
-      const profDailyCap = document.getElementById('profileDailyCapLabel');
-      if (profDailyCap) profDailyCap.textContent = isAr ? 'سقف التحويل اليومي' : 'Daily Transfer Cap';
-      const profMonthLimit = document.getElementById('profileMonthlyLimitLabel');
-      if (profMonthLimit) profMonthLimit.textContent = isAr ? 'الحد الشهري للإنفاق' : 'Monthly Spending Limit';
-      const profStatement = document.getElementById('profileStatementBtnLabel');
-      if (profStatement) {{
-        const svg = profStatement.querySelector('svg');
-        profStatement.textContent = isAr ? 'تحميل كشف الحساب الرسمي (PDF) ' : 'Download Official Statement (PDF) ';
-        if (svg) profStatement.prepend(svg);
-      }}
-      const profSignOut = document.getElementById('profileSignOutBtn');
-      if (profSignOut) {{
-        const svg = profSignOut.querySelector('svg');
-        profSignOut.textContent = isAr ? 'تسجيل الخروج من كاش ليب' : 'Sign Out of Cashleap';
-        if (svg) profSignOut.prepend(svg);
-      }}
 
-      // 9. Transfer Funds Modal Sheet
-      const trTitle = document.getElementById('transferSheetTitle');
-      if (trTitle) trTitle.textContent = isAr ? 'تحويل الأموال' : 'Transfer Funds';
-      const trSub = document.getElementById('transferSheetSub');
-      if (trSub) trSub.textContent = isAr ? 'تحويل فوري بدون أي رسوم بين حساباتك' : 'Instant zero-fee transfer between your accounts';
-      const trFromHead = document.getElementById('transferFromHeader');
-      if (trFromHead) trFromHead.textContent = isAr ? 'من الحساب' : 'From Source';
-      const trToHead = document.getElementById('transferToHeader');
-      if (trToHead) trToHead.textContent = isAr ? 'إلى الحساب' : 'To Destination';
-      const trInstantBadge = document.getElementById('transferInstantCreditBadge');
-      if (trInstantBadge) trInstantBadge.textContent = isAr ? 'إيداع فوري' : 'Instant Credit';
-      const trAmtLabel = document.getElementById('transferAmountLabel');
-      if (trAmtLabel) trAmtLabel.textContent = isAr ? 'مبلغ التحويل' : 'Transfer Amount';
-      const trNoFee = document.getElementById('transferNoFeeBadge');
-      if (trNoFee) trNoFee.textContent = isAr ? 'بدون أي رسوم تحويل' : 'No Transfer Fee';
-      const trConfirm = document.getElementById('transferConfirmBtn');
-      if (trConfirm) {{
-        const svg = trConfirm.querySelector('svg');
-        trConfirm.textContent = isAr ? 'تأكيد التحويل الفوري' : 'Confirm Instant Transfer';
-        if (svg) trConfirm.prepend(svg);
-      }}
-
-      // 10. Send Money Sheet Modal
-      const sendTitle = document.getElementById('sendMoneyModalTitle');
-      if (sendTitle) sendTitle.textContent = isAr ? 'إرسال الأموال' : 'Send Money';
-      const sendSub = document.getElementById('sendMoneyModalSub');
-      if (sendSub) sendSub.textContent = isAr ? 'أرسل لمستخدمي كاش ليب (@leaptag) أو رقم الآيبان' : 'Send to Cashleap users (@leaptag) or bank IBAN';
-      const sendSearchInp = document.getElementById('sendSheetSearchInput');
-      if (sendSearchInp) sendSearchInp.placeholder = isAr ? 'ابحث بالمعرف @leaptag، الاسم، أو الآيبان...' : 'Search @leaptag, Cashleap user, or IBAN...';
-      const sendAddNew = document.getElementById('sendSheetAddNewText');
-      if (sendAddNew) sendAddNew.textContent = isAr ? 'إضافة جديد' : 'Add New';
-      const sendAmtTitle = document.getElementById('sendTransferAmtTitle');
-      if (sendAmtTitle) sendAmtTitle.textContent = isAr ? 'مبلغ التحويل' : 'Transfer Amount';
-      const sendNoteInp = document.getElementById('sendMoneyNoteInput');
-      if (sendNoteInp) sendNoteInp.placeholder = isAr ? 'أضف ملاحظة (مثلاً: مشاركة عشاء، إيجار، هدية)...' : 'Add a note (e.g. Dinner split, rent, gift)...';
-      const sendSlider = document.getElementById('sendSliderLabel');
-      if (sendSlider) sendSlider.textContent = isAr ? 'اسحب أو اضغط للإرسال الفوري' : 'Slide or Tap to Send Instantly';
-
-      // 11. Digital Brand Vouchers
-      const vouchTitle = document.getElementById('vouchersSheetTitle');
-      if (vouchTitle) vouchTitle.textContent = isAr ? 'قسائم الماركات الرقمية' : 'Digital Brand Vouchers';
-      const vouchSub = document.getElementById('vouchersSheetSub');
-      if (vouchSub) vouchSub.textContent = isAr ? 'تفعيل فوري • رسوم معالجة 0.00 د.إ' : 'Instant activation • 0.00 AED processing fee';
-
-      // 12. Global Currency Symbol Swap (AED <-> د.إ)
+      // Global currency labels
       switchDomCurrency(isAr);
     }}
 
@@ -9257,7 +9885,7 @@ html_content = f"""<!DOCTYPE html>
       applyGlobalTranslations(isAr);
 
       if (isAr) {{
-        triggerDynamicIsland('تغيير اللغة', 'تم التبديل إلى العربية (Arabic)', '<span class="text-xs text-blue-400 font-bold">ع</span>');
+        triggerDynamicIsland('تغيير اللغة', 'تم التبديل إلى العربية', '<span class="text-xs text-blue-400 font-bold">ع</span>');
         showToast('تم تحويل لغة التطبيق إلى العربية بنجاح');
       }} else {{
         triggerDynamicIsland('Language Changed', 'Switched to English (UAE)', '<span class="text-xs text-blue-400 font-bold">EN</span>');
@@ -9490,13 +10118,17 @@ html_content = f"""<!DOCTYPE html>
     function toggleStealthMode() {{
       if (typeof playHapticTick === 'function') playHapticTick();
       isStealthModeActive = !isStealthModeActive;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
       const netWorthEl = document.getElementById('financeNetWorth');
       const toggleLabelEl = document.getElementById('stealthToggleLabel');
       const toggleIconEl = document.getElementById('stealthToggleIcon');
 
       if (isStealthModeActive) {{
         if (netWorthEl) netWorthEl.textContent = '••••••••';
-        if (toggleLabelEl) toggleLabelEl.textContent = 'Hidden';
+        if (toggleLabelEl) {{
+          toggleLabelEl.setAttribute('data-i18n-dyn-en', 'Hidden');
+          toggleLabelEl.textContent = t('Hidden');
+        }}
         if (toggleIconEl) {{
           toggleIconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />';
         }}
@@ -9505,7 +10137,10 @@ html_content = f"""<!DOCTYPE html>
         }}
       }} else {{
         if (netWorthEl) netWorthEl.textContent = '23,901.20';
-        if (toggleLabelEl) toggleLabelEl.textContent = 'Visible';
+        if (toggleLabelEl) {{
+          toggleLabelEl.setAttribute('data-i18n-dyn-en', 'Visible');
+          toggleLabelEl.textContent = t('Visible');
+        }}
         if (toggleIconEl) {{
           toggleIconEl.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
         }}
@@ -9575,6 +10210,7 @@ html_content = f"""<!DOCTYPE html>
       if (typeof playHapticTick === 'function') playHapticTick();
       currentTransferFrom = key;
       const info = transferAccountsData[key] || transferAccountsData.mastercard;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
 
       const art = document.getElementById('transferFromCardArt');
       const digits = document.getElementById('transferFromCardDigits');
@@ -9584,11 +10220,12 @@ html_content = f"""<!DOCTYPE html>
       const avail = document.getElementById('transferFromAvailBadge');
 
       if (art) art.className = info.artClass;
-      if (digits) digits.textContent = info.digits;
-      if (name) name.textContent = info.name;
-      if (sub) sub.textContent = info.sub;
-      if (bal) bal.textContent = info.balance;
-      if (avail) avail.textContent = 'Available: ' + info.balance;
+      if (digits) {{ digits.setAttribute('data-i18n-dyn-en', info.digits); digits.textContent = t(info.digits); }}
+      if (name) {{ name.setAttribute('data-i18n-dyn-en', info.name); name.textContent = t(info.name); }}
+      if (sub) {{ sub.setAttribute('data-i18n-dyn-en', info.sub); sub.textContent = t(info.sub); }}
+      if (bal) {{ bal.setAttribute('data-i18n-dyn-en', info.balance); bal.textContent = t(info.balance); }}
+      const enAvail = 'Available: ' + info.balance;
+      if (avail) {{ avail.setAttribute('data-i18n-dyn-en', enAvail); avail.textContent = t(enAvail); }}
 
       ['mastercard', 'debit', 'nbd'].forEach(k => {{
         const pill = document.getElementById('from-pill-' + k);
@@ -9611,6 +10248,7 @@ html_content = f"""<!DOCTYPE html>
       if (typeof playHapticTick === 'function') playHapticTick();
       currentTransferTo = key;
       const info = transferAccountsData[key] || transferAccountsData.debit;
+      const t = (typeof trText === 'function') ? trText : (s) => s;
 
       const art = document.getElementById('transferToCardArt');
       const digits = document.getElementById('transferToCardDigits');
@@ -9619,10 +10257,10 @@ html_content = f"""<!DOCTYPE html>
       const bal = document.getElementById('transferToBalance');
 
       if (art) art.className = info.artClass;
-      if (digits) digits.textContent = info.digits;
-      if (name) name.textContent = info.name;
-      if (sub) sub.textContent = info.sub;
-      if (bal) bal.textContent = info.balance;
+      if (digits) {{ digits.setAttribute('data-i18n-dyn-en', info.digits); digits.textContent = t(info.digits); }}
+      if (name) {{ name.setAttribute('data-i18n-dyn-en', info.name); name.textContent = t(info.name); }}
+      if (sub) {{ sub.setAttribute('data-i18n-dyn-en', info.sub); sub.textContent = t(info.sub); }}
+      if (bal) {{ bal.setAttribute('data-i18n-dyn-en', info.balance); bal.textContent = t(info.balance); }}
 
       ['debit', 'mastercard', 'vault'].forEach(k => {{
         const pill = document.getElementById('to-pill-' + k);
@@ -9766,7 +10404,9 @@ html_content = f"""<!DOCTYPE html>
       setTimeout(() => {{
         const agentDiv = document.createElement('div');
         agentDiv.className = 'flex justify-start';
-        agentDiv.innerHTML = `<div class="bg-white/10 rounded-2xl rounded-tl-sm px-3.5 py-2 max-w-[80%] text-white/90">Thank you for reaching out, Marice. A senior representative is reviewing your request right now.</div>`;
+        const enReply = 'Thank you for reaching out, Marice. A senior representative is reviewing your request right now.';
+        const dispReply = (typeof trText === 'function') ? trText(enReply) : enReply;
+        agentDiv.innerHTML = `<div class="bg-white/10 rounded-2xl rounded-tl-sm px-3.5 py-2 max-w-[80%] text-white/90" data-i18n-dyn-en="${{enReply}}">${{dispReply}}</div>`;
         list.appendChild(agentDiv);
         list.scrollTop = list.scrollHeight;
         if (typeof triggerDynamicIsland === 'function') {{
