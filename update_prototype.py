@@ -1294,10 +1294,10 @@ html_content = f"""<!DOCTYPE html>
         <!-- ======================================================== -->
         <!-- DRAGGABLE CARD CAROUSEL (ZERO PADDING - FULL BLEED)     -->
         <!-- ======================================================== -->
-        <div class="relative w-full overflow-hidden my-1 pt-1 pb-2 px-0 select-none">
-          <div class="relative w-full h-[184px] overflow-hidden cursor-grab active:cursor-grabbing" id="cardCarouselContainer">
-            <!-- Fixed Sticky Add Button Pill on Left Edge (Non-scrollable) -->
-            <div id="addCardPillBtn" onclick="openAddCardModal()" class="absolute left-0 top-[3px] z-30 w-7 h-[178px] rounded-r-[20px] bg-[#161136]/85 hover:bg-[#231b54]/95 active:scale-95 border-y border-r border-white/15 backdrop-blur-xl flex items-center justify-center cursor-pointer transition-all apple-press group shadow-lg" title="Add New Card to Wallet">
+        <div class="relative z-0 w-full overflow-hidden my-1 pt-1 pb-2 px-0 select-none">
+          <div class="relative z-0 w-full h-[184px] overflow-hidden cursor-grab active:cursor-grabbing" id="cardCarouselContainer">
+            <!-- Fixed Sticky Add Button Pill on Left Edge (Non-scrollable, below bottom sheet z-index) -->
+            <div id="addCardPillBtn" onclick="openAddCardModal()" class="absolute left-0 top-[3px] z-10 w-7 h-[178px] rounded-r-[20px] bg-[#161136]/85 hover:bg-[#231b54]/95 active:scale-95 border-y border-r border-white/15 backdrop-blur-xl flex items-center justify-center cursor-pointer transition-all apple-press group shadow-lg" title="Add New Card to Wallet">
               <span class="text-xl font-light text-white/70 group-hover:text-white group-hover:scale-125 transition-all -translate-x-0.5">+</span>
             </div>
 
@@ -1434,7 +1434,7 @@ html_content = f"""<!DOCTYPE html>
       <!-- ======================================================== -->
       <div 
         id="recentTransactionsSheet" 
-        class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-20 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
+        class="liquid-glass-sheet absolute left-0 right-0 bottom-0 rounded-t-[34px] z-30 flex flex-col transition-transform duration-400 ease-out overflow-hidden" 
         style="top: 54px; transform: translateY(356px);"
       >
         <!-- Liquid Glass Specular Top Highlight -->
