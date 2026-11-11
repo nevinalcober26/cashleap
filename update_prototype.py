@@ -96,6 +96,13 @@ html_content = f"""<!DOCTYPE html>
       scrollbar-width: none;
     }}
 
+    .overflow-y-auto {{
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
+    }}
+
     @media (max-width: 480px) {{
       .phone-frame {{
         width: 100vw;
@@ -4948,7 +4955,7 @@ html_content = f"""<!DOCTYPE html>
     <!-- USER ACCOUNT & PROFILE MODAL               -->
     <!-- ========================================== -->
     <div id="userProfileModal" onclick="if(event.target === this) closeUserProfileModal()" class="absolute inset-0 apple-sheet-backdrop z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-      <div id="userProfileSheet" class="liquid-glass-sheet relative overflow-hidden w-full max-h-[88%] rounded-t-[34px] px-5 pt-3.5 pb-6 text-white transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col">
+      <div id="userProfileSheet" class="liquid-glass-sheet relative overflow-hidden w-full h-[88%] max-h-[88%] rounded-t-[34px] px-5 pt-3.5 pb-6 text-white transform translate-y-full transition-transform duration-350 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col">
         
         <!-- Specular top highlight -->
         <div class="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none z-10"></div>
@@ -4972,7 +4979,7 @@ html_content = f"""<!DOCTYPE html>
         </div>
 
         <!-- Scrollable Profile Content -->
-        <div class="overflow-y-auto flex-1 pr-0.5 space-y-3.5 scrollbar-none my-1">
+        <div class="overflow-y-auto flex-1 min-h-0 pr-0.5 pb-6 space-y-3.5 scrollbar-none my-1">
           
           <!-- User Hero Card -->
           <div class="rounded-2xl bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-transparent border border-white/15 p-3.5 backdrop-blur-xl relative overflow-hidden shadow-lg">
@@ -7284,6 +7291,8 @@ html_content = f"""<!DOCTYPE html>
       const modal = document.getElementById('userProfileModal');
       const sheet = document.getElementById('userProfileSheet');
       if (modal && sheet) {{
+        const scrollEl = sheet.querySelector('.overflow-y-auto');
+        if (scrollEl) scrollEl.scrollTop = 0;
         modal.classList.remove('opacity-0', 'pointer-events-none');
         requestAnimationFrame(() => {{
           sheet.classList.remove('translate-y-full');
@@ -10977,16 +10986,18 @@ html_content = f"""<!DOCTYPE html>
           if (!getExpanded() && deltaY > 0) {{
             // Allow normal list scroll downward when collapsed
             dragging = false;
+            sheet.style.transition = '';
             return;
           }}
-          if (getExpanded() && deltaY < 0) {{
+          if (getExpanded() && (deltaY < 0 || (listEl && listEl.scrollTop > 0))) {{
             // Allow normal list scroll upward when expanded
             dragging = false;
+            sheet.style.transition = '';
             return;
           }}
         }}
 
-        if (Math.abs(deltaY) > 4) {{
+        if (Math.abs(deltaY) > 6) {{
           moved = true;
           if (e && e.cancelable) e.preventDefault();
         }}
@@ -11030,17 +11041,21 @@ html_content = f"""<!DOCTYPE html>
       }}, true);
 
       sheet.addEventListener('pointerdown', (e) => {{
+        if (e.pointerType === 'touch') return;
         if (startDrag(e.clientY, e.target)) {{
           if (startedOnHandle && e.cancelable) e.preventDefault();
         }}
       }});
       window.addEventListener('pointermove', (e) => {{
+        if (e.pointerType === 'touch') return;
         if (dragging) moveDrag(e.clientY, e);
       }});
-      window.addEventListener('pointerup', () => {{
+      window.addEventListener('pointerup', (e) => {{
+        if (e.pointerType === 'touch') return;
         if (dragging) endDrag();
       }});
-      window.addEventListener('pointercancel', () => {{
+      window.addEventListener('pointercancel', (e) => {{
+        if (e.pointerType === 'touch') return;
         if (dragging) endDrag();
       }});
 
@@ -11094,12 +11109,13 @@ html_content = f"""<!DOCTYPE html>
         let startY = 0;
         let deltaY = 0;
         let hasMoved = false;
+        let activeScrollEl = null;
 
         function onStart(clientY, target) {{
           // Do not hijack interactive inputs, buttons, or sliders inside modals
           if (target && target.closest('input, select, textarea, button, #sendSlideThumb, #sendSlideTrack')) return;
-          const scrollChild = target ? target.closest('.overflow-y-auto') : null;
-          if (scrollChild && scrollChild.scrollTop > 2) return;
+          activeScrollEl = target ? target.closest('.overflow-y-auto') : null;
+          if (activeScrollEl && activeScrollEl.scrollTop > 2) return;
 
           isDraggingModal = true;
           hasMoved = false;
@@ -11111,7 +11127,21 @@ html_content = f"""<!DOCTYPE html>
         function onMove(clientY, e) {{
           if (!isDraggingModal) return;
           deltaY = clientY - startY;
-          if (Math.abs(deltaY) > 4) {{
+
+          // If gesture started inside a scrollable container and user is swiping UP (deltaY < 0) to scroll down content,
+          // release modal drag immediately so native mobile touch scrolling works without interference
+          if (activeScrollEl) {{
+            const hasScrollableOverflow = activeScrollEl.scrollHeight > activeScrollEl.clientHeight + 1;
+            if ((hasScrollableOverflow && deltaY < 0) || activeScrollEl.scrollTop > 0) {{
+              isDraggingModal = false;
+              hasMoved = false;
+              sheet.style.transform = '';
+              sheet.style.transition = '';
+              return;
+            }}
+          }}
+
+          if (Math.abs(deltaY) > 6) {{
             hasMoved = true;
             if (e && e.cancelable) e.preventDefault();
           }}
@@ -11119,7 +11149,7 @@ html_content = f"""<!DOCTYPE html>
 
           let newY = deltaY;
           if (newY < 0) {{
-            // Rubber-band upward resistance
+            // Rubber-band upward resistance when dragging non-scrollable header/sheet
             newY = newY * 0.2;
           }}
           sheet.style.transform = 'translateY(' + newY + 'px)';
@@ -11128,6 +11158,7 @@ html_content = f"""<!DOCTYPE html>
         function onEnd() {{
           if (!isDraggingModal) return;
           isDraggingModal = false;
+          activeScrollEl = null;
           sheet.style.transition = 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)';
 
           if (hasMoved && deltaY > 55) {{
@@ -11138,10 +11169,22 @@ html_content = f"""<!DOCTYPE html>
           }}
         }}
 
-        sheet.addEventListener('pointerdown', (e) => onStart(e.clientY, e.target));
-        window.addEventListener('pointermove', (e) => {{ if (isDraggingModal) onMove(e.clientY, e); }});
-        window.addEventListener('pointerup', () => {{ if (isDraggingModal) onEnd(); }});
-        window.addEventListener('pointercancel', () => {{ if (isDraggingModal) onEnd(); }});
+        sheet.addEventListener('pointerdown', (e) => {{
+          if (e.pointerType === 'touch') return;
+          onStart(e.clientY, e.target);
+        }});
+        window.addEventListener('pointermove', (e) => {{
+          if (e.pointerType === 'touch') return;
+          if (isDraggingModal) onMove(e.clientY, e);
+        }});
+        window.addEventListener('pointerup', (e) => {{
+          if (e.pointerType === 'touch') return;
+          if (isDraggingModal) onEnd();
+        }});
+        window.addEventListener('pointercancel', (e) => {{
+          if (e.pointerType === 'touch') return;
+          if (isDraggingModal) onEnd();
+        }});
 
         sheet.addEventListener('touchstart', (e) => {{
           if (e.touches && e.touches[0]) onStart(e.touches[0].clientY, e.target);
